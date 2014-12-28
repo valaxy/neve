@@ -1,0 +1,33 @@
+@charset "utf-8";
+@import "../../bower_components/absolute-layout/src/absolute-layout";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	height: 100%;
+}
+
+.everything {
+	@include maximize;
+
+	.tree {
+		@include width-layout(0, 100px, auto);
+		@include height-max;
+		border: 1px solid #000;
+	}
+
+	.editor {
+		@include width-layout(100px, 300px, auto);
+		@include height-max;
+		border: 1px solid #000;
+	}
+
+	.preview {
+		@include width-layout(400px, auto, 0);
+		@include height-max;
+		border: 1px solid #000;
+	}
+}

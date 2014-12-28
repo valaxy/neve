@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  height: 100%; }
+
+.everything {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: auto; }
+  .everything .tree {
+    position: absolute;
+    left: 0;
+    width: 100px;
+    right: auto;
+    position: absolute;
+    top: 0;
+    height: auto;
+    bottom: 0;
+    border: 1px solid #000; }
+  .everything .editor {
+    position: absolute;
+    left: 100px;
+    width: 300px;
+    right: auto;
+    position: absolute;
+    top: 0;
+    height: auto;
+    bottom: 0;
+    border: 1px solid #000; }
+  .everything .preview {
+    position: absolute;
+    left: 400px;
+    width: auto;
+    right: 0;
+    position: absolute;
+    top: 0;
+    height: auto;
+    bottom: 0;
+    border: 1px solid #000; }

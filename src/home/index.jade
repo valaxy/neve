@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        title hello world
+        link(rel="stylesheet" href="index.css")
+    body
+        div.everything
+            div.tree tree
+            div.editor editor
+            div.preview preview
+
+        script.
+            window.requireNode = window.require
+            window.require = undefined
+        script(src="../../bower_components/seajs/dist/sea.js")
+        script(src="../../bower_components/jquery/dist/jquery.min.js")
+        script(src="../../bower_components/underscore/underscore-min.js")
+        script(src="../../bower_components/backbone/backbone.js")
+        script(src="../../bower_components/backbone-relational/backbone-relational.js")
+        script.
+            seajs.config({
+                base: './'
+            })
+            seajs.use(['index'], function (index) {
+                index.init()
+            })
+
+
