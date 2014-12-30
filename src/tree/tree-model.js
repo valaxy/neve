@@ -17,6 +17,7 @@ define(function (require) {
 			if (parent) {
 				parent.get('children').add(child)
 			}
+			return child.cid
 		},
 
 		remove: function (node) {
@@ -44,11 +45,11 @@ define(function (require) {
 			var tree = new TreeModel
 			var n1 = new NodeModel
 			var n2 = new NodeModel
-			tree.add(n1, null)
-			tree.add(n2, null)
+			var id1 = tree.add(n1, null)
+			var id2 = tree.add(n2, null)
 
-			assert.equal(tree.get('nodes').get(n1.cid), n1)
-			assert.equal(tree.get('nodes').get(n2.cid), n2)
+			assert.equal(tree.get('nodes').get(id1), n1)
+			assert.equal(tree.get('nodes').get(id2), n2)
 		})
 
 		QUnit.test('TreeModel:add', function (assert) {

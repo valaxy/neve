@@ -5,9 +5,6 @@ define(function () {
 	 * attribute value is a the in fact value of NodeModel
 	 */
 	var NodeModel = Backbone.RelationalModel.extend({
-		defaults: {
-			value: null
-		},
 
 		relations: [{
 			key: 'children',

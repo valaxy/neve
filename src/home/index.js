@@ -4,7 +4,7 @@ define(function (require, exports) {
 	var path = requireNode('path')
 
 	var Timer = require('../../bower_components/timer/src/timer')
-	var TreeView = require('./tree-view')
+	var TreeView = require('../file-tree/tree-view')
 	var TreeModel = require('../tree/tree-model')
 
 	exports.init = function () {
@@ -20,42 +20,34 @@ define(function (require, exports) {
 
 		var editor = ace.edit($('.editor')[0])
 		editor.setTheme("ace/theme/monokai");
-		editor.getSession().setMode("ace/mode/javascript");
+		editor.getSession().setMode("ace/mode/markdown");
 
-		//var timer = new Timer({
-		//	interval: 1000 * 5,
-		//	immediate: true,
-		//	task: function () {
-		//		fs.writeFile(INPUT_FILE, editor.getValue(), function (err) {
-		//			if (err) {
-		//				$('.preview').html(err)
-		//			}
-		//
-		//			childProcess.exec('pandoc -f markdown -t html ' + INPUT_FILE, function (error, stdout, stderr) {
-		//				$('.preview').html(stdout)
-		//				console.log(timer)
-		//				timer.next()
-		//			})
-		//		})
-		//	}
-		//})
-		//
-		//timer.start()
+		var timer = new Timer({
+			interval: 1000 * 5,
+			immediate: true,
+			task: function () {
+				var me = this
+				fs.writeFile(INPUT_FILE, editor.getValue(), function (err) {
+					if (err) {
+						$('.preview').html(err)
+					}
 
-
-
-
-
-
-		watch.createMonitor('f://test', function (monitor) {
-			monitor.on('created', function (file, stat) {
-				console.log(file, stat)
-			})
+					childProcess.exec('pandoc -f markdown -t html ' + INPUT_FILE, function (error, stdout, stderr) {
+						$('.preview').html(stdout)
+						me.next()
+					})
+				})
+			}
 		})
 
+		timer.start()
 
 
-
+		//watch.createMonitor('f://test', function (monitor) {
+		//	monitor.on('created', function (file, stat) {
+		//		console.log(file, stat)
+		//	})
+		//})
 
 
 		// the file tree
