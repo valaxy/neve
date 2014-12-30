@@ -3,24 +3,41 @@ define(function (require, exports) {
 	var fs = requireNode('fs')
 	var path = requireNode('path')
 
+	var boxLayout = require('../../bower_components/jquery-box-layout/src/box-layout')
 	var Timer = require('../../bower_components/timer/src/timer')
 	var TreeView = require('../file-tree/tree-view')
 	var TreeModel = require('../tree/tree-model')
 
+
 	exports.init = function () {
-		//var Model = require('../treeui/tree-model')
-
-		//require('../process/process')
-		var fs = requireNode('fs')
-
-
 		var INPUT_FILE = 'f://test/test.md'
 		var OUTPUT_FILE = 'f://test/test.html'
 
 
-		var editor = ace.edit($('.editor')[0])
+		var $dom = boxLayout.init({
+			_schema: 'linear',
+			isHor: true,
+			boxes: [{
+				_schema: 'box',
+				size: 200,
+				domSelector: '.tree'
+			}, {
+				_schema: 'box',
+				size: 600,
+				domSelector: '.editor'
+			}, {
+				_schema: 'box',
+				size: 'auto',
+				domSelector: '.preview'
+			}]
+		})
+		$('.everything').append($dom)
+
+
+		var editor = ace.edit($('.editor .ace')[0])
 		editor.setTheme("ace/theme/monokai");
 		editor.getSession().setMode("ace/mode/markdown");
+
 
 		var timer = new Timer({
 			interval: 1000 * 5,
@@ -56,6 +73,7 @@ define(function (require, exports) {
 			model: treeModel,
 			el: $('.tree')
 		})
+
 
 	}
 })

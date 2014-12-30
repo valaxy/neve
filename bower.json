@@ -21,7 +21,8 @@
     "absolute-layout": "https://github.com/valaxy/absolute-layout.git",
     "timer": "https://github.com/valaxy/timer.git",
     "seajs": "~2.3.0",
-    "jstree": "~3.0.8"
+    "jstree": "~3.0.8",
+    "jquery-box-layout": "https://github.com/valaxy/jquery-box-layout.git"
   },
   "devDependencies": {
     "qunit": "~1.11.0"

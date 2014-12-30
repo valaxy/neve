@@ -1,3 +1,13 @@
+.linear, .box {
+  position: absolute;
+  border: none;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto; }
+
 * {
   margin: 0;
   padding: 0; }
@@ -13,33 +23,5 @@ body {
   right: 0;
   width: auto;
   height: auto; }
-  .everything .tree {
-    position: absolute;
-    left: 0;
-    width: 200px;
-    right: auto;
-    position: absolute;
-    top: 0;
-    height: auto;
-    bottom: 0;
-    border: 1px solid #000; }
-  .everything .editor {
-    position: absolute;
-    left: 200px;
-    width: 600px;
-    right: auto;
-    position: absolute;
-    top: 0;
-    height: auto;
-    bottom: 0;
-    border: 1px solid #000; }
-  .everything .preview {
-    position: absolute;
-    left: 800px;
-    width: auto;
-    right: 0;
-    position: absolute;
-    top: 0;
-    height: auto;
-    bottom: 0;
-    border: 1px solid #000; }
+  .everything .editor .ace {
+    height: 100%; }

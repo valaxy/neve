@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import "../../bower_components/absolute-layout/src/absolute-layout";
+@import "../../bower_components/jquery-box-layout/src/style/style";
 
 * {
 	margin: 0;
@@ -14,20 +15,18 @@ body {
 	@include maximize;
 
 	.tree {
-		@include width-layout(0, 200px, auto);
-		@include height-max;
-		border: 1px solid #000;
+		//		border: 1px solid #000;
 	}
 
 	.editor {
-		@include width-layout(200px, 600px, auto);
-		@include height-max;
-		border: 1px solid #000;
+		//		border: 1px solid #000;
+
+		.ace {
+			height: 100%;
+		}
 	}
 
 	.preview {
-		@include width-layout(800px, auto, 0);
-		@include height-max;
-		border: 1px solid #000;
+		//		border: 1px solid #000;
 	}
 }
