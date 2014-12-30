@@ -1,8 +1,11 @@
 define(function (require, exports) {
 	var childProcess = requireNode('child_process')
 	var fs = requireNode('fs')
+	var path = requireNode('path')
 
 	var Timer = require('../../bower_components/timer/src/timer')
+	var TreeView = require('./tree-view')
+	var TreeModel = require('../tree/tree-model')
 
 	exports.init = function () {
 		//var Model = require('../treeui/tree-model')
@@ -39,14 +42,28 @@ define(function (require, exports) {
 		//
 		//timer.start()
 
-		var watch = requireNode('../../node_modules/watch/main')
-		watch.watchTree('f://test', function (f, curr, prev) {
-			console.log(f, curr, prev)
+
+
+
+
+
+		watch.createMonitor('f://test', function (monitor) {
+			monitor.on('created', function (file, stat) {
+				console.log(file, stat)
+			})
 		})
 
 
 
 
+
+
+		// the file tree
+		var treeModel = new TreeModel
+		new TreeView({
+			model: treeModel,
+			el: $('.tree')
+		})
 
 	}
 })

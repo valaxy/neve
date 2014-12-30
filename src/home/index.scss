@@ -14,19 +14,19 @@ body {
 	@include maximize;
 
 	.tree {
-		@include width-layout(0, 100px, auto);
+		@include width-layout(0, 200px, auto);
 		@include height-max;
 		border: 1px solid #000;
 	}
 
 	.editor {
-		@include width-layout(100px, 300px, auto);
+		@include width-layout(200px, 600px, auto);
 		@include height-max;
 		border: 1px solid #000;
 	}
 
 	.preview {
-		@include width-layout(400px, auto, 0);
+		@include width-layout(800px, auto, 0);
 		@include height-max;
 		border: 1px solid #000;
 	}

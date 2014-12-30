@@ -16,7 +16,7 @@ body {
   .everything .tree {
     position: absolute;
     left: 0;
-    width: 100px;
+    width: 200px;
     right: auto;
     position: absolute;
     top: 0;
@@ -25,8 +25,8 @@ body {
     border: 1px solid #000; }
   .everything .editor {
     position: absolute;
-    left: 100px;
-    width: 300px;
+    left: 200px;
+    width: 600px;
     right: auto;
     position: absolute;
     top: 0;
@@ -35,7 +35,7 @@ body {
     border: 1px solid #000; }
   .everything .preview {
     position: absolute;
-    left: 400px;
+    left: 800px;
     width: auto;
     right: 0;
     position: absolute;

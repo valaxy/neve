@@ -40,6 +40,16 @@ define(function (require) {
 	})
 
 	if (typeof QUnit != 'undefined') {
+		QUnit.test('TreeModel:getByCid', function (assert) {
+			var tree = new TreeModel
+			var n1 = new NodeModel
+			var n2 = new NodeModel
+			tree.add(n1, null)
+			tree.add(n2, null)
+
+			assert.equal(tree.get('nodes').get(n1.cid), n1)
+			assert.equal(tree.get('nodes').get(n2.cid), n2)
+		})
 
 		QUnit.test('TreeModel:add', function (assert) {
 			var tree = new TreeModel

@@ -1,8 +1,12 @@
-define(function (require) {
+define(function () {
 
+	/**
+	 * NodeModel used in TreeModel
+	 * attribute value is a the in fact value of NodeModel
+	 */
 	var NodeModel = Backbone.RelationalModel.extend({
 		defaults: {
-			name: '' // display in ui
+			value: null
 		},
 
 		relations: [{
