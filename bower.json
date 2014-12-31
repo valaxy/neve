@@ -22,7 +22,8 @@
     "timer": "https://github.com/valaxy/timer.git",
     "seajs": "~2.3.0",
     "jstree": "~3.0.8",
-    "jquery-box-layout": "https://github.com/valaxy/jquery-box-layout.git"
+    "jquery-box-layout": "https://github.com/valaxy/jquery-box-layout.git",
+    "font-awesome": "~4.2.0"
   },
   "devDependencies": {
     "qunit": "~1.11.0"

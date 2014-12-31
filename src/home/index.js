@@ -49,7 +49,11 @@ define(function (require, exports) {
 						$('.preview').html(err)
 					}
 
-					childProcess.exec('pandoc -f markdown -t html ' + INPUT_FILE, function (error, stdout, stderr) {
+					// -s: standalone
+					var url = 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+					var cmd = 'pandoc --mathjax=' + url + ' -f markdown -s -t html ' + INPUT_FILE
+					childProcess.exec(cmd, function (error, stdout, stderr) {
+						console.log(stdout)
 						$('.preview').html(stdout)
 						me.next()
 					})

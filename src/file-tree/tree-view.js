@@ -33,13 +33,21 @@ define(function (require) {
 
 			if (curPath == '') {
 				this.model.add(curNode)
-				var rootId = this._jstree.create_node(null, absolutePath)
+				var rootId = this._jstree.create_node(null, {
+					name: absolutePath,
+					type: 'directory',
+					expand: true
+				})
 				this._pathToUiId['.'] = rootId
 				this._pathToModel['.'] = curNode
 			} else {
 				var dirNodeId = this._pathToUiId[dirPath]
 				this.model.add(curNode, dirNode)       // add model
-				var nodeId = this._jstree.create_node(dirNodeId, curNode.get('name'))   // add ui
+				var nodeId = this._jstree.create_node(dirNodeId, {
+					name: curNode.get('name'),
+					type: curNode.get('isDir') ? 'directory' : 'file',
+					expand: true
+				})   // add ui
 				this._pathToUiId[curPath] = nodeId
 				this._pathToModel[curPath] = curNode
 			}
@@ -53,9 +61,20 @@ define(function (require) {
 			this.$el.jstree({
 				core: {
 					check_callback: true
-				}
+				},
+				types: {
+					file: {
+						icon: 'fa fa-file-o'
+					},
+					directory: {
+						icon: 'fa fa-at'
+					}
+				},
+
+				plugins: ['types', 'wholerow', 'contextmenu']
 			})
 			this._jstree = this.$el.jstree()
+
 
 			// iterate the file tree to add all the files and directories
 			watch.watchTree(DIR, function (files, curr, prev) {
