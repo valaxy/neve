@@ -65,11 +65,7 @@ define(function (require, exports) {
 		timer.start()
 
 
-		//watch.createMonitor('f://test', function (monitor) {
-		//	monitor.on('created', function (file, stat) {
-		//		console.log(file, stat)
-		//	})
-		//})
+
 
 
 		// the file tree

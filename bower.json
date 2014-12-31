@@ -24,9 +24,11 @@
     "jstree": "~3.0.8",
     "jquery-box-layout": "https://github.com/valaxy/jquery-box-layout.git",
     "font-awesome": "~4.2.0",
-    "MathJax": "https://github.com/mathjax/MathJax.git#~2.4.0"
+    "MathJax": "https://github.com/mathjax/MathJax.git#~2.4.0",
+    "uri.js": "~1.14.1",
+    "qunit": "~1.16.0"
   },
   "devDependencies": {
-    "qunit": "~1.11.0"
+    "qunit": "~1.16.0"
   }
 }
