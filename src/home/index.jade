@@ -10,12 +10,13 @@ html
         div.everything
             div.tree
             div.editor
-                div.ace # Hello editor
+                div.ace $$ a = a^2 $$
             div.preview
 
         script.
             window.requireNode = window.require
             window.require = undefined
+
         script(src="../../bower_components/seajs/dist/sea.js")
         script(src="../../bower_components/jquery/dist/jquery.min.js")
         script(src="../../bower_components/underscore/underscore-min.js")
@@ -23,6 +24,7 @@ html
         script(src="../../bower_components/backbone-relational/backbone-relational.js")
         script(src="../../bower_components/ace-builds/src-min/ace.js")
         script(src="../../bower_components/jstree/dist/jstree.min.js")
+        script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
         script.
             seajs.config({
                 base: './'

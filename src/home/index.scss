@@ -15,11 +15,12 @@ body {
 	@include maximize;
 
 	.tree {
-		//		border: 1px solid #000;
+		border-top: 1px solid #000;
 	}
 
 	.editor {
 		//		border: 1px solid #000;
+		border-top: 1px solid #000;
 
 		.ace {
 			height: 100%;
@@ -28,5 +29,6 @@ body {
 
 	.preview {
 		//		border: 1px solid #000;
+		border-top: 1px solid #000;
 	}
 }

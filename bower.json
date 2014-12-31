@@ -23,7 +23,8 @@
     "seajs": "~2.3.0",
     "jstree": "~3.0.8",
     "jquery-box-layout": "https://github.com/valaxy/jquery-box-layout.git",
-    "font-awesome": "~4.2.0"
+    "font-awesome": "~4.2.0",
+    "MathJax": "https://github.com/mathjax/MathJax.git#~2.4.0"
   },
   "devDependencies": {
     "qunit": "~1.11.0"

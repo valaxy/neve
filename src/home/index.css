@@ -23,5 +23,11 @@ body {
   right: 0;
   width: auto;
   height: auto; }
-  .everything .editor .ace {
-    height: 100%; }
+  .everything .tree {
+    border-top: 1px solid #000; }
+  .everything .editor {
+    border-top: 1px solid #000; }
+    .everything .editor .ace {
+      height: 100%; }
+  .everything .preview {
+    border-top: 1px solid #000; }

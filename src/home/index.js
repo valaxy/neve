@@ -51,10 +51,11 @@ define(function (require, exports) {
 
 					// -s: standalone
 					var url = 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-					var cmd = 'pandoc --mathjax=' + url + ' -f markdown -s -t html ' + INPUT_FILE
+					var cmd = 'pandoc --mathjax=' + url + ' -f markdown -t html ' + INPUT_FILE
 					childProcess.exec(cmd, function (error, stdout, stderr) {
 						console.log(stdout)
 						$('.preview').html(stdout)
+						MathJax.Hub.Queue(['Typeset', MathJax.Hub, $('.preview')[0]])
 						me.next()
 					})
 				})
