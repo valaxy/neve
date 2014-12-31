@@ -5,7 +5,7 @@ define(function (require, exports) {
 
 	var boxLayout = require('../../bower_components/jquery-box-layout/src/box-layout')
 	var Timer = require('../../bower_components/timer/src/timer')
-	var TreeView = require('../file-tree/tree-view')
+	var TreeView = require('../file-tree/file-tree-view')
 	var TreeModel = require('../tree/tree-model')
 
 
@@ -65,14 +65,12 @@ define(function (require, exports) {
 		timer.start()
 
 
-
-
-
 		// the file tree
 		var treeModel = new TreeModel
 		new TreeView({
 			model: treeModel,
-			el: $('.tree')
+			el: $('.tree'),
+			root: 'f://test'
 		})
 
 
