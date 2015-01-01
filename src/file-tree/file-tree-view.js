@@ -1,20 +1,30 @@
 define(function (require) {
+	var fs = requireNode('fs')
 	var path = requireNode('path')
 	var watch = requireNode('../../node_modules/watch/main')
+
 	var TreeNode = require('../tree/node-model')
+	var g = require('../home/global')
 
 	var FileTreeView = Backbone.View.extend({
 
 		_jstree: null,              // jstree control handler
-		_pathToModel: {},            // path -> node.cid
-		_mapUiToModel: {},          // a tree node id hash map from ui to model
-		_mapModelToUi: {},          // a tree node id hash map from model to ui
-		_pathToUIId: {},
+		_domIdToModel: {},          // a tree node id hash map from ui to model
+		_pathToModel: {},           // path -> node.cid
+		_pathToDomId: {},
 
 		events: {
 			// when click file load the file content
-			'click li': function () {
-
+			'select_node.jstree': function (event, data) {
+				console.log(data.node)
+				if (data.node.type == 'file') {
+					var domId = data.node.id
+					var model = this._domIdToModel[domId]
+					var content = fs.readFileSync(path.join(this._root, model.get('path')), {
+						encoding: 'utf-8'
+					})
+					g.editor.setValue(content)
+				}
 			}
 		},
 
@@ -32,22 +42,29 @@ define(function (require) {
 				curPath = '.'
 				if (updateUI) {
 					var curUIId = this._jstree.create_node(null, {
-						name: absolutePath,
-						type: 'directory'
+						text: absolutePath,
+						type: 'directory',
+						state: {
+							opened: true
+						}
 					})
 				}
 			} else {
-				var dirUIId = this._pathToUIId[dirPath]
+				var dirUIId = this._pathToDomId[dirPath]
 				if (updateUI) {
 					var curUIId = this._jstree.create_node(dirUIId, {
-						name: curModel.get('name'),
-						type: curModel.get('isDir') ? 'directory' : 'file'
+						text: curModel.get('name'),
+						type: curModel.get('isDir') ? 'directory' : 'file',
+						state: {
+							opened: true
+						}
 					})
 				}
 			}
 
-			this._pathToUIId[curPath] = curUIId
+			this._pathToDomId[curPath] = curUIId
 			this._pathToModel[curPath] = curModel
+			this._domIdToModel[curUIId] = curModel
 
 			if (updateModel) {
 				this.model.add(curModel, dirModel)
@@ -70,7 +87,23 @@ define(function (require) {
 						icon: 'fa fa-file-o'
 					},
 					directory: {
-						icon: 'fa fa-at'
+						icon: 'fa fa-archive'
+					}
+				},
+				contextmenu: {
+					items: function (node) {
+						if (node.type == 'directory') {
+							return {
+								//create: {
+								//	label: '',
+								//	action: function () {
+								//		console.log(123)
+								//	}
+								//}
+							}
+						} else { // file
+
+						}
 					}
 				},
 
@@ -114,7 +147,6 @@ define(function (require) {
 
 
 	if (typeof QUnit != 'undefined') {
-		var fs = requireNode('fs')
 		var temp = requireNode('../../node_modules/temp/lib/temp')
 		var TreeModel = require('../tree/tree-model')
 

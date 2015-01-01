@@ -1,10 +1,9 @@
 define(function () {
-	var FileModel = Backbone.Model.extend({
-		defaults: {
-			name: '123',    // file name display in ui
-			path: ''        // file relative path of root
-		}
-	})
-
-	return FileModel
+	// 不要饮用这个模块, 这里只是为了说明file用了哪些属性
+	var value = {
+		name: '',
+		path: '',
+		isDir: true,
+		isOpen: false
+	}
 })

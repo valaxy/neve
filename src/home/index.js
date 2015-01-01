@@ -3,6 +3,7 @@ define(function (require, exports) {
 	var fs = requireNode('fs')
 	var path = requireNode('path')
 
+	var g = require('./global')
 	var boxLayout = require('../../bower_components/jquery-box-layout/src/box-layout')
 	var Timer = require('../../bower_components/timer/src/timer')
 	var TreeView = require('../file-tree/file-tree-view')
@@ -34,7 +35,7 @@ define(function (require, exports) {
 		$('.everything').append($dom)
 
 
-		var editor = ace.edit($('.editor .ace')[0])
+		var editor = g.editor = ace.edit($('.editor .ace')[0])
 		editor.setTheme("ace/theme/monokai");
 		editor.getSession().setMode("ace/mode/markdown");
 
