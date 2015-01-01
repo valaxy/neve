@@ -16,7 +16,6 @@ define(function (require) {
 		events: {
 			// when click file load the file content
 			'select_node.jstree': function (event, data) {
-				console.log(data.node)
 				if (data.node.type == 'file') {
 					var domId = data.node.id
 					var model = this._domIdToModel[domId]
@@ -115,7 +114,11 @@ define(function (require) {
 			async.series([
 				function (callback) {
 					// iterate the file tree to add all the files and directories
-					watch.watchTree(me._root, function (files, curr, prev) {
+					watch.watchTree(me._root, {
+						filter: function (absolutePath, stat) {
+							return stat.isDirectory() || /.*\.md/.test(absolutePath) // only add *.md
+						}
+					}, function (files, curr, prev) {
 						if (typeof files == 'object' && curr == null && prev == null) {
 							for (var key in files) {
 								me._addFile(key, files[key], false, true, true)

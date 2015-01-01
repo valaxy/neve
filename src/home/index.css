@@ -8,6 +8,9 @@
   width: auto;
   height: auto; }
 
+.preview ul {
+  padding: 0; }
+
 * {
   margin: 0;
   padding: 0; }
