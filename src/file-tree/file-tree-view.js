@@ -3,7 +3,7 @@ define(function (require) {
 	var path = requireNode('path')
 	var watch = requireNode('../../node_modules/watch/main')
 
-	var TreeNode = require('../tree/node-model')
+	var FileModel = require('./file-model')
 	var g = require('../home/global')
 
 	var FileTreeView = Backbone.View.extend({
@@ -19,10 +19,7 @@ define(function (require) {
 				if (data.node.type == 'file') {
 					var domId = data.node.id
 					var model = this._domIdToModel[domId]
-					var content = fs.readFileSync(path.join(this._root, model.get('path')), {
-						encoding: 'utf-8'
-					})
-					g.editor.setValue(content)
+					this._openFile(model, true, false)
 				}
 			}
 		},
@@ -30,7 +27,7 @@ define(function (require) {
 		_addFile: function (absolutePath, stat, updatefileSystem, updateModel, updateUI) {
 			var curPath = path.relative(this._root, absolutePath) // '' or 'a/1.txt'
 			var dirPath = path.dirname(curPath)                   // '.' or 'a'
-			var curModel = new TreeNode({
+			var curModel = new FileModel({
 				name: path.basename(curPath),
 				path: curPath,
 				isDir: stat.isDirectory()
@@ -69,6 +66,15 @@ define(function (require) {
 				this.model.add(curModel, dirModel)
 			}
 
+		},
+
+		_openFile: function (file, updateModel, updateUI) {
+			if (updateModel) {
+				this.model.set('openFile', file)
+			}
+			if (updateUI) {
+				// none
+			}
 		},
 
 		initialize: function (options) {
@@ -146,9 +152,17 @@ define(function (require) {
 				}
 			], function () {
 				if (g.test) {
-
+					me._openFile(me._pathToModel['compete.md'], true, true)
 				}
 			})
+
+			this.listenTo(this.model, 'change:openFile', function (fileTree, file) {
+				var content = fs.readFileSync(path.join(me._root, file.get('path')), {
+					encoding: 'utf-8'
+				})
+				g.editor.setValue(content)
+			})
+
 		}
 	})
 
