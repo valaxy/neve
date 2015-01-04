@@ -1,7 +1,7 @@
 @charset "utf-8";
 @import "../../bower_components/absolute-layout/src/absolute-layout";
 @import "../../bower_components/jquery-box-layout/src/style/style";
-@import "style/markdown";
+@import "../markdown-style/style/style";
 
 * {
 	margin: 0;
@@ -31,5 +31,7 @@ body {
 	.preview {
 		//		border: 1px solid #000;
 		border-top: 1px solid #000;
+
+		@extend .md-content;
 	}
 }
