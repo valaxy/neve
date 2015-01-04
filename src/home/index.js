@@ -6,25 +6,35 @@ define(function (require, exports) {
 	var process = require('../process/process')
 	var TreeView = require('../file-tree/file-tree-view')
 	var TreeModel = require('../tree/tree-model')
+	var TopNavView = require('../top-nav/index')
 
 
 	exports.init = function () {
 
 		var $dom = boxLayout.init({
 			_schema: 'linear',
-			isHor: true,
+			isHor: false,
 			boxes: [{
 				_schema: 'box',
-				size: 200,
-				domSelector: '.tree'
+				size: 20,
+				domSelector: '.top-nav'
 			}, {
-				_schema: 'box',
-				size: 600,
-				domSelector: '.editor'
-			}, {
-				_schema: 'box',
+				_schema: 'linear',
 				size: 'auto',
-				domSelector: '.preview'
+				isHor: true,
+				boxes: [{
+					_schema: 'box',
+					size: 200,
+					domSelector: '.tree'
+				}, {
+					_schema: 'box',
+					size: 600,
+					domSelector: '.editor'
+				}, {
+					_schema: 'box',
+					size: 'auto',
+					domSelector: '.preview'
+				}]
 			}]
 		})
 		$('.everything').append($dom)
@@ -44,5 +54,7 @@ define(function (require, exports) {
 		})
 
 		process.init()
+
+		new TopNavView
 	}
 })

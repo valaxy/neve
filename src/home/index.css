@@ -260,6 +260,10 @@
 
   .footnotes {
     page-break-before: always; } }
+.top-nav .close {
+  cursor: pointer;
+  float: right; }
+
 * {
   margin: 0;
   padding: 0; }
