@@ -7,13 +7,23 @@ define(function (require, exports) {
 
 	var INPUT_FILE = 'f://test/test.md'
 
+
+	var lastValue = null
+
 	exports.init = function () {
 		var timer = new Timer({
 			interval: 1000 * 5,
 			immediate: true,
 			task: function () {
 				var me = this
-				fs.writeFile(INPUT_FILE, g.editor.getValue(), function (err) {
+				var value = g.editor.getValue()
+				if (value == lastValue) {
+					me.next()
+					return
+				}
+
+				lastValue = value
+				fs.writeFile(INPUT_FILE, value, function (err) {
 					if (err) {
 						$('.preview').html(err)
 					}
