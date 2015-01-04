@@ -152,7 +152,7 @@ define(function (require) {
 				}
 			], function () {
 				if (g.test) {
-					me._openFile(me._pathToModel['compete.md'], true, true)
+					me._openFile(me._pathToModel['sample.md'], true, true)
 				}
 			})
 

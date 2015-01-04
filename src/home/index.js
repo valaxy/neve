@@ -50,7 +50,7 @@ define(function (require, exports) {
 		new TreeView({
 			model: treeModel,
 			el: $('.tree'),
-			root: 'f://test'
+			root: 'd://neve/src/markdown-style'
 		})
 
 		process.init()

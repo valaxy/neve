@@ -4,13 +4,12 @@
 @import "../markdown-style/style/style";
 @import "../top-nav/index";
 
-* {
-	margin: 0;
-	padding: 0;
-}
-
 body {
 	height: 100%;
+}
+
+::-webkit-scrollbar {
+	display: none;
 }
 
 .everything {
@@ -21,7 +20,6 @@ body {
 	}
 
 	.editor {
-		//		border: 1px solid #000;
 		border-top: 1px solid #000;
 
 		.ace {
@@ -30,9 +28,8 @@ body {
 	}
 
 	.preview {
-		//		border: 1px solid #000;
 		border-top: 1px solid #000;
-
+		@include slide-vertical;
 		@extend .md-content;
 	}
 }
