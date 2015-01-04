@@ -144,27 +144,31 @@ define(function (require) {
 					// update when
 					callback()
 				}
-			])
+			], function () {
+				if (g.test) {
+
+				}
+			})
 		}
 	})
 
 
 	if (typeof QUnit != 'undefined') {
 		var temp = requireNode('../../node_modules/temp/lib/temp')
-		var TreeModel = require('../tree/tree-model')
+		var FileTreeModel = require('./file-tree-model')
 
 		QUnit.module('FileTreeView')
 
 		QUnit.test('init environment', function (assert) {
 			var done = assert.async()
-			var tree = new TreeModel
+			var tree = new FileTreeModel
 			assert.equal(tree.get('nodes').length, 0)
 
 			var rootdir = temp.mkdirSync('case') // temp file dir
 			fs.writeFileSync(path.join(rootdir, '1.txt'), '1')
-			fs.writeFileSync(path.join(rootdir, '2.txt'), '2')
+			fs.writeFileSync(path.join(rootdir, '2.md'), '2')
 			fs.mkdirSync(path.join(rootdir, 'a'))
-			fs.writeFileSync(path.join(rootdir, 'a', '3.txt'), '3')
+			fs.writeFileSync(path.join(rootdir, 'a', '3.md'), '3')
 
 			new FileTreeView({
 				el: $('<div></div>'),
@@ -173,14 +177,14 @@ define(function (require) {
 			})
 
 			setTimeout(function () {
-				assert.equal(tree.get('nodes').length, 5)
+				assert.equal(tree.get('nodes').length, 4)
 				done()
 			}, 1000)
 		})
 
 		QUnit.test('delta change about creating', function (assert) {
 			var done = assert.async()
-			var tree = new TreeModel
+			var tree = new FileTreeModel
 			var rootdir = temp.mkdirSync('case')
 			new FileTreeView({
 				el: $('<div></div>'),
@@ -217,32 +221,38 @@ define(function (require) {
 			})
 		})
 
-		QUnit.test('delta change about changing', function (assert) {
-			var done = assert.async()
-			var tree = new TreeModel
-			var rootdir = temp.mkdirSync('case')
-			new FileTreeView({
-				el: $('<div></div>'),
-				model: tree,
-				root: rootdir
-			})
-
-			async.series([
-				function (finish) {
-					setTimeout(function () {
-
-						finish()
-					}, 3000)
-				},
-				function (finish) {
-					setTimeout(function () {
-						finish()
-					}, 3000)
-				}
-			], function () {
-				done()
-			})
-		})
+		//QUnit.test('delta change about changing', function (assert) {
+		//	var done = assert.async()
+		//	var tree = new FileTreeModel
+		//	var rootdir = temp.mkdirSync('case')
+		//	new FileTreeView({
+		//		el: $('<div></div>'),
+		//		model: tree,
+		//		root: rootdir
+		//	})
+		//
+		//
+		//	async.series([
+		//		// init condition
+		//		function (finish) {
+		//
+		//		},
+		//
+		//		function (finish) {
+		//			setTimeout(function () {
+		//
+		//				finish()
+		//			}, 3000)
+		//		},
+		//		function (finish) {
+		//			setTimeout(function () {
+		//				finish()
+		//			}, 3000)
+		//		}
+		//	], function () {
+		//		done()
+		//	})
+		//})
 	}
 
 	return FileTreeView
