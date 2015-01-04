@@ -5,6 +5,7 @@ define(function (require) {
 
 	var FileModel = require('./file-model')
 	var g = require('../home/global')
+	var contextmenu = require('./jstree/contextmenu')
 
 	var FileTreeView = Backbone.View.extend({
 
@@ -24,48 +25,77 @@ define(function (require) {
 			}
 		},
 
-		_addFile: function (absolutePath, stat, updatefileSystem, updateModel, updateUI) {
-			var curPath = path.relative(this._root, absolutePath) // '' or 'a/1.txt'
-			var dirPath = path.dirname(curPath)                   // '.' or 'a'
-			var curModel = new FileModel({
-				name: path.basename(curPath),
-				path: curPath,
-				isDir: stat.isDirectory()
+
+		_createRoot: function () {
+			var model = new FileModel({
+				path: '.',  // current path
+				isDir: true
 			})
-			var dirModel = this._pathToModel[dirPath]
 
-			if (curPath == '') {
-				curPath = '.'
-				if (updateUI) {
-					var curUIId = this._jstree.create_node(null, {
-						text: absolutePath,
-						type: 'directory',
-						state: {
-							opened: true
-						}
-					})
+			var domId = this._jstree.create_node(null, {
+				text: this.model.get('root'),
+				type: 'directory',
+				state: {
+					opened: true
 				}
-			} else {
-				var dirUIId = this._pathToDomId[dirPath]
-				if (updateUI) {
-					var curUIId = this._jstree.create_node(dirUIId, {
-						text: curModel.get('name'),
-						type: curModel.get('isDir') ? 'directory' : 'file',
-						state: {
-							opened: true
-						}
-					})
+			})
+
+			this._pathToDomId['.'] = domId
+			this._pathToModel['.'] = model
+			this._domIdToModel[domId] = model
+		},
+
+		_addFile: function (curPath, isDirectory, updateFileSystem, updateModel, updateDom) {
+			var me = this
+			var dirPath = path.dirname(curPath)                   // '.' or 'a'
+
+			async.series([
+				// update fileSystem if needed
+				function (done) {
+					if (updateFileSystem) {
+						var fileAbsPath = path.join(me.model.get('root'), curPath)
+						fs.writeFile(fileAbsPath, '', function (err) {
+							if (err) {
+								done(err)
+							} else {
+								done()
+							}
+						})
+					} else {
+						done()
+					}
+				},
+				// update model/dom if needed
+				function (done) {
+					if (updateModel) {
+						var dirModel = me._pathToModel[dirPath]
+						var curModel = new FileModel({
+							path: curPath,
+							isDir: isDirectory
+						})
+
+						me.model.add(curModel, dirModel) // no trigger anything
+					} else {
+
+					}
+
+					if (updateDom) {
+						var dirDomId = me._pathToDomId[dirPath]
+						var curDomId = me._jstree.create_node(dirDomId, {
+							text: path.basename(curPath),
+							type: curModel.get('isDir') ? 'directory' : 'file',
+							state: {
+								opened: true
+							}
+						})
+					}
+
+					me._pathToDomId[curPath] = curDomId
+					me._pathToModel[curPath] = curModel
+					me._domIdToModel[curDomId] = curModel
+					done()
 				}
-			}
-
-			this._pathToDomId[curPath] = curUIId
-			this._pathToModel[curPath] = curModel
-			this._domIdToModel[curUIId] = curModel
-
-			if (updateModel) {
-				this.model.add(curModel, dirModel)
-			}
-
+			])
 		},
 
 		_openFile: function (file, updateModel, updateUI) {
@@ -77,10 +107,8 @@ define(function (require) {
 			}
 		},
 
-		initialize: function (options) {
+		initialize: function () {
 			var me = this
-			this._root = options.root
-
 
 			// init UI
 			this.$el.jstree({
@@ -95,48 +123,39 @@ define(function (require) {
 						icon: 'fa fa-archive'
 					}
 				},
-				contextmenu: {
-					items: function (node) {
-						if (node.type == 'directory') {
-							return {
-								//create: {
-								//	label: '',
-								//	action: function () {
-								//		console.log(123)
-								//	}
-								//}
-							}
-						} else { // file
-
-						}
-					}
-				},
-
+				contextmenu: contextmenu(this),
 				plugins: ['types', 'wholerow', 'contextmenu']
 			})
 			this._jstree = this.$el.jstree()
 
-
 			async.series([
 				function (callback) {
 					// iterate the file tree to add all the files and directories
-					watch.watchTree(me._root, {
+					watch.watchTree(me.model.get('root'), {
 						filter: function (absolutePath, stat) {
 							return stat.isDirectory() || /.*\.md/.test(absolutePath) // only add *.md
 						}
 					}, function (files, curr, prev) {
 						if (typeof files == 'object' && curr == null && prev == null) {
-							for (var key in files) {
-								me._addFile(key, files[key], false, true, true)
+							me._createRoot(me.model.get('root'))
+							var flag = true
+							for (var absolutePath in files) {
+								if (flag) { // jump first
+									flag = false
+									continue
+								}
+								var relPath = path.relative(me.model.get('root'), absolutePath) // '' or 'a/1.txt'
+								var stat = files[absolutePath]
+								me._addFile(relPath, stat.isDirectory(), false, true, true)
 							}
-							watch.unwatchTree(me._root)
+							watch.unwatchTree(me.model.get('root'))
 							callback()
 						}
 					})
 				},
 				function (callback) {
 					// update when change
-					watch.createMonitor(me._root, function (monitor) {
+					watch.createMonitor(me.model.get('root'), function (monitor) {
 						monitor.on('created', function (file, stat) {
 							me._addFile(file, stat, false, true, true)
 						})
@@ -157,7 +176,7 @@ define(function (require) {
 			})
 
 			this.listenTo(this.model, 'change:openFile', function (fileTree, file) {
-				var content = fs.readFileSync(path.join(me._root, file.get('path')), {
+				var content = fs.readFileSync(path.join(me.model.get('root'), file.get('path')), {
 					encoding: 'utf-8'
 				})
 				g.editor.setValue(content)

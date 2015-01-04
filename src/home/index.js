@@ -46,11 +46,12 @@ define(function (require, exports) {
 
 
 		// the file tree
-		var treeModel = new TreeModel
+		var treeModel = new TreeModel({
+			root: 'd://neve/src/markdown-style'
+		})
 		new TreeView({
 			model: treeModel,
-			el: $('.tree'),
-			root: 'd://neve/src/markdown-style'
+			el: $('.tree')
 		})
 
 		process.init()

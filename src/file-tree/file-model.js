@@ -4,10 +4,9 @@ define(function (require) {
 	var FileModel = NodeModel.extend({
 		defaults: function () {
 			return {
-				name: '',
-				path: '',
-				isDir: true,
-				isOpen: false
+				path: '',        // relative path of tree.get('root')
+				isDir: true,    // if it is a directory
+				isOpen: false   // if it is opend by editor, multiply files can be opend at same time, imply or exply
 			}
 		}
 	})

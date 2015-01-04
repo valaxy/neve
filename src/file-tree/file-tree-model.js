@@ -5,7 +5,7 @@ define(function (require) {
 
 	var FileTreeModel = TreeModel.extend({
 		defaults: {
-			nothing: ''
+			root: '' // absolute path of file system
 		},
 
 		relations: utility.extendArray([], TreeModel.prototype.relations, [{
