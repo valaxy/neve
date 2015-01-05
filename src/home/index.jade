@@ -29,9 +29,9 @@ html
         script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
         script.
             seajs.config({
-                base: './'
+                base: '../../'
             })
-            seajs.use(['index'], function (index) {
+            seajs.use(['./index'], function (index) {
                 index.init()
             })
 
