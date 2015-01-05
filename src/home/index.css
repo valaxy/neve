@@ -263,6 +263,8 @@
 .top-nav .close {
   cursor: pointer;
   float: right; }
+.top-nav .save {
+  cursor: pointer; }
 
 body {
   height: 100%; }

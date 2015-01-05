@@ -1,11 +1,10 @@
 define(function (require, exports) {
 	var path = requireNode('path')
 
-
 	var boxLayout = require('../../bower_components/jquery-box-layout/src/box-layout')
 	var process = require('../process/process')
 	var TreeView = require('../file-tree/file-tree-view')
-	var TreeModel = require('../tree/tree-model')
+	var FileTreeModel = require('../file-tree/file-tree-model')
 	var TopNavView = require('../top-nav/index')
 	var g = require('./global')
 	var editor = require('../editor/editor')
@@ -44,16 +43,16 @@ define(function (require, exports) {
 		editor.init()
 
 		// the file tree
-		var treeModel = new TreeModel({
-			root: 'd://neve/src/markdown-style'
-		})
-		new TreeView({
-			model: treeModel,
+		g.fileTree = (new TreeView({
+			model: new FileTreeModel({
+				root: 'd://neve/src/markdown-style'
+			}),
 			el: $('.tree')
-		})
+		})).model
 
 		process.init()
 
 		new TopNavView
 	}
 })
+
