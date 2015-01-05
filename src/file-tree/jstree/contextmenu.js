@@ -6,27 +6,32 @@ define(function () {
 
 		return {
 			items: function (node) {
+				var domId = node.id
+				var model = fileTreeView._domIdToModel[domId]
+
 				if (node.type == 'directory') {
 					return {
 						createDir: {
 							label: 'create directory',
 							action: function () {
-								fileTreeView._addFile('new directory', true, true, true, true)
+								var relPath = path.join(model.get('path'), 'new directory')
+								fileTreeView._addFile(relPath, true, true, true, true)
 							}
 						},
 
 						createFile: {
 							label: 'create file',
 							action: function () {
-								var domId = node.id
-								var dirModel = fileTreeView._domIdToModel[domId]
-								var relPath = path.join(dirModel.get('path'), 'new file.md')
+								var relPath = path.join(model.get('path'), 'new file.md')
 								fileTreeView._addFile(relPath, false, true, true, true)
 							}
 						},
 
 						delete: {
-							label: 'delete directory'
+							label: 'delete directory',
+							action: function () {
+								fileTreeView._deleteFile(model, true, true, true, true)
+							}
 						},
 						rename: {
 							label: 'rename'
@@ -37,7 +42,7 @@ define(function () {
 						delete: {
 							label: 'delete file',
 							action: function () {
-
+								fileTreeView._deleteFile(model, false, true, true, true)
 							}
 						},
 						rename: {

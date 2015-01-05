@@ -45,22 +45,95 @@ define(function (require) {
 			this._domIdToModel[domId] = model
 		},
 
+		_deleteFile: function (fileModel, isDirectory, updateFileSystem, updateModel, updateDom) {
+			var absolutePath = path.join(this.model.get('root'), fileModel.get('path'))
+			var me = this
+			async.series([
+				function (done) {
+					if (updateFileSystem) {
+						if (isDirectory) {
+							fs.rmdir(absolutePath, function (err) {
+								if (err) {
+									done(err)
+								} else {
+									done()
+								}
+							})
+						} else {
+							fs.unlink(absolutePath, function (err) {
+								if (err) {
+									done(err)
+								} else {
+									done()
+								}
+							})
+						}
+					} else {
+						done()
+					}
+				},
+
+				function (done) {
+					me.model.remove(fileModel)
+					done()
+				},
+
+				function (done) {
+					if (updateDom) {
+						me._jstree.delete_node(me._pathToDomId[fileModel.get('path')])
+					}
+					done()
+				}
+			], function (err) {
+				if (err) {
+					alert(err)
+				}
+			})
+
+		},
+
 		_addFile: function (curPath, isDirectory, updateFileSystem, updateModel, updateDom) {
 			var me = this
 			var dirPath = path.dirname(curPath)                   // '.' or 'a'
 
 			async.series([
-				// update fileSystem if needed
+				// judge exist
 				function (done) {
 					if (updateFileSystem) {
 						var fileAbsPath = path.join(me.model.get('root'), curPath)
-						fs.writeFile(fileAbsPath, '', function (err) {
-							if (err) {
-								done(err)
+						fs.exists(fileAbsPath, function (exists) {
+							if (exists) {
+								done('file or directory is exist')
 							} else {
 								done()
 							}
 						})
+					} else {
+						done()
+					}
+				},
+
+				// update fileSystem if needed
+				function (done) {
+					var fileAbsPath = path.join(me.model.get('root'), curPath)
+					if (updateFileSystem) {
+						if (isDirectory) {
+							fs.mkdir(fileAbsPath, function (err) {
+								if (err) {
+									done(err)
+								} else {
+									done()
+								}
+							})
+						} else {
+							fs.writeFile(fileAbsPath, '', function (err) {
+								if (err) {
+									done(err)
+								} else {
+									done()
+								}
+							})
+						}
 					} else {
 						done()
 					}
@@ -95,7 +168,11 @@ define(function (require) {
 					me._domIdToModel[curDomId] = curModel
 					done()
 				}
-			])
+			], function (err) {
+				if (err) {
+					alert(err)
+				}
+			})
 		},
 
 		_openFile: function (file, updateModel, updateUI) {
