@@ -6,6 +6,7 @@ define(function (require) {
 	var FileModel = require('./file-model')
 	var g = require('../home/global')
 	var contextmenu = require('./jstree/contextmenu')
+	var fswrap = require('../file-system/fs-wrap')
 
 	var FileTreeView = Backbone.View.extend({
 
@@ -24,7 +25,6 @@ define(function (require) {
 				}
 			}
 		},
-
 
 		_createRoot: function () {
 			var model = new FileModel({
@@ -45,29 +45,23 @@ define(function (require) {
 			this._domIdToModel[domId] = model
 		},
 
+		_asyncDone: function (done) {
+			return function (err) {
+				if (err) {
+					done(err)
+				} else {
+					done()
+				}
+			}
+		},
+
 		_deleteFile: function (fileModel, isDirectory, updateFileSystem, updateModel, updateDom) {
 			var absolutePath = path.join(this.model.get('root'), fileModel.get('path'))
 			var me = this
 			async.series([
 				function (done) {
 					if (updateFileSystem) {
-						if (isDirectory) {
-							fs.rmdir(absolutePath, function (err) {
-								if (err) {
-									done(err)
-								} else {
-									done()
-								}
-							})
-						} else {
-							fs.unlink(absolutePath, function (err) {
-								if (err) {
-									done(err)
-								} else {
-									done()
-								}
-							})
-						}
+						fswrap.delete(absolutePath, isDirectory, me._asyncDone(done))
 					} else {
 						done()
 					}
@@ -117,23 +111,7 @@ define(function (require) {
 				function (done) {
 					var fileAbsPath = path.join(me.model.get('root'), curPath)
 					if (updateFileSystem) {
-						if (isDirectory) {
-							fs.mkdir(fileAbsPath, function (err) {
-								if (err) {
-									done(err)
-								} else {
-									done()
-								}
-							})
-						} else {
-							fs.writeFile(fileAbsPath, '', function (err) {
-								if (err) {
-									done(err)
-								} else {
-									done()
-								}
-							})
-						}
+						fswrap.create(fileAbsPath, isDirectory, me._asyncDone(done))
 					} else {
 						done()
 					}
@@ -205,22 +183,20 @@ define(function (require) {
 			})
 			this._jstree = this.$el.jstree()
 
+			// watch the file-tree
 			async.series([
 				function (callback) {
 					// iterate the file tree to add all the files and directories
 					watch.watchTree(me.model.get('root'), {
-						filter: function (absolutePath, stat) {
-							return stat.isDirectory() || /.*\.md/.test(absolutePath) // only add *.md
-						}
+						//filter: function (absolutePath, stat) {
+						//	return stat.isDirectory() || /.*\.md/.test(absolutePath) // only add *.md
+						//}
 					}, function (files, curr, prev) {
 						if (typeof files == 'object' && curr == null && prev == null) {
 							me._createRoot(me.model.get('root'))
-							var flag = true
-							for (var absolutePath in files) {
-								if (flag) { // jump first
-									flag = false
-									continue
-								}
+							var absolutePaths = Object.keys(files)
+							for (var i = 1; i < absolutePaths.length; i++) {
+								var absolutePath = absolutePaths[i]
 								var relPath = path.relative(me.model.get('root'), absolutePath) // '' or 'a/1.txt'
 								var stat = files[absolutePath]
 								me._addFile(relPath, stat.isDirectory(), false, true, true)
