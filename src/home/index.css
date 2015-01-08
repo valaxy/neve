@@ -1,5 +1,5 @@
 .linear, .box {
-  position: absolute;
+  position: absolute !important;
   border: none;
   left: 0;
   top: 0;
@@ -280,13 +280,16 @@ body {
   right: 0;
   width: auto;
   height: auto; }
-  .everything .tree {
+  .everything .explorer {
     border-top: 1px solid #000; }
   .everything .editor {
-    border-top: 1px solid #000; }
+    border-top: 1px solid #000;
+    border-left: 1px solid #aaaaaa; }
     .everything .editor .ace {
       height: 100%; }
   .everything .preview {
     border-top: 1px solid #000;
+    border-left: 1px solid #aaaaaa;
+    padding: 10px;
     overflow-x: hidden;
     overflow-y: auto; }

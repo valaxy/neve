@@ -20,7 +20,7 @@ define(function (require, exports) {
 				boxes: [{
 					_schema: 'box',
 					size: 200,
-					domSelector: '.tree'
+					domSelector: '.explorer'
 				}, {
 					_schema: 'linear',
 					size: 'auto',

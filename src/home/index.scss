@@ -4,6 +4,8 @@
 @import "../markdown-style/style/style";
 @import "../top-nav/index";
 
+$COLOR: #aaa;
+
 body {
 	height: 100%;
 }
@@ -15,12 +17,13 @@ body {
 .everything {
 	@include maximize;
 
-	.tree {
+	.explorer {
 		border-top: 1px solid #000;
 	}
 
 	.editor {
 		border-top: 1px solid #000;
+		border-left: 1px solid $COLOR;
 
 		.ace {
 			height: 100%;
@@ -29,6 +32,8 @@ body {
 
 	.preview {
 		border-top: 1px solid #000;
+		border-left: 1px solid $COLOR;
+		padding: 10px;
 		@include slide-vertical;
 		@extend .md-content;
 	}

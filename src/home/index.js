@@ -19,7 +19,7 @@ define(function (require, exports) {
 			model: new FileTreeModel({
 				root: 'd://neve/src/markdown-style'
 			}),
-			el: $('.tree')
+			el: $('.jstree')
 		})).model
 
 		process.init()
