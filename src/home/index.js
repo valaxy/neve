@@ -12,6 +12,7 @@ define(function (require, exports) {
 
 	exports.init = function () {
 		layout.init()
+
 		editor.init()
 
 		// the file tree
