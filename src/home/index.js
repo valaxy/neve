@@ -8,6 +8,7 @@ define(function (require, exports) {
 	var g = require('./global')
 	var editor = require('../editor/editor')
 	var layout = require('./layout')
+	var autoSave = require('../editor/auto-save')
 
 
 	exports.init = function () {
@@ -18,7 +19,7 @@ define(function (require, exports) {
 		// the file tree
 		g.fileTree = (new TreeView({
 			model: new FileTreeModel({
-				root: 'd://neve/src/markdown-style'
+				root: 'f://test'
 			}),
 			el: $('.jstree')
 		})).model
@@ -26,6 +27,8 @@ define(function (require, exports) {
 		process.init()
 
 		new TopNavView
+
+		autoSave.init()
 	}
 })
 

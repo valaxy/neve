@@ -1,46 +1,37 @@
 define(function (require, exports) {
 	var fs = requireNode('fs')
 	var childProcess = requireNode('child_process')
-	var Timer = require('../../bower_components/timer/src/timer')
-	var g = require('../home/global')
-
-
+	var editorWatch = require('../editor/editor-watch')
 	var INPUT_FILE = 'f://test/test.md'
 
 
-	var lastValue = null
-
 	exports.init = function () {
-		var timer = new Timer({
-			interval: 1000 * 5,
-			immediate: true,
-			task: function () {
-				var me = this
-				var value = g.editor.getValue()
-				if (value == lastValue) {
-					me.next()
-					return
+		var $preview = $('.preview')
+
+		editorWatch.on('update', function (done, text) {
+			fs.writeFile(INPUT_FILE, text, function (err) {
+				if (err) {
+					$preview.html(err)
 				}
 
-				lastValue = value
-				fs.writeFile(INPUT_FILE, value, function (err) {
-					if (err) {
-						$('.preview').html(err)
-					}
+				// -s: standalone
+				var url = 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+				var cmd = 'pandoc --mathjax=' + url + ' -f markdown -t html ' + INPUT_FILE
+				childProcess.exec(cmd, function (error, stdout, stderr) {
+					console.log(stdout)
 
-					// -s: standalone
-					var url = 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-					var cmd = 'pandoc --mathjax=' + url + ' -f markdown -t html ' + INPUT_FILE
-					childProcess.exec(cmd, function (error, stdout, stderr) {
-						console.log(stdout)
-						$('.preview').html(stdout)
-						MathJax.Hub.Queue(['Typeset', MathJax.Hub, $('.preview')[0]])
-						me.next()
-					})
+					// recover the scroll postion
+					var top = $preview[0].scrollTop
+					$preview.html(stdout)
+					$preview[0].scrollTop = top
+
+					MathJax.Hub.Queue(['Typeset', MathJax.Hub, $('.preview')[0]])
+					done()
 				})
-			}
+			})
 		})
 
-		timer.start()
+		editorWatch.start()
 	}
+
 })
