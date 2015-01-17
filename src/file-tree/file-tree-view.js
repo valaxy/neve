@@ -17,10 +17,10 @@ define(function (require) {
 		_pathToDomId: {},
 
 		events: {
-			// when click file load the file content
-			'select_node.jstree': function (event, data) {
-				if (data.node.type == 'file') {
-					var domId = data.node.id
+			'dblclick.jstree': function (event) {
+				var domId = $(event.target).parent()[0].id
+				var node = this._jstree.get_node(domId)
+				if (node.type == 'file') {
 					var model = this._domIdToModel[domId]
 					this._openFile(model, true, false)
 				}
