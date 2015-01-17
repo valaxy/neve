@@ -9,6 +9,7 @@ define(function (require, exports) {
 	var editor = require('../editor/editor')
 	var layout = require('./layout')
 	var autoSave = require('../editor/auto-save')
+	var saveConfirm = require('../editor/save-confirm')
 
 
 	exports.init = function () {
@@ -29,6 +30,7 @@ define(function (require, exports) {
 		new TopNavView
 
 		autoSave.init()
+		saveConfirm.init()
 	}
 })
 

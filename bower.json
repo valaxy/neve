@@ -27,7 +27,8 @@
     "qunit": "~1.16.0",
     "async": "~0.9.2",
     "path": "https://github.com/valaxy/path.git",
-    "backbone-tree-model": "https://github.com/valaxy/backbone-tree-model.git"
+    "backbone-tree-model": "https://github.com/valaxy/backbone-tree-model.git",
+    "exit-confirm": "https://github.com/valaxy/exit-confirm.git"
   },
   "devDependencies": {
     "qunit": "~1.16.0",
