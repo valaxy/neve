@@ -25,6 +25,9 @@ html
 
         // startup
         script.
+            seajs.config({
+                base: '../../'
+            })
             seajs.use(['./test'], function (test) {
                 test.init()
             })
