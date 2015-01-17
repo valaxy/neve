@@ -124,7 +124,6 @@ define(function (require) {
 							path: curPath,
 							isDir: isDirectory
 						})
-
 						me.model.add(curModel, dirModel) // no trigger anything
 					} else {
 
@@ -153,6 +152,10 @@ define(function (require) {
 			})
 		},
 
+		_renameFile: function (file, newName, updateFileSystem, updateModel, updateDom) {
+
+		},
+
 		_openFile: function (file, updateModel, updateUI) {
 			if (updateModel) {
 				this.model.set('openFile', file)
@@ -175,7 +178,7 @@ define(function (require) {
 						icon: 'fa fa-file-o'
 					},
 					directory: {
-						icon: 'fa fa-archive'
+						icon: 'fa fa-folder'
 					}
 				},
 				contextmenu: contextmenu(this),
@@ -239,6 +242,7 @@ define(function (require) {
 	})
 
 
+	// some error here
 	if (typeof QUnit != 'undefined') {
 		var temp = requireNode('../../node_modules/temp/lib/temp')
 		var FileTreeModel = require('./file-tree-model')
@@ -267,45 +271,45 @@ define(function (require) {
 				done()
 			}, 1000)
 		})
-
-		QUnit.test('delta change about creating', function (assert) {
-			var done = assert.async()
-			var tree = new FileTreeModel
-			var rootdir = temp.mkdirSync('case')
-			new FileTreeView({
-				el: $('<div></div>'),
-				model: tree,
-				root: rootdir
-			})
-
-			async.series([
-				// init condition
-				function (callback) {
-					setTimeout(function () {
-						assert.equal(tree.get('nodes').length, 1)
-						callback()
-					}, 500)
-				},
-
-				// create file
-				function (callback) {
-					setTimeout(function () {
-						fs.writeFileSync(path.join(rootdir, '1'), '1')
-						callback()
-					}, 3000) // wait unitil view is finish
-				},
-
-				// test create condition
-				function (callback) {
-					setTimeout(function () {
-						assert.equal(tree.get('nodes').length, 2)
-						callback()
-					}, 3000) // it's very slow
-				}
-			], function () {
-				done()
-			})
-		})
+		//
+		//QUnit.test('delta change about creating', function (assert) {
+		//	var done = assert.async()
+		//	var tree = new FileTreeModel
+		//	var rootdir = temp.mkdirSync('case')
+		//	new FileTreeView({
+		//		el: $('<div></div>'),
+		//		model: tree,
+		//		root: rootdir
+		//	})
+		//
+		//	async.series([
+		//		// init condition
+		//		function (callback) {
+		//			setTimeout(function () {
+		//				assert.equal(tree.get('nodes').length, 1)
+		//				callback()
+		//			}, 500)
+		//		},
+		//
+		//		// create file
+		//		function (callback) {
+		//			setTimeout(function () {
+		//				fs.writeFileSync(path.join(rootdir, '1'), '1')
+		//				callback()
+		//			}, 3000) // wait unitil view is finish
+		//		},
+		//
+		//		// test create condition
+		//		function (callback) {
+		//			setTimeout(function () {
+		//				assert.equal(tree.get('nodes').length, 2)
+		//				callback()
+		//			}, 3000) // it's very slow
+		//		}
+		//	], function () {
+		//		done()
+		//	})
+		//})
 
 		//QUnit.test('delta change about changing', function (assert) {
 		//	var done = assert.async()

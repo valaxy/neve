@@ -1,5 +1,5 @@
 define(function (require) {
-	var TreeModel = require('../tree/tree-model')
+	var TreeModel = require('bower_components/backbone-tree-model/src/tree-model')
 	var FileModel = require('./file-model')
 	var utility = require('../utility/utility')
 	var path = requireNode('path')
@@ -32,3 +32,4 @@ define(function (require) {
 
 	return FileTreeModel
 })
+

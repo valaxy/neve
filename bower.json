@@ -25,7 +25,9 @@
     "font-awesome": "~4.2.0",
     "uri.js": "~1.14.1",
     "qunit": "~1.16.0",
-    "async": "~0.9.2"
+    "async": "~0.9.2",
+    "path": "https://github.com/valaxy/path.git",
+    "backbone-tree-model": "https://github.com/valaxy/backbone-tree-model.git"
   },
   "devDependencies": {
     "qunit": "~1.16.0",
