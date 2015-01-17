@@ -4,6 +4,8 @@ define(function (require, exports) {
 
 	_.extend(exports, Backbone.Events)
 
+	var timer
+
 	// control the watch frequency
 	// when code update trigger a 'update' event
 	exports.start = function () {
@@ -13,7 +15,7 @@ define(function (require, exports) {
 
 		var me = this
 		var lastValue = null
-		var timer = new Timer({
+		timer = new Timer({
 			interval: 1000 * 4,
 			immediate: true,
 			task: function () {
@@ -27,5 +29,9 @@ define(function (require, exports) {
 			}
 		})
 		timer.start()
+	}
+
+	exports.immediate = function () {
+		timer.immediate()
 	}
 })

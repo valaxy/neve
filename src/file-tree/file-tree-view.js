@@ -7,6 +7,7 @@ define(function (require) {
 	var g = require('../home/global')
 	var contextmenu = require('./jstree/contextmenu')
 	var fswrap = require('../file-system/fs-wrap')
+	var process = require('../process/process')
 
 	var FileTreeView = Backbone.View.extend({
 
@@ -55,6 +56,7 @@ define(function (require) {
 			}
 		},
 
+		// delete file and sync state between fs/model/dom
 		_deleteFile: function (fileModel, isDirectory, updateFileSystem, updateModel, updateDom) {
 			var absolutePath = path.join(this.model.get('root'), fileModel.get('path'))
 			var me = this
@@ -68,7 +70,9 @@ define(function (require) {
 				},
 
 				function (done) {
-					me.model.remove(fileModel)
+					if (updateModel) {
+						me.model.remove(fileModel)
+					}
 					done()
 				},
 
@@ -86,18 +90,23 @@ define(function (require) {
 
 		},
 
+		// add a empty file and sync state between fs/model/dom
 		_addFile: function (curPath, isDirectory, updateFileSystem, updateModel, updateDom) {
 			var me = this
-			var dirPath = path.dirname(curPath)                   // '.' or 'a'
+			var dirPath = path.dirname(curPath) // '.' or 'a'
+			var curModel = new FileModel({
+				path: curPath,
+				isDir: isDirectory
+			})
+			var fileAbsPath = curModel.absolutePath(me.model.get('root'))
 
 			async.series([
 				// judge exist
 				function (done) {
 					if (updateFileSystem) {
-						var fileAbsPath = path.join(me.model.get('root'), curPath)
 						fs.exists(fileAbsPath, function (exists) {
 							if (exists) {
-								done('file or directory is exist')
+								done((isDirectory ? 'directory' : 'file') + ' is exist')
 							} else {
 								done()
 							}
@@ -109,26 +118,27 @@ define(function (require) {
 
 				// update fileSystem if needed
 				function (done) {
-					var fileAbsPath = path.join(me.model.get('root'), curPath)
 					if (updateFileSystem) {
 						fswrap.create(fileAbsPath, isDirectory, me._asyncDone(done))
 					} else {
 						done()
 					}
 				},
-				// update model/dom if needed
+
+				// update model if needed
 				function (done) {
 					if (updateModel) {
 						var dirModel = me._pathToModel[dirPath]
-						var curModel = new FileModel({
-							path: curPath,
-							isDir: isDirectory
-						})
 						me.model.add(curModel, dirModel) // no trigger anything
+						me._pathToModel[curPath] = curModel
 					} else {
-
+						curModel = me._pathToModel[curPath]
 					}
+					done()
+				},
 
+				// update dom if needed
+				function (done) {
 					if (updateDom) {
 						var dirDomId = me._pathToDomId[dirPath]
 						var curDomId = me._jstree.create_node(dirDomId, {
@@ -138,11 +148,10 @@ define(function (require) {
 								opened: true
 							}
 						})
+						me._pathToDomId[curPath] = curDomId
+						me._domIdToModel[curDomId] = curModel
 					}
 
-					me._pathToDomId[curPath] = curDomId
-					me._pathToModel[curPath] = curModel
-					me._domIdToModel[curDomId] = curModel
 					done()
 				}
 			], function (err) {
@@ -153,15 +162,16 @@ define(function (require) {
 		},
 
 		_renameFile: function (file, newName, updateFileSystem, updateModel, updateDom) {
-
+			// 有点麻烦, 暂时不实现
 		},
 
-		_openFile: function (file, updateModel, updateUI) {
+		_openFile: function (file, updateModel, updateDom) {
 			if (updateModel) {
 				this.model.set('openFile', file)
 			}
-			if (updateUI) {
-				// none
+			if (updateDom) {
+				var domId = this._pathToDomId[file.get('path')]
+				this._jstree.select_node(domId)
 			}
 		},
 
@@ -188,7 +198,7 @@ define(function (require) {
 
 			// watch the file-tree
 			async.series([
-				function (callback) {
+				function (done) {
 					// iterate the file tree to add all the files and directories
 					watch.watchTree(me.model.get('root'), {
 						//filter: function (absolutePath, stat) {
@@ -205,11 +215,11 @@ define(function (require) {
 								me._addFile(relPath, stat.isDirectory(), false, true, true)
 							}
 							watch.unwatchTree(me.model.get('root'))
-							callback()
+							done()
 						}
 					})
 				},
-				function (callback) {
+				function (done) {
 					// update when change
 					watch.createMonitor(me.model.get('root'), function (monitor) {
 						monitor.on('created', function (file, stat) {
@@ -223,19 +233,20 @@ define(function (require) {
 						})
 					})
 					// update when
-					callback()
+					done()
 				}
 			], function () {
 				if (g.test) {
-					me._openFile(me._pathToModel['sample.md'], true, true)
+					me._openFile(me._pathToModel['compete.md'], true, false)
 				}
 			})
 
 			this.listenTo(this.model, 'change:openFile', function (fileTree, file) {
-				var content = fs.readFileSync(path.join(me.model.get('root'), file.get('path')), {
+				var content = fs.readFileSync(file.absolutePath(fileTree.get('root')), {
 					encoding: 'utf-8'
 				})
 				g.editor.setValue(content)
+				process.immediate()
 			})
 
 		}

@@ -34,7 +34,10 @@ define(function () {
 							}
 						},
 						rename: {
-							label: 'rename'
+							label: 'rename',
+							action: function () {
+
+							}
 						}
 					}
 				} else { // file
@@ -46,7 +49,10 @@ define(function () {
 							}
 						},
 						rename: {
-							label: 'rename'
+							label: 'rename',
+							action: function () {
+
+							}
 						}
 					}
 				}

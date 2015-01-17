@@ -36,9 +36,13 @@ define(function (require) {
 			return true
 		},
 
-		/** Get absolute path of file or directory */
-		absolutePath: function () {
-			return path.join(this.get('tree').get('root'), this.get('path'))
+		/**
+		 * Get absolute path of file or directory
+		 * @params root optional
+		 */
+		absolutePath: function (root) {
+			root = root ? root : this.get('tree').get('root')
+			return path.join(root, this.get('path'))
 		}
 	})
 

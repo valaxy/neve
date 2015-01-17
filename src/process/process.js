@@ -34,4 +34,8 @@ define(function (require, exports) {
 		editorWatch.start()
 	}
 
+	exports.immediate = function () {
+		editorWatch.immediate()
+	}
+
 })

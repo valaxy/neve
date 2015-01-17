@@ -282,6 +282,8 @@ body {
   height: auto; }
   .everything .explorer {
     border-top: 1px solid #000; }
+    .everything .explorer .title {
+      border-bottom: 1px solid #ccc; }
   .everything .editor {
     border-top: 1px solid #000;
     border-left: 1px solid #aaaaaa; }
