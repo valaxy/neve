@@ -3,8 +3,8 @@ define(function (require, exports) {
 
 	exports.init = function () {
 		var editor = g.editor = ace.edit($('.editor .ace')[0])
-		editor.setTheme("ace/theme/github")
 		editor.getSession().setMode("ace/mode/markdown")
+		editor.setTheme("ace/theme/github") // this bug
 		editor.renderer.setShowGutter(false)
 	}
 })

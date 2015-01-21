@@ -264,7 +264,29 @@
   cursor: pointer;
   float: right; }
 .top-nav .save {
+  float: left;
   cursor: pointer; }
+.top-nav .list {
+  float: left;
+  list-style: none; }
+  .top-nav .list li {
+    float: left;
+    width: 80px;
+    text-align: center;
+    border-right: 1px solid #ccc; }
+.top-nav .menu {
+  position: absolute;
+  display: none;
+  z-index: 9999; }
+  .top-nav .menu li {
+    left: 0;
+    top: 0;
+    z-index: 100;
+    width: 200px; }
+
+* {
+  margin: 0;
+  padding: 0; }
 
 body {
   height: 100%; }

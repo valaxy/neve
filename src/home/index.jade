@@ -15,30 +15,25 @@ html
                 div.ace
             div.preview
 
-        //div.everything
-        //    include ../top-nav/index
-        //    div.d1
-        //        div.explorer
-        //            div.jstree
-        //        div.editor
-        //            div.ace
-        //        div.preview
-
         script.
             window.requireNode = window.require
             window.require = undefined
 
+        // 不知道是不是因为ace的require覆盖了seajs的require, 导致切换位置后会出错
         script(src="../../bower_components/seajs/dist/sea.js")
         script(src="../../bower_components/jquery/dist/jquery.min.js")
         script(src="../../bower_components/underscore/underscore-min.js")
         script(src="../../bower_components/backbone/backbone.js")
         script(src="../../bower_components/backbone-relational/backbone-relational.js")
-        script(src="../../bower_components/ace-builds/src-min/ace.js")
+        script(src="../../bower_components/ace-builds/src-min-noconflict/ace.js")
         script(src="../../bower_components/jstree/dist/jstree.min.js")
         script(src="../../bower_components/async/lib/async.js")
         script(src="../../bower_components/jquery-ui/jquery-ui.min.js")
         script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
+
+
         script.
+            define.amd = { }
             seajs.config({
                 base: '../../'
             })

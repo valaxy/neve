@@ -6,6 +6,32 @@
 		float: right
 	}
 	.save {
+		float: left;
 		cursor: pointer;
+	}
+
+	.list {
+		float: left;
+		list-style: none;
+
+		li {
+			float: left;
+			width: 80px;
+			text-align: center;
+			border-right: 1px solid #ccc;
+		}
+	}
+
+	.menu {
+		position: absolute;
+		display: none;
+		z-index: 9999;
+
+		li {
+			left: 0;
+			top: 0;
+			z-index: 100;
+			width: 200px;
+		}
 	}
 }
