@@ -7,6 +7,7 @@
     "test": "test"
   },
   "dependencies": {
+    "nodegit": "^0.2.7",
     "temp": "^0.8.1",
     "trash": "^1.3.0",
     "watch": "^0.13.0"

@@ -1,5 +1,6 @@
 define(function (require, exports) {
 	var path = requireNode('path')
+	//var nodegit = requireNode('../../node_modules/nodegit/lib/nodegit')
 
 	var process = require('../process/process')
 	var TreeView = require('../file-tree/file-tree-view')
@@ -20,7 +21,7 @@ define(function (require, exports) {
 		// the file tree
 		g.fileTree = (new TreeView({
 			model: new FileTreeModel({
-				root: 'f://test'
+				root: 'd://CodeForces'
 			}),
 			el: $('.jstree')
 		})).model

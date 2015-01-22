@@ -201,9 +201,12 @@ define(function (require) {
 				function (done) {
 					// iterate the file tree to add all the files and directories
 					watch.watchTree(me.model.get('root'), {
-						//filter: function (absolutePath, stat) {
-						//	return stat.isDirectory() || /.*\.md/.test(absolutePath) // only add *.md
-						//}
+						filter: function (absolutePath, stat) {
+							return !/\.git/.test(absolutePath)
+								&& !/__pycache__/.test(absolutePath)
+								&& !/\.idea/.test(absolutePath)
+							//return stat.isDirectory() || /.*\.md/.test(absolutePath) // only add *.md
+						}
 					}, function (files, curr, prev) {
 						if (typeof files == 'object' && curr == null && prev == null) {
 							me._createRoot(me.model.get('root'))
@@ -222,14 +225,17 @@ define(function (require) {
 				function (done) {
 					// update when change
 					watch.createMonitor(me.model.get('root'), function (monitor) {
-						monitor.on('created', function (file, stat) {
-							me._addFile(file, stat, false, true, true)
+						monitor.on('created', function (absolutePath, stat) {
+							var relPath = path.relative(me.model.get('root'), absolutePath)
+							me._addFile(relPath, stat.isDirectory(), false, true, true)
 						})
-						monitor.on('changed', function (file) {
-
+						monitor.on('changed', function (absolutePath) {
+							// do some change thing
 						})
-						monitor.on('removed', function (file, stat) {
-
+						monitor.on('removed', function (absolutePath, stat) {
+							var relPath = path.relative(me.model.get('root'), absolutePath)
+							var model = me._pathToModel[relPath]
+							me._deleteFile(model, stat.isDirectory(), false, true, true)
 						})
 					})
 					// update when
@@ -237,7 +243,7 @@ define(function (require) {
 				}
 			], function () {
 				if (g.test) {
-					me._openFile(me._pathToModel['compete.md'], true, false)
+					me._openFile(me._pathToModel['readme.md'], true, false)
 				}
 			})
 
