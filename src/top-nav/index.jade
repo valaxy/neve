@@ -1,18 +1,21 @@
 div.top-nav
     ul.list
-        li.git git
-        li.about 关于
+        li.file File
+        li.git Git
+        li.about About
 
-    span.fa.fa-close.close
-    span.fa.fa-save.save
+    //span.fa.fa-close.close
+    //span.fa.fa-save.save
 
+    ul.file-menu.menu
+        li.new-project New Project...
 
     ul.git-menu.menu
         li commit
         li push
 
-
     ul.about-menu.menu
         li help
         li about
 
+    include ../new-project/index

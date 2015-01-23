@@ -11,8 +11,13 @@ $COLOR: #aaa;
 	padding: 0;
 }
 
+.c-hide {
+	display: none;
+}
+
 body {
 	height: 100%;
+	font-familiy: Arial, '微软雅黑';
 }
 
 ::-webkit-scrollbar {

@@ -12,6 +12,15 @@ define(function (require) {
 			'click .save': function () {
 				g.fileTree.saveOpen(g.editor.getValue())
 				alert('save ok')
+			},
+			'click .new-project': function () {
+				$.magnificPopup.open({
+					items: {
+						src: '.new-project-dialog',
+						type: 'inline'
+					},
+					modal: true
+				})
 			}
 		},
 		initialize: function () {
@@ -23,6 +32,11 @@ define(function (require) {
 			new MenuPopup({
 				$button: $('.about'),
 				$menu: $('.about-menu').menu().hide()
+			})
+
+			new MenuPopup({
+				$button: $('.file'),
+				$menu: $('.file-menu').menu().hide()
 			})
 		}
 	})

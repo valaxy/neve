@@ -29,7 +29,8 @@
     "path": "https://github.com/valaxy/path.git",
     "backbone-tree-model": "https://github.com/valaxy/backbone-tree-model.git",
     "exit-confirm": "https://github.com/valaxy/exit-confirm.git",
-    "javascript-state-machine": "~2.3.5"
+    "javascript-state-machine": "~2.3.5",
+    "magnific-popup": "~1.0.0"
   },
   "devDependencies": {
     "qunit": "~1.16.0",
