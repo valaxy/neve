@@ -262,8 +262,7 @@
   .footnotes {
     page-break-before: always; } }
 .new-project-dialog {
-  width: 600px;
-  height: 400px;
+  width: 700px;
   background: white; }
 
 .top-nav .close {

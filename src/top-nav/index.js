@@ -1,6 +1,7 @@
 define(function (require) {
 	var g = require('../home/global')
 	var MenuPopup = require('./menu-popup')
+	var NewProjectView = require('../new-project/index')
 	var path = requireNode('path')
 
 	var TopNavView = Backbone.View.extend({
@@ -37,6 +38,10 @@ define(function (require) {
 			new MenuPopup({
 				$button: $('.file'),
 				$menu: $('.file-menu').menu().hide()
+			})
+
+			new NewProjectView({
+				el: this.$('.new-project-dialog')
 			})
 		}
 	})

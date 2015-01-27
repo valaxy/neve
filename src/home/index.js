@@ -11,9 +11,12 @@ define(function (require, exports) {
 	var layout = require('./layout')
 	var autoSave = require('../editor/auto-save')
 	var saveConfirm = require('../editor/save-confirm')
+	var ProjectManager = require('../project-manager/project-manager')
 
 
 	exports.init = function () {
+		g.projectManager = new ProjectManager
+		
 		layout.init()
 
 		editor.init()

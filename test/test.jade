@@ -1,0 +1,34 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        title QUnit test
+        link(rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css")
+    body
+        div#qunit
+        div#qunit-fixture
+
+        script.
+            window.requireNode = window.require
+            window.require = undefined
+
+        script(src="../bower_components/qunit/qunit/qunit.js")
+        script(src="../bower_components/seajs/dist/sea.js")
+        script(src="../bower_components/jquery/dist/jquery.min.js")
+        script(src="../bower_components/underscore/underscore-min.js")
+        script(src="../bower_components/backbone/backbone.js")
+        script(src="../bower_components/backbone-relational/backbone-relational.js")
+        script(src="../bower_components/ace-builds/src-min/ace.js")
+        script(src="../bower_components/jstree/dist/jstree.min.js")
+        script(src="../bower_components/uri.js/src/uri.min.js")
+        script(src="../bower_components/async/lib/async.js")
+
+        // startup
+        script.
+            define.amd = {}
+            seajs.config({
+                base: '../'
+            })
+            seajs.use(['./test'], function (test) {
+                test.init()
+            })

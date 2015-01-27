@@ -1,0 +1,2 @@
+- **Javascript** 必须非常熟练，对浏览器端和node端的Javascript API要非常了解
+- **Bootstrap** 使用Bootstrap框架对边角布局进行快速开发

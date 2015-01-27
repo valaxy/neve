@@ -2,26 +2,19 @@ doctype html
 html
     head
         meta(charset="utf-8")
-        title hello world
-        link(rel="stylesheet" href="index.css")
+        title 界面组件手工测试
         link(rel="stylesheet" href="../../bower_components/jstree/dist/themes/default/style.min.css")
         link(rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css")
         link(rel="stylesheet" href="../../bower_components/jquery-ui/themes/blitzer/jquery-ui.min.css")
         link(rel="stylesheet" href="../../bower_components/magnific-popup/dist/magnific-popup.css")
         link(rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css")
     body
-        div.everything
-            include ../top-nav/index
-            include ../file-tree/index
-            div.editor
-                div.ace
-            div.preview
+        block body
 
         script.
             window.requireNode = window.require
             window.require = undefined
 
-        // 不知道是不是因为ace的require覆盖了seajs的require, 导致切换位置后会出错
         script(src="../../bower_components/seajs/dist/sea.js")
         script(src="../../bower_components/jquery/dist/jquery.min.js")
         script(src="../../bower_components/underscore/underscore-min.js")
@@ -34,13 +27,12 @@ html
         script(src="../../bower_components/magnific-popup/dist/jquery.magnific-popup.min.js")
         script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
 
+        // startup
         script.
-            define.amd = { }
+            define.amd = {}
             seajs.config({
                 base: '../../'
             })
-            seajs.use(['./index'], function (index) {
-                index.init()
+            seajs.use('./test', function (test) {
+                test.init()
             })
-
-
