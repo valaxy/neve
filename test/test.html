@@ -1,15 +1,9 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><title>QUnit test</title><link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css"></head><body><div id="qunit"></div><div id="qunit-fixture"></div><script>window.requireNode = window.require
 window.require = undefined
-</script><script src="../bower_components/qunit/qunit/qunit.js"></script><script src="../bower_components/seajs/dist/sea-debug.js"></script><script src="../bower_components/seajs-text/dist/seajs-text-debug.js"></script><!--script(src="../bower_components/requirejs/require.js")--><script src="../bower_components/jquery/dist/jquery.min.js"></script><script src="../bower_components/underscore/underscore-min.js"></script><script src="../bower_components/backbone/backbone.js"></script><script src="../bower_components/backbone-relational/backbone-relational.js"></script><script src="../bower_components/ace-builds/src-min-noconflict/ace.js"></script><script src="../bower_components/jstree/dist/jstree.min.js"></script><script src="../bower_components/magnific-popup/dist/jquery.magnific-popup.min.js"></script><!--script.--><!--    requirejs.config({--><!--        baseUrl: '../'--><!--    })--><!--    define(['test/test'], function (test) {--><!--        test.init()--><!--    })--><!-- startup--><script>define.amd = {
-    jQuery: true
-}
-seajs.config({
-    base: '../',
-    alias: {
-        async: 'bower_components/async/lib/async',
-        uri: 'bower_components/uri.js/src/URI.min'
-    }
-})
-seajs.use(['./test', ''], function (test) {
+</script><!-- this components can not package them to AMD for now--><script src="../bower_components/qunit/qunit/qunit.js"></script><script src="../bower_components/ace-builds/src-min-noconflict/ace.js"></script><script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config"></script><!-- startup--><script src="../bower_components/requirejs/require.js"></script><script src="../src/home/requirejs-config.js"></script><script>require([
+    'test/test',
+    'backbone',
+    'backbone-relational'
+], function (test) {
     test.init()
 })</script></body></html>

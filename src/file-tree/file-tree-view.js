@@ -9,6 +9,7 @@ define(function (require) {
 	var fswrap = require('../file-system/fs-wrap')
 	var process = require('../process/process')
 	var async = require('async')
+	require('jstree')
 
 
 	var FileTreeView = Backbone.View.extend({

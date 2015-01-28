@@ -21,29 +21,23 @@ html
             window.requireNode = window.require
             window.require = undefined
 
-        // 不知道是不是因为ace的require覆盖了seajs的require, 导致切换位置后会出错
-        script(src="../../bower_components/seajs/dist/sea.js")
-        script(src="../../bower_components/jquery/dist/jquery.min.js")
-        script(src="../../bower_components/underscore/underscore-min.js")
-        script(src="../../bower_components/backbone/backbone.js")
-        script(src="../../bower_components/backbone-relational/backbone-relational.js")
+        // this components can not package them to AMD for now
         script(src="../../bower_components/ace-builds/src-min-noconflict/ace.js")
-        script(src="../../bower_components/jstree/dist/jstree.min.js")
-        script(src="../../bower_components/jquery-ui/jquery-ui.min.js")
-        script(src="../../bower_components/magnific-popup/dist/jquery.magnific-popup.min.js")
         script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
 
+        // startup
+        script(src="../../bower_components/requirejs/require.js")
+        script(src="requirejs-config.js")
         script.
-            define.amd = {}
-            seajs.config({
-                base: '../../',
-                alias: {
-                    async: 'bower_components/async/lib/async',
-                    uri: 'bower_components/uri.js/src/URI.min'
-                }
-            })
-            seajs.use(['./index'], function (index) {
+            require([
+                'src/home/index',
+                'backbone',
+                'backbone-relational'
+            ], function (index) {
                 index.init()
             })
+
+
+
 
 

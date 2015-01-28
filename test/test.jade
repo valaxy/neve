@@ -12,39 +12,19 @@ html
             window.requireNode = window.require
             window.require = undefined
 
+        // this components can not package them to AMD for now
         script(src="../bower_components/qunit/qunit/qunit.js")
-        script(src="../bower_components/seajs/dist/sea-debug.js")
-        script(src="../bower_components/seajs-text/dist/seajs-text-debug.js")
-        //script(src="../bower_components/requirejs/require.js")
-        script(src="../bower_components/jquery/dist/jquery.min.js")
-        script(src="../bower_components/underscore/underscore-min.js")
-        script(src="../bower_components/backbone/backbone.js")
-        script(src="../bower_components/backbone-relational/backbone-relational.js")
         script(src="../bower_components/ace-builds/src-min-noconflict/ace.js")
-        script(src="../bower_components/jstree/dist/jstree.min.js")
-        script(src="../bower_components/magnific-popup/dist/jquery.magnific-popup.min.js")
-
-
-        //script.
-        //    requirejs.config({
-        //        baseUrl: '../'
-        //    })
-        //    define(['test/test'], function (test) {
-        //        test.init()
-        //    })
+        script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
 
         // startup
+        script(src="../bower_components/requirejs/require.js")
+        script(src="../src/home/requirejs-config.js")
         script.
-            define.amd = {
-                jQuery: true
-            }
-            seajs.config({
-                base: '../',
-                alias: {
-                    async: 'bower_components/async/lib/async',
-                    uri: 'bower_components/uri.js/src/URI.min'
-                }
-            })
-            seajs.use(['./test', ''], function (test) {
+            require([
+                'test/test',
+                'backbone',
+                'backbone-relational'
+            ], function (test) {
                 test.init()
             })

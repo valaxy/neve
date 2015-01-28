@@ -1,6 +1,8 @@
 define(function (require, exports) {
 	var global = require('../home/global')
 	var Timer = require('bower_components/timer/src/timer')
+	var _ = require('underscore')
+	var $ = require('jquery')
 
 	_.extend(exports, Backbone.Events)
 
