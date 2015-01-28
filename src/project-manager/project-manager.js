@@ -3,7 +3,8 @@ define(function (require) {
 	var path = require('bower_components/path/path')
 	var EventEmitter = require('bower_components/eventEmitter/EventEmitter.min')
 	var Set = require('bower_components/algorithm-data-structure/src/set/set')
-	var async = require('bower_components/async/lib/async')
+	var async = require('async')
+
 
 	var ProjectManager = function () {
 		this._active = null
@@ -46,6 +47,12 @@ define(function (require) {
 		this._active = project
 		this._set.add(project)
 		this.trigger('open', [project])
+	}
+
+
+	/** Close current active project */
+	ProjectManager.prototype.close = function (project) {
+
 	}
 
 

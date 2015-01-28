@@ -29,15 +29,18 @@ html
         script(src="../../bower_components/backbone-relational/backbone-relational.js")
         script(src="../../bower_components/ace-builds/src-min-noconflict/ace.js")
         script(src="../../bower_components/jstree/dist/jstree.min.js")
-        script(src="../../bower_components/async/lib/async.js")
         script(src="../../bower_components/jquery-ui/jquery-ui.min.js")
         script(src="../../bower_components/magnific-popup/dist/jquery.magnific-popup.min.js")
         script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
 
         script.
-            define.amd = { }
+            define.amd = {}
             seajs.config({
-                base: '../../'
+                base: '../../',
+                alias: {
+                    async: 'bower_components/async/lib/async',
+                    uri: 'bower_components/uri.js/src/URI.min'
+                }
             })
             seajs.use(['./index'], function (index) {
                 index.init()

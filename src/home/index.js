@@ -26,7 +26,8 @@ define(function (require, exports) {
 			model: new FileTreeModel({
 				root: 'd://CodeForces'
 			}),
-			el: $('.jstree')
+			el: $('.jstree'),
+			projectManager: g.projectManager
 		})).model
 
 		process.init()

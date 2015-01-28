@@ -6,8 +6,11 @@ define(function (require) {
 	var fs = requireNode('fs')
 
 	var FileTreeModel = TreeModel.extend({
-		defaults: {
-			root: '' // absolute path of file system
+		defaults: function () {
+			return {
+				project: null,
+				root: '' // absolute path of file system
+			}
 		},
 
 		relations: utility.extendArray([], TreeModel.prototype.relations, [{

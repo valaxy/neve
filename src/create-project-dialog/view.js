@@ -1,6 +1,8 @@
 define(function (require) {
+	//var $ = require('bower_components/jquery/dist/jquery')
 	var path = require('bower_components/path/path')
 	var Project = require('../project-manager/project-model')
+
 
 	/** Events: close */
 	var CreateProjectDialog = Backbone.View.extend({
@@ -30,6 +32,7 @@ define(function (require) {
 					} else {
 						me._$errMsg.hide()
 						me.close()
+						me._projectManager.open(project)
 					}
 				})
 			},

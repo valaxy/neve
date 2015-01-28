@@ -4,7 +4,7 @@
 define(function (require, exports) {
 
 	var fs = requireNode('fs')
-	var trash = requireNode('../../node_modules/trash/index')
+	var trash = requireNode('trash')
 
 	exports.create = function (absolutePath, isDirectory, callback) {
 		if (isDirectory) {

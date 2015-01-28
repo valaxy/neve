@@ -22,8 +22,7 @@ html
         script(src="../bower_components/backbone-relational/backbone-relational.js")
         script(src="../bower_components/ace-builds/src-min-noconflict/ace.js")
         script(src="../bower_components/jstree/dist/jstree.min.js")
-        script(src="../bower_components/uri.js/src/uri.min.js")
-        script(src="../bower_components/async/lib/async.js")
+        script(src="../bower_components/magnific-popup/dist/jquery.magnific-popup.min.js")
 
 
         //script.
@@ -36,10 +35,16 @@ html
 
         // startup
         script.
-            define.amd = {}
+            define.amd = {
+                jQuery: true
+            }
             seajs.config({
-                base: '../'
+                base: '../',
+                alias: {
+                    async: 'bower_components/async/lib/async',
+                    uri: 'bower_components/uri.js/src/URI.min'
+                }
             })
-            seajs.use(['./test'], function (test) {
+            seajs.use(['./test', ''], function (test) {
                 test.init()
             })

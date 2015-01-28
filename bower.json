@@ -30,7 +30,7 @@
     "eventEmitter": "~4.2.11",
     "jquery-box-layout": "https://github.com/valaxy/jquery-box-layout.git",
     "absolute-layout": "https://github.com/valaxy/absolute-layout.git",
-    "timer": "https://github.com/valaxy/timer.git",
+    "timer": "valaxy/timer",
     "path": "https://github.com/valaxy/path.git",
     "backbone-tree-model": "https://github.com/valaxy/backbone-tree-model.git",
     "exit-confirm": "https://github.com/valaxy/exit-confirm.git",
