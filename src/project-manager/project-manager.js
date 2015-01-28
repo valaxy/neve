@@ -3,7 +3,7 @@ define(function (require) {
 	var path = require('bower_components/path/path')
 	var EventEmitter = require('bower_components/eventEmitter/EventEmitter.min')
 	var Set = require('bower_components/algorithm-data-structure/src/set/set')
-
+	var async = require('bower_components/async/lib/async')
 
 	var ProjectManager = function () {
 		this._active = null
@@ -17,15 +17,27 @@ define(function (require) {
 
 
 	/** Check if you can create this project */
-	ProjectManager.prototype.canCreate = function (project) {
-		return !fs.existsSync(project.get('location'))
+	ProjectManager.prototype.isExist = function (project) {
+		return fs.existsSync(project.get('location'))
 	}
 
 
 	/** Actually create the project */
-	ProjectManager.prototype.create = function (project) {
-		fs.mkdirSync(project.get('location'))
-		fs.mkdirSync(path.join(project.get('location'), '.neve'))
+	ProjectManager.prototype.create = function (project, callback) {
+		async.series([
+			function (done) {
+				fs.mkdir(project.get('location'), function (err) {
+					done(err)
+				})
+			},
+			function (done) {
+				fs.mkdir(path.join(project.get('location'), '.neve'), function (err) {
+					done(err)
+				})
+			}
+		], function (err) {
+			callback(err)
+		})
 	}
 
 

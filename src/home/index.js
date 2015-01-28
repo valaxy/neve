@@ -16,7 +16,7 @@ define(function (require, exports) {
 
 	exports.init = function () {
 		g.projectManager = new ProjectManager
-		
+
 		layout.init()
 
 		editor.init()

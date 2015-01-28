@@ -13,15 +13,26 @@ html
             window.require = undefined
 
         script(src="../bower_components/qunit/qunit/qunit.js")
-        script(src="../bower_components/seajs/dist/sea.js")
+        script(src="../bower_components/seajs/dist/sea-debug.js")
+        script(src="../bower_components/seajs-text/dist/seajs-text-debug.js")
+        //script(src="../bower_components/requirejs/require.js")
         script(src="../bower_components/jquery/dist/jquery.min.js")
         script(src="../bower_components/underscore/underscore-min.js")
         script(src="../bower_components/backbone/backbone.js")
         script(src="../bower_components/backbone-relational/backbone-relational.js")
-        script(src="../bower_components/ace-builds/src-min/ace.js")
+        script(src="../bower_components/ace-builds/src-min-noconflict/ace.js")
         script(src="../bower_components/jstree/dist/jstree.min.js")
         script(src="../bower_components/uri.js/src/uri.min.js")
         script(src="../bower_components/async/lib/async.js")
+
+
+        //script.
+        //    requirejs.config({
+        //        baseUrl: '../'
+        //    })
+        //    define(['test/test'], function (test) {
+        //        test.init()
+        //    })
 
         // startup
         script.

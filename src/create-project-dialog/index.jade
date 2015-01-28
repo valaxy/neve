@@ -9,10 +9,15 @@ div.create-project-dialog.mfp-hide
         div.form-group
             label.col-md-2.control-label Location
             div.col-md-10
-                input.form-control.location(type="text")
+                input.form-control.location(type="text" value="d:/" disabled)
+        div.row
+            p.col-md-offset-2.col-md-10.error-msg.text-danger(style="display: none")
         div.form-group
             div.col-md-offset-2.col-md-10
-                button.btn.btn-primary OK
-                button.btn.btn-default Cancel
+                button.btn.btn-primary.ok OK
+                button.btn.btn-default.cancel Cancel
+
+
+
 
 
