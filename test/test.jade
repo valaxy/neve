@@ -9,16 +9,23 @@ html
         div#qunit-fixture
 
         script(src="../bower_components/qunit/qunit/qunit.js")
-        script(src="../bower_components/underscore/underscore-min.js")
-        script(src="../bower_components/backbone/backbone.js")
-        script(src="../bower_components/backbone-relational/backbone-relational.js")
-        script(src="../bower_components/seajs/dist/sea.js")
+        script(src="../bower_components/requirejs/require.js")
 
         // startup
         script.
-            seajs.config({
-                base: '../'
+            require.config({
+                baseUrl: '../',
+                paths: {
+                    jquery: 'bower_components/jquery/dist/jquery.min',
+                    underscore: 'bower_components/underscore/underscore-min',
+                    backbone: 'bower_components/backbone/backbone',
+                    'backbone-relational': 'bower_components/backbone-relational/backbone-relational'
+                }
             })
-            seajs.use(['./test'], function (test) {
-                test.init()
+            require([
+                'backbone',
+                'backbone-relational',
+                'test/test'
+            ], function () {
+                // do nothing
             })

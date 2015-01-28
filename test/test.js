@@ -1,6 +1,4 @@
-define(function (require, exports) {
-	exports.init = function () {
-		require('./node-model')
-		require('./tree-model')
-	}
+define(function (require) {
+	require('./node-model')
+	require('./tree-model')
 })
