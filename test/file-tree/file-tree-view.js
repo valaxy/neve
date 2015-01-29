@@ -3,31 +3,44 @@ define(function (require) {
 	var fs = requireNode('fs')
 	var FileTreeModel = require('src/file-tree/file-tree-model')
 	var FileTreeView = require('src/file-tree/file-tree-view')
+	var ProjectManager = require('src/project-manager/project-manager')
+	var utility = require('../utility')
+	var domHtml = require('text!src/file-tree/index.html')
+	var Project = require('src/project-manager/project-model')
 
 	module('FileTreeView')
 
-	//test('init environment', function (assert) {
-	//	var done = assert.async()
-	//	var tree = new FileTreeModel
-	//	assert.equal(tree.get('nodes').length, 0)
-	//
-	//	var rootdir = temp.mkdirSync('case') // temp file dir
-	//	fs.writeFileSync(path.join(rootdir, '1.txt'), '1')
-	//	fs.writeFileSync(path.join(rootdir, '2.md'), '2')
-	//	fs.mkdirSync(path.join(rootdir, 'a'))
-	//	fs.writeFileSync(path.join(rootdir, 'a', '3.md'), '3')
-	//
-	//	new FileTreeView({
-	//		el: $('<div></div>'),
-	//		model: tree,
-	//		root: rootdir
-	//	})
-	//
-	//	setTimeout(function () {
-	//		assert.equal(tree.get('nodes').length, 4)
-	//		done()
-	//	}, 1000)
-	//})
+
+	test('open a project', function (assert) {
+		var done = assert.async()
+
+		// init environment
+		var root = utility.createProjectFiles()
+		var tree = new FileTreeModel({
+			root: root
+		})
+		var projectManager = new ProjectManager
+		assert.equal(tree.get('files').length, 0)
+
+
+		// init view
+		new FileTreeView({
+			el: $(domHtml),
+			model: tree,
+			projectManager: projectManager
+		})
+
+		projectManager.open(new Project({
+			name: 'test-project',
+			location: root
+		}))
+
+		// give them 1s to process
+		setTimeout(function () {
+			assert.equal(tree.get('files').length, 4)
+			done()
+		}, 1000)
+	})
 
 	//test('delta change about creating', function (assert) {
 	//	var done = assert.async()
@@ -43,7 +56,7 @@ define(function (require) {
 	//		// init condition
 	//		function (callback) {
 	//			setTimeout(function () {
-	//				assert.equal(tree.get('nodes').length, 1)
+	//				assert.equal(tree.get('files').length, 1)
 	//				callback()
 	//			}, 500)
 	//		},
@@ -59,7 +72,7 @@ define(function (require) {
 	//		// test create condition
 	//		function (callback) {
 	//			setTimeout(function () {
-	//				assert.equal(tree.get('nodes').length, 2)
+	//				assert.equal(tree.get('files').length, 2)
 	//				callback()
 	//			}, 3000) // it's very slow
 	//		}

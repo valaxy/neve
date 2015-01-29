@@ -279,7 +279,7 @@ define(function (require) {
 
 
 			this._projectManager.on('open', function (project) {
-				this._initForWatch()
+				me._initForWatch()
 				me.model.set('root', project.get('location'))
 			})
 

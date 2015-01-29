@@ -14,7 +14,7 @@ define(function (require) {
 
 		relations: [{
 			/** The root directory */
-			key: 'rootFile',
+			key: 'rootDir',
 			type: Backbone.HasOne,
 			relatedModel: FileModel,
 			reverseRelation: {
@@ -22,7 +22,7 @@ define(function (require) {
 			}
 		}, {
 			/** All the file */
-			key: 'nodes',
+			key: 'files',
 			type: Backbone.HasMany,
 			relatedModel: FileModel,
 			reverseRelation: {
@@ -48,11 +48,9 @@ define(function (require) {
 			})
 		},
 
-		/** Add root or add a child of parent, return the cid of child
-		 ** @param child
-		 ** @param parent can be optional */
+		/** Add root or add a child of parent, return the cid of child */
 		add: function (child, parent) {
-			this.get('nodes').add(child)
+			this.get('files').add(child)
 			if (parent) {
 				parent.addFile(child)
 			}
@@ -61,7 +59,7 @@ define(function (require) {
 
 		/** Remove the subtree whose root is node, return the node */
 		remove: function (node) {
-			this.get('nodes').remove(node)
+			this.get('files').remove(node)
 			node.cut()
 			var me = this
 			node.get('children').forEach(function (child) {
@@ -71,7 +69,7 @@ define(function (require) {
 		},
 
 		_cut: function (node) {
-			this.get('nodes').remove(node)
+			this.get('files').remove(node)
 			var me = this
 			node.get('children').forEach(function (child) {
 				me._cut(child)
