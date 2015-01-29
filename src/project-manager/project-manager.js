@@ -6,6 +6,7 @@ define(function (require) {
 	var async = require('async')
 
 
+	/** Events: open, close */
 	var ProjectManager = function () {
 		this._active = null
 		this._set = new Set
@@ -51,8 +52,10 @@ define(function (require) {
 
 
 	/** Close current active project */
-	ProjectManager.prototype.close = function (project) {
-
+	ProjectManager.prototype.close = function () {
+		var orignal = this._active
+		this._active = null
+		this.trigger('close', [orignal])
 	}
 
 

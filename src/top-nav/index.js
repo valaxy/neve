@@ -1,4 +1,7 @@
 define(function (require) {
+	var $ = require('jquery')
+	require('magnific-popup')
+
 	var g = require('../home/global')
 	var MenuPopup = require('./menu-popup')
 	var CreateProjectDialogView = require('../create-project-dialog/view')
@@ -17,7 +20,7 @@ define(function (require) {
 			'click .new-project': function () {
 				$.magnificPopup.open({
 					items: {
-						src: '.new-project-dialog',
+						src: '.create-project-dialog',
 						type: 'inline'
 					},
 					modal: true
@@ -41,7 +44,7 @@ define(function (require) {
 			})
 
 			new CreateProjectDialogView({
-				el: this.$('.new-project-dialog')
+				el: this.$('.create-project-dialog')
 			})
 		}
 	})

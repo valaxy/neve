@@ -168,6 +168,15 @@ define(function (require) {
 			// 有点麻烦, 暂时不实现
 		},
 
+		_clearFile: function (updateModel, updateDom) {
+			if (updateDom) {
+				me._jstree.destroy()
+			}
+			if (updateModel) {
+				// do sth for this.model
+			}
+		},
+
 		_openFile: function (file, updateModel, updateDom) {
 			if (updateModel) {
 				this.model.set('openFile', file)
@@ -179,16 +188,7 @@ define(function (require) {
 		},
 
 
-		initialize: function (options) {
-			var me = this
-			this._projectManager = options.projectManager
-
-			this.on('open', function (project) {
-				this.model.set('project', project)
-				alert(123)
-			})
-
-			// init UI
+		_initForDom: function () {
 			this.$el.jstree({
 				core: {
 					check_callback: true
@@ -205,6 +205,10 @@ define(function (require) {
 				plugins: ['types', 'wholerow', 'contextmenu']
 			})
 			this._jstree = this.$el.jstree()
+		},
+
+		_initForWatch: function () {
+			var me = this
 
 			// watch the file-tree
 			async.series([
@@ -256,7 +260,15 @@ define(function (require) {
 					me._openFile(me._pathToModel['readme.md'], true, false)
 				}
 			})
+		},
 
+
+		initialize: function (options) {
+			this._projectManager = options.projectManager
+			this._initForDom()
+
+
+			var me = this
 			this.listenTo(this.model, 'change:openFile', function (fileTree, file) {
 				var content = fs.readFileSync(file.absolutePath(fileTree.get('root')), {
 					encoding: 'utf-8'
@@ -265,6 +277,17 @@ define(function (require) {
 				process.immediate()
 			})
 
+
+			this._projectManager.on('open', function (project) {
+				this._initForWatch()
+				me.model.set('root', project.get('location'))
+			})
+
+			this._projectManager.on('close', function () {
+				me.stopListening()
+				watch.unwatchTree(me.model.get('root'))
+				me._clearFile(true, true)
+			})
 		}
 	})
 

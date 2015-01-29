@@ -8,7 +8,6 @@ define(function (require) {
 	var FileTreeModel = TreeModel.extend({
 		defaults: function () {
 			return {
-				project: null,
 				root: '' // absolute path of file system
 			}
 		},
