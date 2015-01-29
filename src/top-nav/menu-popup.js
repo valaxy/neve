@@ -1,5 +1,6 @@
 define(function (require) {
-	var StateMachine = require('bower_components/javascript-state-machine/state-machine.min')
+	require('backbone')
+	var StateMachine = require('state-machine')
 
 	/**
 	 *
@@ -19,7 +20,8 @@ define(function (require) {
 			fsm.close()
 		}
 
-		var fsm = StateMachine.create({
+		var me = this
+		var fsm = this._fsm = StateMachine.create({
 			initial: 'hide',
 			events: [
 				{name: 'open', from: 'hide', to: 'show'},
@@ -29,6 +31,7 @@ define(function (require) {
 				// config state hide
 				onenterhide: function () {
 					$button.on('mouseenter', onMouseenterButton)
+					me._state = 'hide'
 				},
 				onleavehide: function () {
 					$button.off('mouseenter', onMouseenterButton)
@@ -36,6 +39,7 @@ define(function (require) {
 				// config state show
 				onentershow: function () {
 					$document.on('click', onClickDocument)
+					me._state = 'show'
 				},
 				onleaveshow: function () {
 					$document.off('click', onClickDocument)
@@ -50,10 +54,28 @@ define(function (require) {
 				// event close
 				onafterclose: function () {
 					$menu.hide()
+				},
+
+				// common events
+				onenterstate: function (event, from, to) {
+					me.trigger('enter:' + to)
+				},
+				onleavestate: function (event, from, to) {
+					me.trigger('leave:' + from)
 				}
 			}
 		})
 	}
+
+	MenuPopup.prototype.state = function () {
+		return this._state
+	}
+
+	MenuPopup.prototype.close = function () {
+		this._fsm.close()
+	}
+
+	_.extend(MenuPopup.prototype, Backbone.Events)
 
 	return MenuPopup
 })

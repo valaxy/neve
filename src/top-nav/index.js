@@ -1,11 +1,13 @@
 define(function (require) {
-	var $ = require('jquery')
-	require('magnific-popup')
+	var path = requireNode('path')
 
+	require('magnific-popup')
+	var $ = require('jquery')
 	var g = require('../home/global')
 	var MenuPopup = require('./menu-popup')
+	var MenuAssociate = require('./menu-associate')
 	var CreateProjectDialogView = require('../create-project-dialog/view')
-	var path = requireNode('path')
+
 
 	var TopNavView = Backbone.View.extend({
 		el: $('.top-nav'),
@@ -28,19 +30,23 @@ define(function (require) {
 			}
 		},
 		initialize: function () {
-			new MenuPopup({
+			var m1 = new MenuPopup({
 				$button: $('.git'),
 				$menu: $('.git-menu').menu().hide()
 			})
 
-			new MenuPopup({
+			var m2 = new MenuPopup({
 				$button: $('.about'),
 				$menu: $('.about-menu').menu().hide()
 			})
 
-			new MenuPopup({
+			var m3 = new MenuPopup({
 				$button: $('.file'),
 				$menu: $('.file-menu').menu().hide()
+			})
+
+			new MenuAssociate({
+				menuPopups: [m1, m2, m3]
 			})
 
 			new CreateProjectDialogView({

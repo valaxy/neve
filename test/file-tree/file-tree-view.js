@@ -55,7 +55,7 @@ define(function (require) {
 		var done = assert.async()
 		var rootdir = temp.mkdirSync('case')
 		var tree = new FileTreeModel({
-			root: rootDir
+			root: rootdir
 		})
 		new FileTreeView({
 			el: $(domHtml),

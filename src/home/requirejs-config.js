@@ -10,6 +10,7 @@ requirejs.config({
 		'backbone-relational': 'bower_components/backbone-relational/backbone-relational',
 		jstree: 'bower_components/jstree/dist/jstree.min',
 		'magnific-popup': 'bower_components/magnific-popup/dist/jquery.magnific-popup.min',
-		text: 'bower_components/text/text'
+		text: 'bower_components/text/text',
+		'state-machine': 'bower_components/javascript-state-machine/state-machine.min'
 	}
 })
