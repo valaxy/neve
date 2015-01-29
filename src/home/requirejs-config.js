@@ -12,5 +12,6 @@ requirejs.config({
 		'magnific-popup': 'bower_components/magnific-popup/dist/jquery.magnific-popup.min',
 		text: 'bower_components/text/text',
 		'state-machine': 'bower_components/javascript-state-machine/state-machine.min'
+		//path: 'bower_components/path/path'
 	}
 })

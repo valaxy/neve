@@ -21,20 +21,12 @@ define(function (require) {
 				type: Backbone.HasOne
 			}
 		}, {
-			/** All the file */
+			/** All the files that is this tree */
 			key: 'files',
 			type: Backbone.HasMany,
 			relatedModel: FileModel,
 			reverseRelation: {
 				key: 'tree'
-			}
-		}, {
-			/** Opened File */
-			type: Backbone.HasOne,
-			key: 'openFile',
-			relatedModel: FileModel,
-			reverseRelation: {
-				type: Backbone.HasOne
 			}
 		}],
 
@@ -46,17 +38,6 @@ define(function (require) {
 		/** Return a file the match the relative path */
 		getFileByPath: function (path) {
 			return this._pathToModel[path]
-		},
-
-
-		// save the opened file
-		saveOpen: function (content) {
-			var absolutePath = path.join(this.get('root'), this.get('openFile').get('path'))
-			fs.writeFile(absolutePath, content, function (err) {
-				if (err) {
-					alert(err)
-				}
-			})
 		},
 
 		/** Add root or add a child of parent, return the cid of child */

@@ -37,7 +37,10 @@ define(function (require, exports) {
 			projectManager: projectManager
 		})
 
-		autoSave.init()
+		autoSave.init({
+			projectManager: projectManager
+		})
+
 		saveConfirm.init()
 
 		g.projectManager.open(new ProjectModel({
