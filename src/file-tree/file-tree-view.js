@@ -179,7 +179,6 @@ define(function (require) {
 
 		_openFile: function (file, updateModel, updateDom) {
 			if (updateModel) {
-				this.model.set('openFile', file)
 				this.model.get('project').set('openFile', file)
 			}
 			if (updateDom) {
@@ -257,9 +256,7 @@ define(function (require) {
 					done()
 				}
 			], function () {
-				if (g.test) {
-					me._openFile(me.model.getFileByPath('readme.md'), true, false)
-				}
+
 			})
 		},
 

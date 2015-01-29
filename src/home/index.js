@@ -47,6 +47,12 @@ define(function (require, exports) {
 			name: 'CF',
 			location: 'd:/CodeForces'
 		}))
+
+		// auto open
+		setTimeout(function () {
+			var file = g.fileTree.getFileByPath('readme.md')
+			g.fileTree.get('project').set('openFile', file)
+		}, 1000)
 	}
 })
 

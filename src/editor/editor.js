@@ -17,9 +17,10 @@ define(function (require) {
 			projectManager.on('open', function (project) {
 				// change the editor value when open a file
 				me.listenTo(project, 'change:openFile', function (collection, file) {
-					var content = fs.readFileSync(file.absolutePath(project.get('root')), {
+					var content = fs.readFileSync(file.absolutePath(project.get('location')), {
 						encoding: 'utf-8'
 					})
+					console.log(file.absolutePath(project.get('location')))
 					g.editor.setValue(content)
 					process.immediate()
 				})
