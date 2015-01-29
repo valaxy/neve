@@ -29,7 +29,7 @@ define(function (require) {
 				})
 			}
 		},
-		initialize: function () {
+		initialize: function (options) {
 			var m1 = new MenuPopup({
 				$button: $('.git'),
 				$menu: $('.git-menu').menu().hide()
@@ -50,7 +50,8 @@ define(function (require) {
 			})
 
 			new CreateProjectDialogView({
-				el: this.$('.create-project-dialog')
+				el: this.$('.create-project-dialog'),
+				projectManager: options.projectManager
 			})
 		}
 	})

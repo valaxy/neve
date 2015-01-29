@@ -3,8 +3,9 @@ define(function (require) {
 
 	var ProjectModel = Backbone.Model.extend({
 		defaults: {
-			name: '',       // unique identity of project
-			location: ''    // absolute path of local file system
+			name: '',             // unique identity of project
+			location: '',         // absolute path of local file system
+			lastOpenedDate: null // opened time
 		}
 	})
 

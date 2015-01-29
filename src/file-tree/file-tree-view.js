@@ -172,10 +172,11 @@ define(function (require) {
 
 		_clearFile: function (updateModel, updateDom) {
 			if (updateDom) {
-				me._jstree.destroy()
+				var domId = this._pathToDomId['.']
+				this._jstree.delete_node(domId)
 			}
 			if (updateModel) {
-				// do sth for this.model
+				this.model.addRoot(null)
 			}
 		},
 

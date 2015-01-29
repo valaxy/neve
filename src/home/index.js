@@ -31,7 +31,9 @@ define(function (require, exports) {
 
 		process.init()
 
-		new TopNavView
+		new TopNavView({
+			projectManager: projectManager
+		})
 
 		autoSave.init()
 		saveConfirm.init()

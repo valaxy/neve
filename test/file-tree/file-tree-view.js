@@ -51,6 +51,31 @@ define(function (require) {
 	})
 
 
+	test('open a project and open another project', function (assert) {
+		var done = assert.async()
+		var view = new FileTreeView({
+			el: $(domHtml),
+			model: new FileTreeModel,
+			projectManager: projectManager
+		})
+
+		// open 1
+		projectManager.open(new Project({
+			name: 'test1',
+			location: utility.createProjectFiles()
+		}))
+
+		// open 2
+		projectManager.open(new Project({
+			name: 'test2',
+			location: utility.createProjectFiles()
+		}))
+
+		assert.ok(true)
+		done()
+	})
+
+
 	test('delta change about creating', function (assert) {
 		var done = assert.async()
 		var rootdir = temp.mkdirSync('case')

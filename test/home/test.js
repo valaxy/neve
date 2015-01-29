@@ -5,7 +5,7 @@ define(function (require, exports) {
 		require('test/file-tree/file-model')
 
 		require('test/file-tree/file-tree-view') // test error can't locate
-		require('test/project-manager/project-manager-test')
+		require('test/project-manager/project-manager')
 		require('test/create-project-dialog/view-test')
 	}
 })
