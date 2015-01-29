@@ -16,7 +16,6 @@ define(function (require) {
 
 		_jstree: null,              // jstree control handler
 		_domIdToModel: {},          // a tree node id hash map from ui to model
-		_pathToModel: {},           // path -> node.cid
 		_pathToDomId: {},
 
 		events: {
@@ -45,7 +44,6 @@ define(function (require) {
 			})
 
 			this._pathToDomId['.'] = domId
-			this._pathToModel['.'] = model
 			this._domIdToModel[domId] = model
 
 			this.model.addRoot(model)
@@ -133,11 +131,10 @@ define(function (require) {
 				// update model if needed
 				function (done) {
 					if (updateModel) {
-						var dirModel = me._pathToModel[dirPath]
+						var dirModel = me.model.getFileByPath(dirPath)
 						me.model.add(curModel, dirModel) // no trigger anything
-						me._pathToModel[curPath] = curModel
 					} else {
-						curModel = me._pathToModel[curPath]
+						curModel = me.model.getFileByPath(curPath)
 					}
 					done()
 				},
@@ -252,7 +249,7 @@ define(function (require) {
 						})
 						monitor.on('removed', function (absolutePath, stat) {
 							var relPath = path.relative(me.model.get('root'), absolutePath)
-							var model = me._pathToModel[relPath]
+							var model = me.model.getFileByPath(relPath)
 							me._deleteFile(model, stat.isDirectory(), false, true, true)
 						})
 					})
@@ -261,7 +258,7 @@ define(function (require) {
 				}
 			], function () {
 				if (g.test) {
-					me._openFile(me._pathToModel['readme.md'], true, false)
+					me._openFile(me.model.getFileByPath('readme.md'), true, false)
 				}
 			})
 		},
