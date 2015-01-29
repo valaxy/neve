@@ -28,18 +28,15 @@
     "bootstrap": "~3.3.2",
     "normalize.css": "~3.0.2",
     "eventEmitter": "~4.2.11",
-    "jquery-box-layout": "https://github.com/valaxy/jquery-box-layout.git",
-    "absolute-layout": "https://github.com/valaxy/absolute-layout.git",
+    "jquery-box-layout": "valaxy/jquery-box-layout",
+    "absolute-layout": "valaxy/absolute-layout",
     "timer": "valaxy/timer",
-    "path": "https://github.com/valaxy/path.git",
-    "backbone-tree-model": "https://github.com/valaxy/backbone-tree-model.git",
-    "exit-confirm": "https://github.com/valaxy/exit-confirm.git",
-    "algorithm-data-structure": "valaxy/algorithm-data-structure",
-    "seajs-text": "seajs/seajs-text#~1.1.1"
+    "path": "valaxy/path",
+    "exit-confirm": "valaxy/exit-confirm",
+    "algorithm-data-structure": "valaxy/algorithm-data-structure"
   },
   "devDependencies": {
     "qunit": "~1.16.0",
-    "seajs": "~2.3.0",
     "requirejs": "~2.1.15",
     "text": "requirejs/text#~2.0.13"
   }
