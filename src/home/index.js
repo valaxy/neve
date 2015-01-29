@@ -7,7 +7,7 @@ define(function (require, exports) {
 	var FileTreeModel = require('../file-tree/file-tree-model')
 	var TopNavView = require('../top-nav/index')
 	var g = require('./global')
-	var editor = require('../editor/editor')
+	var Editor = require('../editor/editor')
 	var layout = require('./layout')
 	var autoSave = require('../editor/auto-save')
 	var saveConfirm = require('../editor/save-confirm')
@@ -20,7 +20,9 @@ define(function (require, exports) {
 
 		layout.init()
 
-		editor.init()
+		new Editor({
+			projectManager: projectManager
+		})
 
 		// the file tree
 		g.fileTree = (new FileTreeView({

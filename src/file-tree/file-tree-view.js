@@ -183,6 +183,7 @@ define(function (require) {
 		_openFile: function (file, updateModel, updateDom) {
 			if (updateModel) {
 				this.model.set('openFile', file)
+				this.model.get('project').set('openFile', file)
 			}
 			if (updateDom) {
 				var domId = this._pathToDomId[file.get('path')]
@@ -269,20 +270,11 @@ define(function (require) {
 		initialize: function (options) {
 			this._projectManager = options.projectManager
 			this._initForDom()
-
-
 			var me = this
-			this.listenTo(this.model, 'change:openFile', function (fileTree, file) {
-				var content = fs.readFileSync(file.absolutePath(fileTree.get('root')), {
-					encoding: 'utf-8'
-				})
-				g.editor.setValue(content)
-				process.immediate()
-			})
-
 
 			this._projectManager.on('open', function (project) {
 				me.model.set('root', project.get('location'))
+				me.model.set('project', project)
 				me._initForWatch()
 			})
 
