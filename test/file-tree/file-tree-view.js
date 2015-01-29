@@ -1,6 +1,7 @@
 define(function (require) {
 	var temp = requireNode('temp')
 	var fs = requireNode('fs')
+
 	var FileTreeModel = require('src/file-tree/file-tree-model')
 	var FileTreeView = require('src/file-tree/file-tree-view')
 	var ProjectManager = require('src/project-manager/project-manager')

@@ -1,4 +1,6 @@
-define(function () {
+define(function (require) {
+	require('backbone')
+
 	var ProjectModel = Backbone.Model.extend({
 		defaults: {
 			name: '',       // unique identity of project
