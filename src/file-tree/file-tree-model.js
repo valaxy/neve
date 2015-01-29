@@ -57,6 +57,12 @@ define(function (require) {
 			return child.cid
 		},
 
+		/** Set the root dir */
+		addRoot: function (dir) {
+			this.get('files').add(dir)
+			this.set('rootDir', dir)
+		},
+
 		/** Remove the subtree whose root is node, return the node */
 		remove: function (node) {
 			this.get('files').remove(node)

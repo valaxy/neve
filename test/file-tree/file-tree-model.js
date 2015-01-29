@@ -36,6 +36,17 @@ define(function (require) {
 	})
 
 
+	test('addRoot()', function (assert) {
+		var tree = new FileTreeModel
+		assert.equal(tree.get('rootDir'), null)
+
+		var root = new FileModel
+		tree.addRoot(root)
+		assert.equal(tree.get('rootDir'), root)
+		assert.equal(tree.get('files').length, 1)
+	})
+
+
 	test('remove()', function (assert) {
 		var tree = new FileTreeModel
 		var n1 = new FileModel

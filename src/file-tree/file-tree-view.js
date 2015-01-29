@@ -47,6 +47,8 @@ define(function (require) {
 			this._pathToDomId['.'] = domId
 			this._pathToModel['.'] = model
 			this._domIdToModel[domId] = model
+
+			this.model.addRoot(model)
 		},
 
 		_asyncDone: function (done) {
