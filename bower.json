@@ -40,6 +40,7 @@
   "devDependencies": {
     "qunit": "~1.16.0",
     "seajs": "~2.3.0",
-    "requirejs": "~2.1.15"
+    "requirejs": "~2.1.15",
+    "text": "requirejs/text#~2.0.13"
   }
 }

@@ -2,7 +2,7 @@ define(function (require) {
 	var Project = require('src/project-manager/project-model')
 	var ProjectManager = require('src/project-manager/project-manager')
 	var CreateProjectDialogView = require('src/create-project-dialog/view')
-	var domHtml = require('src/create-project-dialog/index.html')
+	var domHtml = require('text!src/create-project-dialog/index.html')
 	var path = require('bower_components/path/path')
 	var temp = requireNode('temp')
 

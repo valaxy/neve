@@ -1,5 +1,6 @@
 define(function (require) {
-	//var $ = require('bower_components/jquery/dist/jquery')
+	var $ = require('jquery')
+	require('magnific-popup')
 	var path = require('bower_components/path/path')
 	var Project = require('../project-manager/project-model')
 
