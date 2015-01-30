@@ -1,39 +1,34 @@
 define(function (require, exports) {
-
-	var boxLayout = require('bower_components/jquery-box-layout/src/box-layout')
+	var treeLayout = require('bower_components/jquery-flex-layout/src/view/tree-layout')
 
 	exports.init = function () {
-		var $dom = boxLayout.init({
+		var $dom = treeLayout.init({
 			_schema: 'linear',
-			isHor: false,
-			size: 'auto',
-			isPer: false,
-			boxes: [{
-				_schema: 'box',
-				size: 20,
-				domSelector: '.top-nav'
+			direction: 'column',
+			views: [{
+				_schema: 'view',
+				flex: 1,
+				selector: '.top-nav'
 			}, {
 				_schema: 'linear',
-				size: 'auto',
-				isHor: true,
-				isPer: false,
-				boxes: [{
-					_schema: 'box',
-					size: 200,
-					domSelector: '.explorer'
+				direction: 'row',
+				flex: 24,
+				views: [{
+					_schema: 'view',
+					flex: 1,
+					selector: '.explorer'
 				}, {
 					_schema: 'linear',
-					size: 'auto',
-					isHor: true,
-					isPer: true,
-					boxes: [{
-						_schema: 'box',
-						size: 50,
-						domSelector: '.editor'
+					flex: 4,
+					direction: 'row',
+					views: [{
+						_schema: 'view',
+						flex: 1,
+						selector: '.editor'
 					}, {
-						_schema: 'box',
-						size: 'auto',
-						domSelector: '.preview'
+						_schema: 'view',
+						flex: 1,
+						selector: '.preview'
 					}]
 				}]
 			}]

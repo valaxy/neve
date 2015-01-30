@@ -1,13 +1,6 @@
 @charset "UTF-8";
-.linear, .box {
-  position: absolute !important;
-  border: none;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: auto;
-  height: auto; }
+.view {
+  display: flex; }
 
 /*
  * This document has been created with Marked.app <http://markedapp.com>.
@@ -19,7 +12,7 @@
  * Authors: @brunodecarvalho, @jpedroso, @rcabaco
  * Copyright 2011 Metaclassy, Lda. <http://metaclassy.com>
  */
-.md-content, .everything .preview {
+.md-content, .everything .preview .content {
   background-color: #f2f2f2;
   color: #3c3c3c;
   /* Change font size below */
@@ -45,28 +38,28 @@
   /* end of lists */
   /* classes */
   /* custom formatting classes */ }
-  .md-content a, .everything .preview a {
+  .md-content a, .everything .preview .content a {
     color: #308bd8;
     text-decoration: none; }
-  .md-content a:hover, .everything .preview a:hover {
+  .md-content a:hover, .everything .preview .content a:hover {
     text-decoration: underline; }
-  .md-content h1, .everything .preview h1, .md-content h2, .everything .preview h2 {
+  .md-content h1, .everything .preview .content h1, .md-content h2, .everything .preview .content h2 {
     line-height: 1.2em;
     margin-top: 32px;
     margin-bottom: 12px; }
-  .md-content h1:first-child, .everything .preview h1:first-child {
+  .md-content h1:first-child, .everything .preview .content h1:first-child {
     margin-top: 0; }
-  .md-content h3, .everything .preview h3, .md-content h4, .everything .preview h4, .md-content h5, .everything .preview h5, .md-content h6, .everything .preview h6 {
+  .md-content h3, .everything .preview .content h3, .md-content h4, .everything .preview .content h4, .md-content h5, .everything .preview .content h5, .md-content h6, .everything .preview .content h6 {
     margin-top: 12px;
     margin-bottom: 0; }
-  .md-content h5, .everything .preview h5, .md-content h6, .everything .preview h6 {
+  .md-content h5, .everything .preview .content h5, .md-content h6, .everything .preview .content h6 {
     font-size: 0.9em;
     line-height: 1.0em; }
-  .md-content p, .everything .preview p {
+  .md-content p, .everything .preview .content p {
     margin: 0 0 24px 0; }
-  .md-content p:last-child, .everything .preview p:last-child {
+  .md-content p:last-child, .everything .preview .content p:last-child {
     margin: 0; }
-  .md-content #wrapper hr, .everything .preview #wrapper hr {
+  .md-content #wrapper hr, .everything .preview .content #wrapper hr {
     width: 100%;
     margin: 3em auto;
     border: 0;
@@ -74,33 +67,33 @@
     background-color: #ccc;
     height: 1px;
     -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.75); }
-  .md-content ol, .everything .preview ol {
+  .md-content ol, .everything .preview .content ol {
     list-style: outside decimal; }
-  .md-content ul, .everything .preview ul {
+  .md-content ul, .everything .preview .content ul {
     list-style: outside disc; }
-  .md-content ol, .everything .preview ol, .md-content ul, .everything .preview ul {
+  .md-content ol, .everything .preview .content ol, .md-content ul, .everything .preview .content ul {
     padding-left: 0;
     margin-bottom: 24px; }
-  .md-content ol li, .everything .preview ol li {
+  .md-content ol li, .everything .preview .content ol li {
     margin-left: 28px; }
-  .md-content ul li, .everything .preview ul li {
+  .md-content ul li, .everything .preview .content ul li {
     margin-bottom: 8px;
     margin-left: 16px; }
-  .md-content ol:last-child, .everything .preview ol:last-child, .md-content ul:last-child, .everything .preview ul:last-child {
+  .md-content ol:last-child, .everything .preview .content ol:last-child, .md-content ul:last-child, .everything .preview .content ul:last-child {
     margin: 0; }
-  .md-content li > ol, .everything .preview li > ol, .md-content li > ul, .everything .preview li > ul {
+  .md-content li > ol, .everything .preview .content li > ol, .md-content li > ul, .everything .preview .content li > ul {
     padding-left: 12px; }
-  .md-content dl, .everything .preview dl {
+  .md-content dl, .everything .preview .content dl {
     margin-bottom: 24px; }
-  .md-content dl dt, .everything .preview dl dt {
+  .md-content dl dt, .everything .preview .content dl dt {
     font-weight: bold;
     margin-bottom: 8px; }
-  .md-content dl dd, .everything .preview dl dd {
+  .md-content dl dd, .everything .preview .content dl dd {
     margin-left: 0;
     margin-bottom: 12px; }
-  .md-content dl dd:last-child, .everything .preview dl dd:last-child, .md-content dl:last-child, .everything .preview dl:last-child {
+  .md-content dl dd:last-child, .everything .preview .content dl dd:last-child, .md-content dl:last-child, .everything .preview .content dl:last-child {
     margin-bottom: 0; }
-  .md-content pre, .everything .preview pre {
+  .md-content pre, .everything .preview .content pre {
     white-space: pre-wrap;
     width: 96%;
     margin-bottom: 24px;
@@ -109,74 +102,74 @@
     -webkit-border-radius: 3px;
     background-color: #eee;
     border: 1px solid #ddd; }
-  .md-content code, .everything .preview code {
+  .md-content code, .everything .preview .content code {
     white-space: nowrap;
     font-size: 1.1em;
     padding: 2px;
     -webkit-border-radius: 3px;
     background-color: #eee;
     border: 1px solid #ddd; }
-  .md-content pre code, .everything .preview pre code {
+  .md-content pre code, .everything .preview .content pre code {
     white-space: pre-wrap;
     border: none;
     padding: 0;
     background-color: transparent;
     -webkit-border-radius: 0; }
-  .md-content blockquote, .everything .preview blockquote {
+  .md-content blockquote, .everything .preview .content blockquote {
     margin-left: 0;
     margin-right: 0;
     width: 96%;
     padding: 0 10px;
     border-left: 3px solid #ddd;
     color: #777; }
-  .md-content table, .everything .preview table {
+  .md-content table, .everything .preview .content table {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 24px;
     /* border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd; */
     border-spacing: 0; }
-  .md-content table th, .everything .preview table th {
+  .md-content table th, .everything .preview .content table th {
     padding: 3px 10px;
     background-color: #eee;
     /* border-top: 1px solid #ddd;
     border-left: 1px solid #ddd;*/ }
-  .md-content table td, .everything .preview table td {
+  .md-content table td, .everything .preview .content table td {
     padding: 3px 10px;
     /* border-top: 1px solid #ddd;
     border-left: 1px solid #ddd; */ }
-  .md-content table tr:nth-child(odd), .everything .preview table tr:nth-child(odd), .md-content table th:nth-child(odd), .everything .preview table th:nth-child(odd), .md-content table td:nth-child(odd), .everything .preview table td:nth-child(odd) {
+  .md-content table tr:nth-child(odd), .everything .preview .content table tr:nth-child(odd), .md-content table th:nth-child(odd), .everything .preview .content table th:nth-child(odd), .md-content table td:nth-child(odd), .everything .preview .content table td:nth-child(odd) {
     background: rgba(255, 255, 255, 0.06); }
-  .md-content table tr:nth-child(even), .everything .preview table tr:nth-child(even), .md-content table td:nth-child(even), .everything .preview table td:nth-child(even) {
+  .md-content table tr:nth-child(even), .everything .preview .content table tr:nth-child(even), .md-content table td:nth-child(even), .everything .preview .content table td:nth-child(even) {
     background: rgba(0, 0, 0, 0.06); }
-  .md-content caption, .everything .preview caption {
+  .md-content caption, .everything .preview .content caption {
     font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 5px; }
-  .md-content figure, .everything .preview figure {
+  .md-content figure, .everything .preview .content figure {
     display: block;
     text-align: center; }
-  .md-content #wrapper img, .everything .preview #wrapper img {
+  .md-content #wrapper img, .everything .preview .content #wrapper img {
     border: none;
     display: block;
     margin: 1em auto;
     max-width: 100%; }
-  .md-content figcaption, .everything .preview figcaption {
+  .md-content figcaption, .everything .preview .content figcaption {
     font-size: 0.8em;
     font-style: italic; }
-  .md-content mark, .everything .preview mark {
+  .md-content mark, .everything .preview .content mark {
     background: #fefec0;
     padding: 1px 3px; }
-  .md-content .footnote, .everything .preview .footnote {
+  .md-content .footnote, .everything .preview .content .footnote {
     font-size: 0.8em;
     vertical-align: super; }
-  .md-content .footnotes ol, .everything .preview .footnotes ol {
+  .md-content .footnotes ol, .everything .preview .content .footnotes ol {
     font-weight: bold; }
-  .md-content .footnotes ol li p, .everything .preview .footnotes ol li p {
+  .md-content .footnotes ol li p, .everything .preview .content .footnotes ol li p {
     font-weight: normal; }
-  .md-content .shadow, .everything .preview .shadow {
+  .md-content .shadow, .everything .preview .content .shadow {
     -webkit-box-shadow: 0 2px 4px #999; }
-  .md-content .source, .everything .preview .source {
+  .md-content .source, .everything .preview .content .source {
     text-align: center;
     font-size: 0.8em;
     color: #777;
@@ -290,6 +283,14 @@
     z-index: 100;
     width: 200px; }
 
+.editor {
+  border-top: 1px solid #000;
+  border-left: 1px solid #aaaaaa;
+  heihgt: 100%; }
+  .editor .ace {
+    width: 100%;
+    height: 500px; }
+
 * {
   margin: 0;
   padding: 0; }
@@ -297,30 +298,29 @@
 .c-hide {
   display: none; }
 
+html, body {
+  width: 100%;
+  height: 100%; }
+
 body {
-  height: 100%;
   font-familiy: Arial, '微软雅黑'; }
+
+.view {
+  position: relative; }
 
 ::-webkit-scrollbar {
   display: none; }
 
 .everything {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: auto;
-  height: auto; }
+  width: 100%;
+  height: 100%; }
+  .everything > :first-child {
+    width: 100%;
+    height: 100%; }
   .everything .explorer {
     border-top: 1px solid #000; }
     .everything .explorer .title {
       border-bottom: 1px solid #ccc; }
-  .everything .editor {
-    border-top: 1px solid #000;
-    border-left: 1px solid #aaaaaa; }
-    .everything .editor .ace {
-      height: 100%; }
   .everything .preview {
     border-top: 1px solid #000;
     border-left: 1px solid #aaaaaa;

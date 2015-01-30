@@ -1,8 +1,9 @@
 @charset "utf-8";
 @import "../../bower_components/absolute-layout/src/absolute-layout";
-@import "../../bower_components/jquery-box-layout/src/style/style";
+@import "../../bower_components/jquery-flex-layout/src/style/style";
 @import "../markdown-style/style/style";
 @import "../top-nav/index";
+@import "../editor/index";
 
 $COLOR: #aaa;
 
@@ -15,9 +16,17 @@ $COLOR: #aaa;
 	display: none;
 }
 
-body {
+html, body {
+	width: 100%;
 	height: 100%;
+}
+
+body {
 	font-familiy: Arial, '微软雅黑';
+}
+
+.view {
+	position: relative;
 }
 
 ::-webkit-scrollbar {
@@ -25,7 +34,13 @@ body {
 }
 
 .everything {
-	@include maximize;
+	width: 100%;
+	height: 100%;
+
+	> :first-child {
+		width: 100%;
+		height: 100%;
+	}
 
 	.explorer {
 		border-top: 1px solid #000;
@@ -35,21 +50,15 @@ body {
 		}
 	}
 
-	.editor {
-		border-top: 1px solid #000;
-		border-left: 1px solid $COLOR;
-
-		.ace {
-			height: 100%;
-		}
-	}
-
 	.preview {
 		border-top: 1px solid #000;
 		border-left: 1px solid $COLOR;
 		padding: 10px;
 		@include slide-vertical;
-		@extend .md-content;
+
+		.content {
+			@extend .md-content;
+		}
 	}
 }
 

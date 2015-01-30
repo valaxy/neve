@@ -28,7 +28,7 @@
     "bootstrap": "~3.3.2",
     "normalize.css": "~3.0.2",
     "eventEmitter": "~4.2.11",
-    "jquery-box-layout": "valaxy/jquery-box-layout",
+    "jquery-flex-layout": "valaxy/jquery-flex-layout",
     "absolute-layout": "valaxy/absolute-layout",
     "timer": "valaxy/timer",
     "path": "valaxy/path",

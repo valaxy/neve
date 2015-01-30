@@ -6,7 +6,7 @@ define(function (require, exports) {
 
 
 	exports.init = function () {
-		var $preview = $('.preview')
+		var $preview = $('.preview .content')
 
 		editorWatch.on('update', function (done, text) {
 			fs.writeFile(INPUT_FILE, text, function (err) {
