@@ -1,40 +1,26 @@
-doctype html
-html
-    head
-        meta(charset="utf-8")
-        title hello world
-        link(rel="stylesheet" href="index.css")
-        link(rel="stylesheet" href="../../bower_components/jstree/dist/themes/default/style.min.css")
-        link(rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css")
-        link(rel="stylesheet" href="../../bower_components/magnific-popup/dist/magnific-popup.css")
-        link(rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css")
-        link(rel="stylesheet" href="../../bower_components/jquery-ui/themes/blitzer/jquery-ui.min.css")
-    body
-        div.everything
-            include ../top-nav/index
-            include ../file-tree/index
-            include ../editor/index
-            include ../preview/index
+extends manual-template
+block title
+    title NEVE - editor
 
-        script.
-            window.requireNode = window.require
-            window.require = undefined
+block link
+    link(rel="stylesheet" href="index.css")
 
-        // this components can not package them to AMD for now
-        script(src="../../bower_components/ace-builds/src-min-noconflict/ace.js")
-        script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
+block body
+    div.everything
+        include ../top-nav/index
+        include ../file-tree/index
+        include ../editor/index
+        include ../preview/index
 
-        // startup
-        script(src="../../bower_components/requirejs/require.js")
-        script(src="requirejs-config.js")
-        script.
-            require([
-                'src/home/index',
-                'backbone',
-                'backbone-relational'
-            ], function (index) {
-                index.init()
-            })
+block script
+    script.
+        require([
+            'src/home/index',
+            'backbone',
+            'backbone-relational'
+        ], function (index) {
+            index.init()
+        })
 
 
 

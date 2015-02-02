@@ -266,13 +266,15 @@
   cursor: pointer; }
 .top-nav .list {
   float: left;
-  list-style: none; }
+  list-style: none;
+  height: 100%; }
   .top-nav .list li {
     cursor: pointer;
     float: left;
     width: 80px;
     text-align: center;
-    border-right: 1px solid #ccc; }
+    border-right: 1px solid #ccc;
+    heihgt: 100%; }
 .top-nav .menu {
   position: absolute;
   display: none;
@@ -292,6 +294,10 @@
     height: 500px; }
 
 * {
+  margin: 0;
+  padding: 0; }
+
+ul {
   margin: 0;
   padding: 0; }
 

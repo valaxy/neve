@@ -1,0 +1,14 @@
+extends ../../src/home/manual-template
+
+block body
+    div hello world
+
+block script
+    script.
+        require([
+            'test/file-tree/manual',
+            'backbone',
+            'backbone-relational'
+        ], function (index) {
+            index.init()
+        })

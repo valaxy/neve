@@ -189,7 +189,7 @@ define(function (require) {
 
 
 		_initForDom: function () {
-			this.$el.jstree({
+			this._$jstree.jstree({
 				core: {
 					check_callback: true
 				},
@@ -204,7 +204,7 @@ define(function (require) {
 				contextmenu: contextmenu(this),
 				plugins: ['types', 'wholerow', 'contextmenu']
 			})
-			this._jstree = this.$el.jstree()
+			this._jstree = this._$jstree.jstree()
 		},
 
 		_initForWatch: function () {
@@ -262,6 +262,7 @@ define(function (require) {
 
 
 		initialize: function (options) {
+			this._$jstree = this.$('.jstree')
 			this._projectManager = options.projectManager
 			this._initForDom()
 			var me = this

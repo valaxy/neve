@@ -7,19 +7,19 @@ define(function (require, exports) {
 			direction: 'column',
 			views: [{
 				_schema: 'view',
-				flex: 1,
+				flex: '25px',
 				selector: '.top-nav'
 			}, {
 				_schema: 'linear',
 				direction: 'row',
-				flex: 24,
+				flex: 1,
 				views: [{
 					_schema: 'view',
-					flex: 1,
+					flex: '200px',
 					selector: '.explorer'
 				}, {
 					_schema: 'linear',
-					flex: 4,
+					flex: 1,
 					direction: 'row',
 					views: [{
 						_schema: 'view',

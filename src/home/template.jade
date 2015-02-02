@@ -1,0 +1,38 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        title 界面组件手工测试
+        link(rel="stylesheet" href="../../bower_components/jstree/dist/themes/default/style.min.css")
+        link(rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css")
+        link(rel="stylesheet" href="../../bower_components/jquery-ui/themes/blitzer/jquery-ui.min.css")
+        link(rel="stylesheet" href="../../bower_components/magnific-popup/dist/magnific-popup.css")
+        link(rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css")
+    body
+        block body
+
+        script.
+            window.requireNode = window.require
+            window.require = undefined
+
+        script(src="../../bower_components/seajs/dist/sea.js")
+        script(src="../../bower_components/jquery/dist/jquery.min.js")
+        script(src="../../bower_components/underscore/underscore-min.js")
+        script(src="../../bower_components/backbone/backbone.js")
+        script(src="../../bower_components/backbone-relational/backbone-relational.js")
+        script(src="../../bower_components/ace-builds/src-min-noconflict/ace.js")
+        script(src="../../bower_components/jstree/dist/jstree.min.js")
+        script(src="../../bower_components/async/lib/async.js")
+        script(src="../../bower_components/jquery-ui/jquery-ui.min.js")
+        script(src="../../bower_components/magnific-popup/dist/jquery.magnific-popup.min.js")
+        script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
+
+        // startup
+        script.
+            define.amd = {}
+            seajs.config({
+                base: '../../'
+            })
+            seajs.use('./test', function (test) {
+                test.init()
+            })
