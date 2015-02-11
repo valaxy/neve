@@ -3,7 +3,7 @@ define(function (require) {
 	require('magnific-popup')
 	var path = require('bower_components/path/path')
 	var Project = require('../project-manager/project-model')
-
+	var fileDialog = require('bower_components/nw-file-dialog/index')
 
 	/** Events: close */
 	var CreateProjectDialog = Backbone.View.extend({
@@ -39,6 +39,14 @@ define(function (require) {
 			},
 			'click .cancel': function () {
 				this.close()
+			},
+			'click .location-select': function () {
+				var me = this
+				fileDialog.openDir({}, function (dir) {
+					var name = me._$name.val()
+					var location = path.join(dir, name)
+					me._$location.val(location)
+				})
 			}
 		},
 
@@ -65,7 +73,7 @@ define(function (require) {
 			this._$ok = this.$('.ok')
 			this._$cancel = this.$('.cancel')
 			this._$errMsg = this.$('.error-msg')
-			this._hasName = false
+			this._hasName = false // if user input a name
 		}
 	})
 
