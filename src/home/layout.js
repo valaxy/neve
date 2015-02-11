@@ -31,6 +31,10 @@ define(function (require, exports) {
 						selector: '.preview'
 					}]
 				}]
+			}, {
+				_schema: 'view',
+				flex: '20px',
+				selector: '.status-bar'
 			}]
 		})
 		$('.everything').append($dom)

@@ -5,32 +5,47 @@ define(function (require) {
 	var process = require('../process/process')
 
 	var Editor = Backbone.View.extend({
+		_onOpenFile: function (project, file) {
+			this.$el.show()
+			var content = fs.readFileSync(file.absolutePath(project.get('location')), {
+				encoding: 'utf-8'
+			})
+			this._editor.setValue(content)
+			process.immediate()
+		},
+
+		_onCloseFile: function (project, file) {
+			this.$el.hide()
+		},
+
 		initialize: function (options) {
 			var projectManager = options.projectManager
-
 			var editor = g.editor = ace.edit($('.editor .ace')[0])
+			this._editor = editor
+
 			editor.getSession().setMode("ace/mode/javascript")
 			editor.setTheme("ace/theme/github") // this bug
 			editor.renderer.setShowGutter(false)
 
 			var me = this
+
+			// bind event when open a project
 			projectManager.on('open', function (project) {
 				// change the editor value when open a file
-				me.listenTo(project, 'change:openFile', function (collection, file) {
-					var content = fs.readFileSync(file.absolutePath(project.get('location')), {
-						encoding: 'utf-8'
-					})
-					console.log(file.absolutePath(project.get('location')))
-					g.editor.setValue(content)
-					process.immediate()
+				me.listenTo(project, 'change:openFile', function (project, file) {
+					if (file) {
+						me._onOpenFile(project, file)
+					} else {
+						me._onCloseFile(project, file)
+					}
 				})
 			})
 
+			// unbind event when close a project
 			projectManager.on('close', function (project) {
 				me.stopListening(project)
 			})
 		}
-
 	})
 
 	return Editor

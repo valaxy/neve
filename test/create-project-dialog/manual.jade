@@ -1,18 +1,18 @@
 extends ../../src/home/manual-template
 
 block link
-    link(rel="stylesheet" href="../../src/file-tree/index.css")
-
+    link(rel="stylesheet" href="../../src/create-project-dialog/index.css")
 
 block body
-    include ../../src/file-tree/index
+    include ../../src/create-project-dialog/index
 
 block script
     script.
         require([
-            'test/file-tree/manual',
+            'test/create-project-dialog/manual',
             'backbone',
             'backbone-relational'
         ], function (index) {
             index.init()
         })
+

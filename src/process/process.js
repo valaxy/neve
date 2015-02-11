@@ -25,7 +25,7 @@ define(function (require, exports) {
 					$preview.html(stdout)
 					$preview[0].scrollTop = top
 
-					MathJax.Hub.Queue(['Typeset', MathJax.Hub, $('.preview')[0]])
+					MathJax.Hub.Queue(['Typeset', MathJax.Hub, $('.preview .content')[0]])
 					done()
 				})
 			})

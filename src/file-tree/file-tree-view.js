@@ -12,6 +12,11 @@ define(function (require) {
 	require('jstree')
 
 
+	/** Events:
+	 **     - selectFile(file: FileModel)
+	 **     - selectDirectory(dir: FileModel)
+	 ** Options:
+	 **     - filters: String */
 	var FileTreeView = Backbone.View.extend({
 
 		_jstree: null,              // jstree control handler
@@ -203,6 +208,18 @@ define(function (require) {
 				},
 				contextmenu: contextmenu(this),
 				plugins: ['types', 'wholerow', 'contextmenu']
+			})
+
+			// 不知道为什么不能把这里的事件绑定放到events选项里
+			var me = this
+			this._$jstree.on('select_node.jstree', function (event, data) {
+				var domId = data.selected[0]
+				var file = me._domIdToModel[domId]
+				if (file.get('isDir')) {
+					me.trigger('selectDirectory', file)
+				} else {
+					me.trigger('selectFile', file)
+				}
 			})
 			this._jstree = this._$jstree.jstree()
 		},

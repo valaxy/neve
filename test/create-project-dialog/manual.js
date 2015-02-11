@@ -1,6 +1,6 @@
 define(function (require, exports) {
-	var CreateProjectDialogView = require('./view')
-	var ProjectManager = require('../project-manager/project-manager')
+	var CreateProjectDialogView = require('src/create-project-dialog/view')
+	var ProjectManager = require('src/project-manager/project-manager')
 
 	exports.init = function () {
 		var dialog = new CreateProjectDialogView({

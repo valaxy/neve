@@ -33,7 +33,8 @@
     "timer": "valaxy/timer",
     "path": "valaxy/path",
     "exit-confirm": "valaxy/exit-confirm",
-    "algorithm-data-structure": "valaxy/algorithm-data-structure"
+    "algorithm-data-structure": "valaxy/algorithm-data-structure",
+    "nw-file-dialog": "valaxy/nw-file-dialog"
   },
   "devDependencies": {
     "qunit": "~1.16.0",
