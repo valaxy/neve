@@ -7,8 +7,10 @@ define(function (require) {
 
 
 	/** Events:
-	 **     - open
-	 **     - close
+	 **     - open: open a project
+	 **     - close: close a project
+	 **     - openFile: active project open a file
+	 **     - closeFile: active project close a file
 	 */
 	var ProjectManager = function () {
 		this._active = null
@@ -58,6 +60,7 @@ define(function (require) {
 
 	/** Open the project in neve, and trigger a `open` event */
 	ProjectManager.prototype.open = function (project) {
+		project._manager = this
 		if (this._active) {
 			this.close() // close first
 		}

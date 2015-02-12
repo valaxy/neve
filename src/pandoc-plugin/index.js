@@ -33,6 +33,7 @@ define(function (require, exports) {
 
 					// editor
 					new Editor({
+						el: editor._$dom,
 						projectManager: options.projectManager
 					})
 				} else {

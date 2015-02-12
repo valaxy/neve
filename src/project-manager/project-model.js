@@ -21,6 +21,18 @@ define(function (require) {
 			}
 		}],
 
+		initialize: function () {
+			this._manager = null
+
+			var me = this
+			this.on('change:openFile', function (project, file) {
+				if (file) {
+					me._manager.trigger('closeFile', project, file)
+				}
+				me._manager.trigger('openFile', [project, file])
+			})
+		},
+
 
 		// save the opened file
 		saveOpen: function (content) {

@@ -11,7 +11,7 @@ define(function (require) {
 				encoding: 'utf-8'
 			})
 			this._editor.setValue(content)
-			process.immediate()
+			//process.immediate()
 		},
 
 		_onCloseFile: function (project, file) {
@@ -20,7 +20,7 @@ define(function (require) {
 
 		initialize: function (options) {
 			var projectManager = options.projectManager
-			var editor = g.editor = ace.edit($('.editor .ace')[0])
+			var editor = g.editor = ace.edit(this.$('.ace')[0])
 			this._editor = editor
 
 			editor.getSession().setMode("ace/mode/javascript")
@@ -29,21 +29,13 @@ define(function (require) {
 
 			var me = this
 
-			// bind event when open a project
-			projectManager.on('open', function (project) {
-				// change the editor value when open a file
-				me.listenTo(project, 'change:openFile', function (project, file) {
-					if (file) {
-						me._onOpenFile(project, file)
-					} else {
-						me._onCloseFile(project, file)
-					}
-				})
-			})
-
-			// unbind event when close a project
-			projectManager.on('close', function (project) {
-				me.stopListening(project)
+			// bind event when open a file in project
+			projectManager.on('openFile', function (project, file) {
+				if (file) {
+					me._onOpenFile(project, file)
+				} else {
+					me._onCloseFile(project, file)
+				}
 			})
 		}
 	})
