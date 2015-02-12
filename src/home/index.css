@@ -306,6 +306,19 @@
   overflow-x: hidden;
   overflow-y: auto; }
 
+.editor-tab {
+  border-bottom: 1px solid #ccc; }
+  .editor-tab ul {
+    height: 30px; }
+    .editor-tab ul li {
+      display: inline-block;
+      height: 100%;
+      list-style: none;
+      width: 100px;
+      border-right: 1px solid #ccc; }
+    .editor-tab ul .close {
+      cursor: pointer; }
+
 * {
   margin: 0;
   padding: 0; }

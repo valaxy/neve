@@ -21,14 +21,23 @@ define(function (require, exports) {
 					loader.loadHTML('preview', 'index', function ($dom) {
 						done(null, $dom)
 					})
+				},
+				function (done) {
+					loader.loadHTML('editor-tab', 'index', function ($dom) {
+						done(null, $dom)
+					})
 				}
 			], function (err, results) {
 				if (!err) {
-					var linear = new LinearLayout({direction: 'row'})
+					var linear = new LinearLayout({direction: 'column'})
+					var linear2 = new LinearLayout({direction: 'row'})
 					var editor = new SimpleView({selector: results[0]})
 					var preview = new SimpleView({selector: results[1]})
-					linear.appendView(editor, {flex: 1})
-					linear.appendView(preview, {flex: 1})
+					var editorTab = new SimpleView({selector: results[2]})
+					linear2.appendView(editor, {flex: 1})
+					linear2.appendView(preview, {flex: 1})
+					linear.appendView(editorTab, {flex: '30px'})
+					linear.appendView(linear2, {flex: 1})
 					layout.appendAfterFileTree(linear, {flex: 1})
 
 					// editor

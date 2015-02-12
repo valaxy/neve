@@ -1,0 +1,17 @@
+extends ../../src/home/manual-template
+
+block link
+    link(rel="stylesheet" href="../../src/editor-tab/index.css")
+
+block body
+    include ../../src/editor-tab/index
+
+block script
+    script.
+        require([
+            'test/editor-tab/manual',
+            'backbone',
+            'backbone-relational'
+        ], function (index) {
+            index.init()
+        })
