@@ -279,8 +279,8 @@ define(function (require) {
 
 
 		initialize: function (options) {
-			this._$jstree = this.$('.jstree')
 			this._projectManager = options.projectManager
+			this._$jstree = this.$('.jstree')
 			this._initForDom()
 			var me = this
 

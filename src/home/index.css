@@ -2,6 +2,52 @@
 .linear {
   display: flex; }
 
+.create-project-dialog {
+  width: 700px;
+  background: white; }
+
+.top-nav .close {
+  cursor: pointer;
+  float: right; }
+.top-nav .save {
+  float: left;
+  cursor: pointer; }
+.top-nav .list {
+  float: left;
+  list-style: none;
+  height: 100%; }
+  .top-nav .list li {
+    cursor: pointer;
+    float: left;
+    width: 80px;
+    text-align: center;
+    border-right: 1px solid #ccc;
+    heihgt: 100%; }
+.top-nav .menu {
+  position: absolute;
+  display: none;
+  z-index: 9999; }
+  .top-nav .menu li {
+    left: 0;
+    top: 0;
+    z-index: 100;
+    width: 200px; }
+
+.editor {
+  heihgt: 100%; }
+  .editor .ace {
+    width: 100%;
+    height: 500px; }
+
+.explorer {
+  overflow-x: hidden;
+  overflow-y: auto; }
+  .explorer .title {
+    border-bottom: 1px solid #ccc; }
+
+.status-bar {
+  border-top: 1px solid #ccc; }
+
 /*
  * This document has been created with Marked.app <http://markedapp.com>.
  * Copyright 2011 Brett Terpstra
@@ -12,7 +58,7 @@
  * Authors: @brunodecarvalho, @jpedroso, @rcabaco
  * Copyright 2011 Metaclassy, Lda. <http://metaclassy.com>
  */
-.md-content, .everything .preview .content {
+.md-content, .preview .content {
   background-color: #f2f2f2;
   color: #3c3c3c;
   /* Change font size below */
@@ -38,28 +84,28 @@
   /* end of lists */
   /* classes */
   /* custom formatting classes */ }
-  .md-content a, .everything .preview .content a {
+  .md-content a, .preview .content a {
     color: #308bd8;
     text-decoration: none; }
-  .md-content a:hover, .everything .preview .content a:hover {
+  .md-content a:hover, .preview .content a:hover {
     text-decoration: underline; }
-  .md-content h1, .everything .preview .content h1, .md-content h2, .everything .preview .content h2 {
+  .md-content h1, .preview .content h1, .md-content h2, .preview .content h2 {
     line-height: 1.2em;
     margin-top: 32px;
     margin-bottom: 12px; }
-  .md-content h1:first-child, .everything .preview .content h1:first-child {
+  .md-content h1:first-child, .preview .content h1:first-child {
     margin-top: 0; }
-  .md-content h3, .everything .preview .content h3, .md-content h4, .everything .preview .content h4, .md-content h5, .everything .preview .content h5, .md-content h6, .everything .preview .content h6 {
+  .md-content h3, .preview .content h3, .md-content h4, .preview .content h4, .md-content h5, .preview .content h5, .md-content h6, .preview .content h6 {
     margin-top: 12px;
     margin-bottom: 0; }
-  .md-content h5, .everything .preview .content h5, .md-content h6, .everything .preview .content h6 {
+  .md-content h5, .preview .content h5, .md-content h6, .preview .content h6 {
     font-size: 0.9em;
     line-height: 1.0em; }
-  .md-content p, .everything .preview .content p {
+  .md-content p, .preview .content p {
     margin: 0 0 24px 0; }
-  .md-content p:last-child, .everything .preview .content p:last-child {
+  .md-content p:last-child, .preview .content p:last-child {
     margin: 0; }
-  .md-content #wrapper hr, .everything .preview .content #wrapper hr {
+  .md-content #wrapper hr, .preview .content #wrapper hr {
     width: 100%;
     margin: 3em auto;
     border: 0;
@@ -67,33 +113,33 @@
     background-color: #ccc;
     height: 1px;
     -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.75); }
-  .md-content ol, .everything .preview .content ol {
+  .md-content ol, .preview .content ol {
     list-style: outside decimal; }
-  .md-content ul, .everything .preview .content ul {
+  .md-content ul, .preview .content ul {
     list-style: outside disc; }
-  .md-content ol, .everything .preview .content ol, .md-content ul, .everything .preview .content ul {
+  .md-content ol, .preview .content ol, .md-content ul, .preview .content ul {
     padding-left: 0;
     margin-bottom: 24px; }
-  .md-content ol li, .everything .preview .content ol li {
+  .md-content ol li, .preview .content ol li {
     margin-left: 28px; }
-  .md-content ul li, .everything .preview .content ul li {
+  .md-content ul li, .preview .content ul li {
     margin-bottom: 8px;
     margin-left: 16px; }
-  .md-content ol:last-child, .everything .preview .content ol:last-child, .md-content ul:last-child, .everything .preview .content ul:last-child {
+  .md-content ol:last-child, .preview .content ol:last-child, .md-content ul:last-child, .preview .content ul:last-child {
     margin: 0; }
-  .md-content li > ol, .everything .preview .content li > ol, .md-content li > ul, .everything .preview .content li > ul {
+  .md-content li > ol, .preview .content li > ol, .md-content li > ul, .preview .content li > ul {
     padding-left: 12px; }
-  .md-content dl, .everything .preview .content dl {
+  .md-content dl, .preview .content dl {
     margin-bottom: 24px; }
-  .md-content dl dt, .everything .preview .content dl dt {
+  .md-content dl dt, .preview .content dl dt {
     font-weight: bold;
     margin-bottom: 8px; }
-  .md-content dl dd, .everything .preview .content dl dd {
+  .md-content dl dd, .preview .content dl dd {
     margin-left: 0;
     margin-bottom: 12px; }
-  .md-content dl dd:last-child, .everything .preview .content dl dd:last-child, .md-content dl:last-child, .everything .preview .content dl:last-child {
+  .md-content dl dd:last-child, .preview .content dl dd:last-child, .md-content dl:last-child, .preview .content dl:last-child {
     margin-bottom: 0; }
-  .md-content pre, .everything .preview .content pre {
+  .md-content pre, .preview .content pre {
     white-space: pre-wrap;
     width: 96%;
     margin-bottom: 24px;
@@ -102,74 +148,74 @@
     -webkit-border-radius: 3px;
     background-color: #eee;
     border: 1px solid #ddd; }
-  .md-content code, .everything .preview .content code {
+  .md-content code, .preview .content code {
     white-space: nowrap;
     font-size: 1.1em;
     padding: 2px;
     -webkit-border-radius: 3px;
     background-color: #eee;
     border: 1px solid #ddd; }
-  .md-content pre code, .everything .preview .content pre code {
+  .md-content pre code, .preview .content pre code {
     white-space: pre-wrap;
     border: none;
     padding: 0;
     background-color: transparent;
     -webkit-border-radius: 0; }
-  .md-content blockquote, .everything .preview .content blockquote {
+  .md-content blockquote, .preview .content blockquote {
     margin-left: 0;
     margin-right: 0;
     width: 96%;
     padding: 0 10px;
     border-left: 3px solid #ddd;
     color: #777; }
-  .md-content table, .everything .preview .content table {
+  .md-content table, .preview .content table {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 24px;
     /* border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd; */
     border-spacing: 0; }
-  .md-content table th, .everything .preview .content table th {
+  .md-content table th, .preview .content table th {
     padding: 3px 10px;
     background-color: #eee;
     /* border-top: 1px solid #ddd;
     border-left: 1px solid #ddd;*/ }
-  .md-content table td, .everything .preview .content table td {
+  .md-content table td, .preview .content table td {
     padding: 3px 10px;
     /* border-top: 1px solid #ddd;
     border-left: 1px solid #ddd; */ }
-  .md-content table tr:nth-child(odd), .everything .preview .content table tr:nth-child(odd), .md-content table th:nth-child(odd), .everything .preview .content table th:nth-child(odd), .md-content table td:nth-child(odd), .everything .preview .content table td:nth-child(odd) {
+  .md-content table tr:nth-child(odd), .preview .content table tr:nth-child(odd), .md-content table th:nth-child(odd), .preview .content table th:nth-child(odd), .md-content table td:nth-child(odd), .preview .content table td:nth-child(odd) {
     background: rgba(255, 255, 255, 0.06); }
-  .md-content table tr:nth-child(even), .everything .preview .content table tr:nth-child(even), .md-content table td:nth-child(even), .everything .preview .content table td:nth-child(even) {
+  .md-content table tr:nth-child(even), .preview .content table tr:nth-child(even), .md-content table td:nth-child(even), .preview .content table td:nth-child(even) {
     background: rgba(0, 0, 0, 0.06); }
-  .md-content caption, .everything .preview .content caption {
+  .md-content caption, .preview .content caption {
     font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 5px; }
-  .md-content figure, .everything .preview .content figure {
+  .md-content figure, .preview .content figure {
     display: block;
     text-align: center; }
-  .md-content #wrapper img, .everything .preview .content #wrapper img {
+  .md-content #wrapper img, .preview .content #wrapper img {
     border: none;
     display: block;
     margin: 1em auto;
     max-width: 100%; }
-  .md-content figcaption, .everything .preview .content figcaption {
+  .md-content figcaption, .preview .content figcaption {
     font-size: 0.8em;
     font-style: italic; }
-  .md-content mark, .everything .preview .content mark {
+  .md-content mark, .preview .content mark {
     background: #fefec0;
     padding: 1px 3px; }
-  .md-content .footnote, .everything .preview .content .footnote {
+  .md-content .footnote, .preview .content .footnote {
     font-size: 0.8em;
     vertical-align: super; }
-  .md-content .footnotes ol, .everything .preview .content .footnotes ol {
+  .md-content .footnotes ol, .preview .content .footnotes ol {
     font-weight: bold; }
-  .md-content .footnotes ol li p, .everything .preview .content .footnotes ol li p {
+  .md-content .footnotes ol li p, .preview .content .footnotes ol li p {
     font-weight: normal; }
-  .md-content .shadow, .everything .preview .content .shadow {
+  .md-content .shadow, .preview .content .shadow {
     -webkit-box-shadow: 0 2px 4px #999; }
-  .md-content .source, .everything .preview .content .source {
+  .md-content .source, .preview .content .source {
     text-align: center;
     font-size: 0.8em;
     color: #777;
@@ -254,52 +300,11 @@
 
   .footnotes {
     page-break-before: always; } }
-.create-project-dialog {
-  width: 700px;
-  background: white; }
-
-.top-nav .close {
-  cursor: pointer;
-  float: right; }
-.top-nav .save {
-  float: left;
-  cursor: pointer; }
-.top-nav .list {
-  float: left;
-  list-style: none;
-  height: 100%; }
-  .top-nav .list li {
-    cursor: pointer;
-    float: left;
-    width: 80px;
-    text-align: center;
-    border-right: 1px solid #ccc;
-    heihgt: 100%; }
-.top-nav .menu {
-  position: absolute;
-  display: none;
-  z-index: 9999; }
-  .top-nav .menu li {
-    left: 0;
-    top: 0;
-    z-index: 100;
-    width: 200px; }
-
-.editor {
-  border-top: 1px solid #000;
-  border-left: 1px solid #aaaaaa;
-  heihgt: 100%; }
-  .editor .ace {
-    width: 100%;
-    height: 500px; }
-
-.explorer {
-  border-top: 1px solid #000; }
-  .explorer .title {
-    border-bottom: 1px solid #ccc; }
-
-.status-bar {
-  border-top: 1px solid #ccc; }
+.preview {
+  border-left: 1px solid #ccc;
+  padding: 10px;
+  overflow-x: hidden;
+  overflow-y: auto; }
 
 * {
   margin: 0;
@@ -328,12 +333,13 @@ body {
 .everything {
   width: 100%;
   height: 100%; }
-  .everything > :first-child {
+  .everything > .linear {
     width: 100%;
     height: 100%; }
-  .everything .preview {
-    border-top: 1px solid #000;
-    border-left: 1px solid #aaaaaa;
-    padding: 10px;
-    overflow-x: hidden;
-    overflow-y: auto; }
+
+.everything .top-nav {
+  border-bottom: 1px solid #aaaaaa; }
+.everything .status-bar {
+  border-top: 1px solid #aaaaaa; }
+.everything .explorer {
+  border-right: 1px solid #aaaaaa; }

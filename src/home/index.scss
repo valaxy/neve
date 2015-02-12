@@ -1,11 +1,11 @@
 @charset "utf-8";
 @import "../../bower_components/absolute-layout/src/absolute-layout";
 @import "../../bower_components/jquery-flex-layout/src/style/style";
-@import "../markdown-style/style/style";
 @import "../top-nav/index";
 @import "../editor/index";
 @import "../file-tree/index";
 @import "../status-bar/index";
+@import "../preview/index";
 
 $COLOR: #aaa;
 
@@ -44,52 +44,22 @@ body {
 	width: 100%;
 	height: 100%;
 
-	> :first-child {
+	> .linear {
 		width: 100%;
 		height: 100%;
 	}
 
-	.preview {
-		border-top: 1px solid #000;
-		border-left: 1px solid $COLOR;
-		padding: 10px;
-		@include slide-vertical;
-
-		.content {
-			@extend .md-content;
-		}
-	}
 }
 
-//.everything {
-//	display: -webkit-box;
-//	-webkit-box-orient: vertical;
-//	width: 100%;
-//	height: 100%;
-//
-//	.top-nav {
-//		display: -webkit-box;
-//		height: 30px;
-//	}
-//
-//	.d1 {
-//		display: -webkit-box;
-//		-webkit-box-flex: 1;
-//		height: 100%;
-//
-//		.explorer {
-//			display: -webkit-box;
-//			width: 200px;
-//		}
-//
-//		.editor {
-//			display: -webkit-box;
-//			-webkit-box-flex: 1;
-//		}
-//
-//		.preview {
-//			display: -webkit-box;
-//			-webkit-box-flex: 1;
-//		}
-//	}
-//}
+// about border
+.everything {
+	.top-nav {
+		border-bottom: 1px solid $COLOR;
+	}
+	.status-bar {
+		border-top: 1px solid $COLOR;
+	}
+	.explorer {
+		border-right: 1px solid $COLOR;
+	}
+}

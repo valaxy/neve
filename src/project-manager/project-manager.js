@@ -6,7 +6,10 @@ define(function (require) {
 	var async = require('async')
 
 
-	/** Events: open, close */
+	/** Events:
+	 **     - open
+	 **     - close
+	 */
 	var ProjectManager = function () {
 		this._active = null
 		this._set = new Set(function (p1, p2) {

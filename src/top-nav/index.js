@@ -7,6 +7,8 @@ define(function (require) {
 	var MenuPopup = require('./menu-popup')
 	var MenuAssociate = require('./menu-associate')
 	var CreateProjectDialogView = require('../create-project-dialog/view')
+	var fileDialog = require('bower_components/nw-file-dialog/index')
+	var ProjectModel = require('../project-manager/project-model')
 
 
 	var TopNavView = Backbone.View.extend({
@@ -27,9 +29,21 @@ define(function (require) {
 					},
 					modal: true
 				})
+			},
+			'click .open-project': function () {
+				var me = this
+				fileDialog.openDir({}, function (path) {
+					var project = new ProjectModel({
+						name: 'xxxxdddd',
+						location: path
+					})
+					me._projectManager.open(project)
+				})
 			}
 		},
 		initialize: function (options) {
+			this._projectManager = options.projectManager
+
 			var m1 = new MenuPopup({
 				$button: $('.git'),
 				$menu: $('.git-menu').menu().hide()

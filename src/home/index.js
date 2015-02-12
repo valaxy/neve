@@ -7,20 +7,20 @@ define(function (require, exports) {
 	var FileTreeModel = require('../file-tree/file-tree-model')
 	var TopNavView = require('../top-nav/index')
 	var g = require('./global')
-	var Editor = require('../editor/editor')
 	var layout = require('./layout')
 	var autoSave = require('../editor/auto-save')
 	var saveConfirm = require('../editor/save-confirm')
 	var ProjectManager = require('../project-manager/project-manager')
 	var ProjectModel = require('../project-manager/project-model')
 
+	var pandocPlugin = require('../pandoc-plugin/index')
 
 	exports.init = function () {
 		var projectManager = g.projectManager = new ProjectManager
 
 		layout.init()
 
-		new Editor({
+		new TopNavView({
 			projectManager: projectManager
 		})
 
@@ -28,20 +28,20 @@ define(function (require, exports) {
 		g.fileTree = (new FileTreeView({
 			model: new FileTreeModel,
 			el: $('.explorer'),
-			projectManager: g.projectManager
+			projectManager: projectManager
 		})).model
 
-		process.init()
-
-		new TopNavView({
+		pandocPlugin.init({
 			projectManager: projectManager
 		})
 
-		autoSave.init({
-			projectManager: projectManager
-		})
+		//process.init()
 
-		saveConfirm.init()
+		//autoSave.init({
+		//	projectManager: projectManager
+		//})
+		//
+		//saveConfirm.init()
 
 		g.projectManager.open(new ProjectModel({
 			name: 'CF',
@@ -50,8 +50,8 @@ define(function (require, exports) {
 
 		// auto open
 		setTimeout(function () {
-			var file = g.fileTree.getFileByPath('readme.md')
-			g.fileTree.get('project').set('openFile', file)
+			//var file = g.fileTree.getFileByPath('readme.md')
+			//g.fileTree.get('project').set('openFile', file)
 		}, 1000)
 	}
 })
