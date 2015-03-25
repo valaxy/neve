@@ -35,7 +35,8 @@
     "exit-confirm": "valaxy/exit-confirm",
     "algorithm-data-structure": "valaxy/algorithm-data-structure",
     "nw-file-dialog": "valaxy/nw-file-dialog",
-    "pouchdb": "~3.3.0"
+    "pouchdb": "~3.3.0",
+    "css-loading-spinners": "~1.0.0"
   },
   "devDependencies": {
     "qunit": "~1.16.0",

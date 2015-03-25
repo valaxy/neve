@@ -1,6 +1,4 @@
 define(function (require) {
-	var path = requireNode('path')
-
 	require('magnific-popup')
 	var $ = require('jquery')
 	var g = require('../home/global')
@@ -9,6 +7,7 @@ define(function (require) {
 	var CreateProjectDialogView = require('../create-project-dialog/view')
 	var fileDialog = require('bower_components/nw-file-dialog/index')
 	var ProjectModel = require('../project-manager/project-model')
+	var path = requireNode('path')
 
 
 	var TopNavView = Backbone.View.extend({

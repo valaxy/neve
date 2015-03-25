@@ -12,10 +12,15 @@ define(function (require, exports) {
 	var saveConfirm = require('../editor/save-confirm')
 	var ProjectManager = require('../project-manager/project-manager')
 	var ProjectModel = require('../project-manager/project-model')
+	var Loading = require('../loading/index')
 
 	var pandocPlugin = require('../pandoc-plugin/index')
 
 	exports.init = function () {
+		var loading = new Loading({
+			el: $('.project-loading')
+		})
+
 		var projectManager = g.projectManager = new ProjectManager
 
 		layout.init()
@@ -45,7 +50,7 @@ define(function (require, exports) {
 
 		g.projectManager.open(new ProjectModel({
 			name: 'CF',
-			location: 'd:/CodeForces'
+			location: 'c:/project/help-test'
 		}))
 
 		// auto open

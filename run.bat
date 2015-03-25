@@ -1,3 +1,4 @@
-cd d:/neve
-nw --url="file://d:/neve/src/home/index.html"
+@rem for debug convenient
+cd c:/project/neve
+nw --url="file://c:/project/neve/src/home/index.html"
 pause

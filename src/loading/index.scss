@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+.project-loading {
+	position: absolute; // todo: 这里用fixed, .everything不用absolute, 视图总是会在最下, 原因不明
+	z-index: 99999;
+	width: 100%;
+	height: 100%;
+	background: black;
+
+	.loader {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+		font-size: 1.2em;
+	}
+
+	.text {
+		position: absolute;
+		width: 8em;
+		height: 8em;
+		line-height: 8em;
+		text-align: center;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+		font-size: 1.2em;
+		color: white;
+	}
+}
