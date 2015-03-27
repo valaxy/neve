@@ -8,10 +8,14 @@ define(function (require) {
 	var fileDialog = require('bower_components/nw-file-dialog/index')
 	var ProjectModel = require('../project-manager/project-model')
 	var path = requireNode('path')
+	var loader = require('../loader/index')
+
+
+	var html = require('text!./index.html')
+	var css = require('css!./index')
 
 
 	var TopNavView = Backbone.View.extend({
-		el: $('.top-nav'),
 		events: {
 			'click .close': function () {
 				alert('close me')
@@ -41,6 +45,8 @@ define(function (require) {
 			}
 		},
 		initialize: function (options) {
+			this.setElement(loader.loadHTML(html))
+
 			this._projectManager = options.projectManager
 
 			var m1 = new MenuPopup({
@@ -66,6 +72,8 @@ define(function (require) {
 				el: this.$('.create-project-dialog'),
 				projectManager: options.projectManager
 			})
+
+
 		}
 	})
 

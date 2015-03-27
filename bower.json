@@ -36,7 +36,9 @@
     "algorithm-data-structure": "valaxy/algorithm-data-structure",
     "nw-file-dialog": "valaxy/nw-file-dialog",
     "pouchdb": "~3.3.0",
-    "css-loading-spinners": "~1.0.0"
+    "css-loading-spinners": "~1.0.0",
+    "require-css": "~0.1.8",
+    "text": "~2.0.14"
   },
   "devDependencies": {
     "qunit": "~1.16.0",

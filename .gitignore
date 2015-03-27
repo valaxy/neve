@@ -2,3 +2,8 @@ bower_components/
 .idea/
 node_modules/
 target/
+bundle.js
+
+# compile you own css/html
+*.html
+*.css

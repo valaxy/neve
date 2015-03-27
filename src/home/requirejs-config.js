@@ -14,4 +14,11 @@ requirejs.config({
 		'state-machine': 'bower_components/javascript-state-machine/state-machine.min'
 		//path: 'bower_components/path/path'
 	}
+	,
+	map: {
+		'*': {
+			css: 'bower_components/require-css/css.min',
+			text: 'bower_components/text/text'
+		}
+	}
 })

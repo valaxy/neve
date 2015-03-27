@@ -11,6 +11,10 @@ define(function (require) {
 	var async = require('async')
 	require('jstree')
 
+	var loader = require('../loader/index')
+	var html = require('text!./index.html')
+	require('css!./index')
+
 
 	/** Events:
 	 **     - selectFile(file: FileModel)
@@ -279,6 +283,7 @@ define(function (require) {
 
 
 		initialize: function (options) {
+			this.setElement(loader.loadHTML(html))
 			this._projectManager = options.projectManager
 			this._$jstree = this.$('.jstree')
 			this._initForDom()

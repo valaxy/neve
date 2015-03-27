@@ -13,26 +13,34 @@ define(function (require, exports) {
 	var ProjectManager = require('../project-manager/project-manager')
 	var ProjectModel = require('../project-manager/project-model')
 	var Loading = require('../loading/index')
+	var StatusBar = require('../status-bar/index')
 
 	var pandocPlugin = require('../pandoc-plugin/index')
 
 	exports.init = function () {
-		var loading = new Loading({
-			el: $('.project-loading')
-		})
+		//var loading = new Loading({
+		//	el: $('.project-loading')
+		//})
+		//setTimeout(function () {
+		//	loading.dispose()
+		//}, 2000)
 
 		var projectManager = g.projectManager = new ProjectManager
 
-		layout.init()
+		setTimeout(function () {
+			layout.init()
+		}, 2000)
+
 
 		new TopNavView({
 			projectManager: projectManager
 		})
 
+		new StatusBar
+
 		// the file tree
 		g.fileTree = (new FileTreeView({
 			model: new FileTreeModel,
-			el: $('.explorer'),
 			projectManager: projectManager
 		})).model
 
