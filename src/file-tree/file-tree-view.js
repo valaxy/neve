@@ -1,4 +1,6 @@
 define(function (require) {
+	require('css!bower_components/jstree/dist/themes/default/style.min')
+
 	var fs = requireNode('fs')
 	var path = requireNode('path')
 	var watch = requireNode('watch')
