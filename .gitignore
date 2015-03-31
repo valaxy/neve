@@ -1,8 +1,6 @@
-bower_components/
 .idea/
+bower_components/
 node_modules/
-target/
-bundle.js
 
 # compile you own css/html
 *.html

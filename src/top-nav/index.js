@@ -2,13 +2,12 @@ define(function (require) {
 	require('magnific-popup')
 	var $ = require('jquery')
 	var g = require('../home/global')
-	var MenuPopup = require('./menu-popup')
-	var MenuAssociate = require('./menu-associate')
 	var CreateProjectDialogView = require('../create-project-dialog/view')
 	var fileDialog = require('bower_components/nw-file-dialog/index')
 	var ProjectModel = require('../project-manager/project-model')
-	var path = requireNode('path')
+	var path = require('bower_components/path/path') // todo 奇怪
 	var loader = require('../loader/index')
+	var HoverToPopInGroup = require('bower_components/jquery-interaction/src/hover-to-pop-in-group')
 
 
 	var html = require('text!./index.html')
@@ -25,13 +24,7 @@ define(function (require) {
 				alert('save ok')
 			},
 			'click .new-project': function () {
-				$.magnificPopup.open({
-					items: {
-						src: '.create-project-dialog',
-						type: 'inline'
-					},
-					modal: true
-				})
+				this._createProjectDialogView.open()
 			},
 			'click .open-project': function () {
 				var me = this
@@ -47,33 +40,41 @@ define(function (require) {
 		initialize: function (options) {
 			this.setElement(loader.loadHTML(html))
 
-			this._projectManager = options.projectManager
-
-			var m1 = new MenuPopup({
-				$button: $('.git'),
-				$menu: $('.git-menu').menu().hide()
-			})
-
-			var m2 = new MenuPopup({
-				$button: $('.about'),
-				$menu: $('.about-menu').menu().hide()
-			})
-
-			var m3 = new MenuPopup({
-				$button: $('.file'),
-				$menu: $('.file-menu').menu().hide()
-			})
-
-			new MenuAssociate({
-				menuPopups: [m1, m2, m3]
-			})
-
-			new CreateProjectDialogView({
+			this._createProjectDialogView = new CreateProjectDialogView({
 				el: this.$('.create-project-dialog'),
 				projectManager: options.projectManager
 			})
 
+			this._projectManager = options.projectManager
 
+			//var m1 = new MenuPopup({
+			//	$button: $('.git'),
+			//	$menu: $('.git-menu').menu().hide()
+			//})
+			//
+			//var m2 = new MenuPopup({
+			//	$button: $('.about'),
+			//	$menu: $('.about-menu').menu().hide()
+			//})
+			//
+			//var m3 = new MenuPopup({
+			//	$button: $('.file'),
+			//	$menu: $('.file-menu').menu().hide()
+			//})
+			//
+			//new MenuAssociate({
+			//	menuPopups: [m1, m2, m3]
+			//})
+
+
+			new HoverToPopInGroup({
+				$buttons: [$('.git'), $('.about'), $('.file')],
+				$menus: [
+					$('.git-menu').menu().hide(),
+					$('.about-menu').menu().hide(),
+					$('.file-menu').menu().hide()
+				]
+			})
 		}
 	})
 

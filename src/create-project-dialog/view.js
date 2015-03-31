@@ -1,9 +1,12 @@
 define(function (require) {
 	var $ = require('jquery')
 	require('magnific-popup')
+	require('css!bower_components/magnific-popup/dist/magnific-popup')
+	require('css!bower_components/bootstrap/dist/css/bootstrap.min')
 	var path = require('bower_components/path/path')
 	var Project = require('../project-manager/project-model')
 	var fileDialog = require('bower_components/nw-file-dialog/index')
+
 
 	/** Events: close */
 	var CreateProjectDialog = Backbone.View.extend({

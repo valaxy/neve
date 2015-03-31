@@ -1,41 +1,42 @@
 @charset "utf-8";
 @import "../create-project-dialog/index";
-
 .top-nav {
+	line-height: 25px; // bootstrap conflict
+
 	.close {
 		cursor: pointer;
-		float: right
+		float:  right
 	}
 	.save {
-		float: left;
+		float:  left;
 		cursor: pointer;
 	}
 
 	.list {
-		float: left;
-		list-style: none;
-		height: 100%;
+		list-style:    none;
+		height:        100%;
+		margin-bottom: 0 !important; // bootstrap conflict
 
 		li {
-			cursor: pointer;
-			float: left;
-			width: 80px;
-			text-align: center;
+			display:      inline-block;
+			cursor:       pointer;
+			width:        80px;
+			text-align:   center;
 			border-right: 1px solid #ccc;
-			heihgt: 100%;
+			heihgt:       100%;
 		}
 	}
 
 	.menu {
 		position: absolute;
-		display: none;
-		z-index: 9999;
+		display:  none;
+		z-index:  9999;
 
 		li {
-			left: 0;
-			top: 0;
+			left:    0;
+			top:     0;
 			z-index: 100;
-			width: 200px;
+			width:   200px;
 		}
 	}
 }
