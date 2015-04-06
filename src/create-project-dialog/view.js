@@ -73,7 +73,7 @@ define(function (require) {
 			var html = require('html!./index')
 			var style = require('style!bower_components/bootstrap/dist/css/bootstrap.min')
 
-			loader.loadDom('create-project-dialog', html).hide()
+			loader.loadDom('create-project-dialog', html)
 			loader.loadStyle('create-project-dialog', style)
 
 			this.setElement($('.create-project-dialog'))

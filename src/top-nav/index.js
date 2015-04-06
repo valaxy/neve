@@ -8,10 +8,9 @@ define(function (require) {
 	var path = require('bower_components/path/path') // todo 奇怪
 	var loader = require('../loader/index')
 	var HoverToPopInGroup = require('bower_components/jquery-interaction/src/hover-to-pop-in-group')
-
-
-	var html = require('text!./index.html')
-	var css = require('css!./index')
+	var dom = require('../utility/dom')
+	var html = require('html!./index')
+	var style = require('style!./index')
 
 
 	var TopNavView = Backbone.View.extend({
@@ -28,6 +27,9 @@ define(function (require) {
 			},
 			'click .open-project': function () {
 				var me = this
+				//this._createProjectDialogView = new CreateProjectDialogView({
+				//	projectManager: this._projectManager
+				//})
 				fileDialog.openDir({}, function (path) {
 					var project = new ProjectModel({
 						name: 'xxxxdddd',
@@ -38,40 +40,17 @@ define(function (require) {
 			}
 		},
 		initialize: function (options) {
-			this.setElement(loader.loadHTML(html))
-
-			this._createProjectDialogView = new CreateProjectDialogView({
-				projectManager: options.projectManager
-			})
-
 			this._projectManager = options.projectManager
 
-			//var m1 = new MenuPopup({
-			//	$button: $('.git'),
-			//	$menu: $('.git-menu').menu().hide()
-			//})
-			//
-			//var m2 = new MenuPopup({
-			//	$button: $('.about'),
-			//	$menu: $('.about-menu').menu().hide()
-			//})
-			//
-			//var m3 = new MenuPopup({
-			//	$button: $('.file'),
-			//	$menu: $('.file-menu').menu().hide()
-			//})
-			//
-			//new MenuAssociate({
-			//	menuPopups: [m1, m2, m3]
-			//})
-
-
+			this.setElement(loader.loadDom('top-nav', html))
+			dom.appendStyle(this.$el[0], style)
+			
 			new HoverToPopInGroup({
-				$buttons: [$('.git'), $('.about'), $('.file')],
+				$buttons: [this.$('.git'), this.$('.about'), this.$('.file')],
 				$menus: [
-					$('.git-menu').menu().hide(),
-					$('.about-menu').menu().hide(),
-					$('.file-menu').menu().hide()
+					this.$('.git-menu').menu().hide(),
+					this.$('.about-menu').menu().hide(),
+					this.$('.file-menu').menu().hide()
 				]
 			})
 		}

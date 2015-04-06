@@ -13,7 +13,7 @@ define(function (require, exports) {
 		var root = shadowRoots[name] = $dom[0].createShadowRoot()
 		root.appendChild($(html)[0])
 		$('.everything').append($dom)
-		return $dom
+		return root
 	}
 
 	exports.loadStyle = function (name, styleContent) {
@@ -32,5 +32,6 @@ define(function (require, exports) {
 		})
 		return dfd.promise()
 	}
+
 
 })
