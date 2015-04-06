@@ -25,17 +25,14 @@ define(function (require) {
 	 ** Options:
 	 **     - filters: String */
 	var FileTreeView = Backbone.View.extend({
-
-		_jstree: null,              // jstree control handler
-		_domIdToModel: {},          // a tree node id hash map from ui to model
 		_pathToDomId: {},
 
 		events: {
 			'dblclick.jstree': function (event) {
 				var domId = $(event.target).parent()[0].id
-				var node = this._jstree.get_node(domId)
-				if (node.type == 'file') {
-					var model = this._domIdToModel[domId]
+				var file = this._fileTree.getFile(domId)
+				if (!file.isDir) {
+					var model = file.data
 					this._openFile(model, true, false)
 				}
 			}
@@ -47,16 +44,13 @@ define(function (require) {
 				isDir: true
 			})
 
-			var domId = this._jstree.create_node(null, {
-				text: this.model.get('root'),
-				type: 'directory',
-				state: {
-					opened: true
-				}
-			})
+			var domId = this._fileTree.addFile({
+				label: this.model.get('root'),
+				isDir: true,
+				data: model
+			}, null)
 
 			this._pathToDomId['.'] = domId
-			this._domIdToModel[domId] = model
 
 			this.model.addRoot(model)
 		},
@@ -93,7 +87,7 @@ define(function (require) {
 
 				function (done) {
 					if (updateDom) {
-						me._jstree.delete_node(me._pathToDomId[fileModel.get('path')])
+						me._fileTree.deleteFile(me._pathToDomId[fileModel.get('path')])
 					}
 					done()
 				}
@@ -155,15 +149,12 @@ define(function (require) {
 				function (done) {
 					if (updateDom) {
 						var dirDomId = me._pathToDomId[dirPath]
-						var curDomId = me._jstree.create_node(dirDomId, {
-							text: path.basename(curPath),
-							type: curModel.get('isDir') ? 'directory' : 'file',
-							state: {
-								opened: true
-							}
-						})
+						var curDomId = me._fileTree.addFile({
+							label: path.basename(curPath),
+							type: curModel.get('isDir'),
+							data: curModel
+						}, dirDomId)
 						me._pathToDomId[curPath] = curDomId
-						me._domIdToModel[curDomId] = curModel
 					}
 
 					done()
@@ -182,7 +173,7 @@ define(function (require) {
 		_clearFile: function (updateModel, updateDom) {
 			if (updateDom) {
 				var domId = this._pathToDomId['.']
-				this._jstree.delete_node(domId)
+				this._fileTree.deleteFile(domId)
 			}
 			if (updateModel) {
 				this.model.addRoot(null)
@@ -195,33 +186,16 @@ define(function (require) {
 			}
 			if (updateDom) {
 				var domId = this._pathToDomId[file.get('path')]
-				this._jstree.select_node(domId)
+				this._fileTree.selectFile(domId)
 			}
 		},
 
 
 		_initForDom: function () {
-			//this._$jstree.jstree({
-			//	core: {
-			//		check_callback: true
-			//	},
-			//	types: {
-			//		file: {
-			//			icon: 'fa fa-file-o'
-			//		},
-			//		directory: {
-			//			icon: 'fa fa-folder'
-			//		}
-			//	},
-			//	contextmenu: contextmenu(this),
-			//	plugins: ['types', 'wholerow', 'contextmenu']
-			//})
-
 			var me = this
-			var adapter = new JstreeAdapter(this._$jstree, this._$jstree)
+			var adapter = this._fileTree = new JstreeAdapter(this._$jstree)
 			adapter.initContextMenu(function (file) {
-				var domId = file.id
-				var model = me._domIdToModel[domId]
+				var model = file.data
 				if (file.isDir) {
 					return [{
 						label: 'create directory',
@@ -260,17 +234,6 @@ define(function (require) {
 					}]
 				}
 			})
-
-
-			// 不知道为什么不能把这里的事件绑定放到events选项里
-			var me = this
-			this._$jstree.on('select_node.jstree', function (event, data) {
-				var domId = data.selected[0]
-				var file = me._domIdToModel[domId]
-				me.trigger('selectFile', file)
-				me._$jstree.trigger('selectFile', [file])
-			})
-			this._jstree = this._$jstree.jstree()
 		},
 
 		_initForWatch: function () {

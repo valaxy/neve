@@ -1,12 +1,21 @@
 ---
 API:
-    - addFile(file, id):
-        file: file or directory Object
+    - initContextMenu(fn):
+        fn(file): a function to trigger when selected
+            file: which file to trigger context menu
+            return: a Array
+                - '-' # split line
+                - label: the menu item text
+                  icon: the menu item font-awsome icon name
+                  action(): a function when click
+    - addFile(file, parentId):
+        file: Object
             label: the text show in file tree
             icon: null or font-awsome icon name, for example 'times' not 'fa-times' nor 'fa fa-times'
             isDir: boolean
-        id: the parent dom id, can be optional if it's root
-        return: added dom id
+            data: data to bind with
+        parentId: the parent dom id, can be optional if it's root
+        return: dom id
     - updateFile(id, file):
         id: the dom id
         file:
@@ -20,20 +29,14 @@ API:
     - selectFile(id): select file
         id: dom id
         return: the dom id
-    - initContextMenu(fn):
-        fn(file): a function to trigger when selected
-            file: which file to trigger context menu
-            return: a Array
-                - '-' # split line
-                - label: the menu item text
-                  icon: the menu item font-awsome icon name
-                  action(): a function when click
 
 
-## Events
-- selectFile
-- addFile
-- updateFile
-- deleteFile
 
-##
+High Events:
+    - selectFile
+    - addFile
+    - updateFile
+    - deleteFile
+
+Low Events:
+    - dblclick:
