@@ -15,8 +15,9 @@ define(function (require) {
 
 	var loader = require('../loader/index')
 	var html = require('text!./index.html')
-	require('css!./index')
-	require('css!bower_components/jstree/dist/themes/default/style.min')
+	var css1 = require('style!./index')
+	var css2 = require('style!bower_components/jstree/dist/themes/default/style')
+	var dom = require('../utility/dom')
 
 
 	/** Events:
@@ -284,7 +285,10 @@ define(function (require) {
 
 
 		initialize: function (options) {
-			this.setElement(loader.loadHTML(html))
+			this.setElement(loader.loadDom('file-tree', html))
+			dom.appendStyle(this.$el[0], css1)
+			dom.appendStyle(this.$el[0], css2)
+
 			this._projectManager = options.projectManager
 			this._$jstree = this.$('.jstree')
 			this._initForDom()

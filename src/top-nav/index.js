@@ -44,7 +44,7 @@ define(function (require) {
 
 			this.setElement(loader.loadDom('top-nav', html))
 			dom.appendStyle(this.$el[0], style)
-			
+
 			new HoverToPopInGroup({
 				$buttons: [this.$('.git'), this.$('.about'), this.$('.file')],
 				$menus: [

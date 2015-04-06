@@ -8,4 +8,12 @@ define(function (require, exports) {
 		dom.appendChild(style)
 	}
 
+
+	exports.importStyle = function (dom, styleUrl) {
+		var style = document.createElement('style')
+		style.setAttribute('type', 'text/css')
+		style.textContent = '@import "' + styleUrl + '";'
+		dom.appendChild(style)
+	}
+
 })

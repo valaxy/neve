@@ -42,6 +42,9 @@ body {
 }
 // about border
 .everything {
+	.file-tree {
+		border-right: 1px solid $COLOR;
+	}
 	.top-nav {
 		border-bottom: 1px solid $COLOR;
 	}

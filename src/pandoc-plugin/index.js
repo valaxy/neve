@@ -11,21 +11,14 @@ define(function (require, exports) {
 		this._projectManager = options.projectManager
 
 		this._projectManager.on('open', function () {
-			async.parallel([
-				function (done) {
-					loader.load('text!../editor/index.html',
-						'text!../preview/index.html',
-						'text!../editor-tab/index.html').done(function (editor, preview, editorTab) {
-							done(null, $(editor), $(preview), $(editorTab))
-						})
-				}
-			], function (err, results) {
-				if (!err) {
+			loader.load('text!../editor/index.html',
+				'text!../preview/index.html',
+				'text!../editor-tab/index.html').done(function (editor, preview, editorTab) {
 					var linear = new LinearLayout({direction: 'column'})
 					var linear2 = new LinearLayout({direction: 'row'})
-					var editor = new SimpleView({selector: results[0][0]})
-					var preview = new SimpleView({selector: results[0][1]})
-					var editorTab = new SimpleView({selector: results[0][2]})
+					var editor = new SimpleView({selector: $(editor)})
+					var preview = new SimpleView({selector: $(preview)})
+					var editorTab = new SimpleView({selector: $(editorTab)})
 					linear2.appendView(editor, {flex: 1})
 					linear2.appendView(preview, {flex: 1})
 					linear.appendView(editorTab, {flex: '30px'})
@@ -37,10 +30,7 @@ define(function (require, exports) {
 						el: editor._$dom,
 						projectManager: options.projectManager
 					})
-				} else {
-					alert(err)
-				}
-			})
+				})
 		})
 
 		this._projectManager.close('close', function () {
