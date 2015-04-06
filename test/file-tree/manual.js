@@ -3,7 +3,10 @@ define(function (require, exports) {
 	var FileTreeView = require('src/file-tree/file-tree-view')
 	var ProjectManager = require('src/project-manager/project-manager')
 	var ProjectModel = require('src/project-manager/project-model')
+	var css = require('css!src/file-tree/index')
 	var $ = require('jquery')
+	var Backbone = require('backbone')
+
 
 	exports.init = function () {
 		var manager = new ProjectManager
@@ -11,22 +14,27 @@ define(function (require, exports) {
 		// the file tree
 		var view = (new FileTreeView({
 			model: new FileTreeModel,
-			el: $('.explorer'),
 			projectManager: manager
 		}))
 
 
-		view.on('selectFile', function (file) {
-			alert('selectFile: ' + file.get('path'))
-		})
+		new (Backbone.View.extend({
+			el: $('.file-tree'),
+			events: {
+				selectFile: function (e, file) {
+					//alert('selectFile: ' + file.get('path'))
+				}
+			}
+		}))
 
-		view.on('selectDirectory', function (dir) {
-			alert('selectDir: ' + dir.get('path'))
-		})
 
+		//view.on('selectFile', function (file) {
+		//	alert('selectFile: ' + file.get('path'))
+		//})
+		//
 		manager.open(new ProjectModel({
 			name: 'CF',
-			location: 'd:/CodeForces'
+			location: 'd:/test'
 		}))
 	}
 

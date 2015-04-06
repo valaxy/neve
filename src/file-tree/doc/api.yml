@@ -1,0 +1,39 @@
+---
+API:
+    - addFile(file, id):
+        file: file or directory Object
+            label: the text show in file tree
+            icon: null or font-awsome icon name, for example 'times' not 'fa-times' nor 'fa fa-times'
+            isDir: boolean
+        id: the parent dom id, can be optional if it's root
+        return: added dom id
+    - updateFile(id, file):
+        id: the dom id
+        file:
+        return: dom id
+    - deleteFile(id): you cannot delete directory, that is not empty
+        id: the dom id
+        return: dom id
+    - getFile(id):
+        id: dom id
+        return: the file Object
+    - selectFile(id): select file
+        id: dom id
+        return: the dom id
+    - initContextMenu(fn):
+        fn(file): a function to trigger when selected
+            file: which file to trigger context menu
+            return: a Array
+                - '-' # split line
+                - label: the menu item text
+                  icon: the menu item font-awsome icon name
+                  action(): a function when click
+
+
+## Events
+- selectFile
+- addFile
+- updateFile
+- deleteFile
+
+##

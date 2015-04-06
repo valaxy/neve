@@ -5,9 +5,10 @@ define(function (require) {
 	var path = requireNode('path')
 	var watch = requireNode('watch')
 
+	var JstreeAdapter = require('./jstree/js-adapter')
 	var FileModel = require('./file-model')
 	var g = require('../home/global')
-	var contextmenu = require('./jstree/contextmenu')
+
 	var fswrap = require('../file-system/fs-wrap')
 	var process = require('../process/process')
 	var async = require('async')
@@ -200,32 +201,74 @@ define(function (require) {
 
 
 		_initForDom: function () {
-			this._$jstree.jstree({
-				core: {
-					check_callback: true
-				},
-				types: {
-					file: {
-						icon: 'fa fa-file-o'
-					},
-					directory: {
-						icon: 'fa fa-folder'
-					}
-				},
-				contextmenu: contextmenu(this),
-				plugins: ['types', 'wholerow', 'contextmenu']
+			//this._$jstree.jstree({
+			//	core: {
+			//		check_callback: true
+			//	},
+			//	types: {
+			//		file: {
+			//			icon: 'fa fa-file-o'
+			//		},
+			//		directory: {
+			//			icon: 'fa fa-folder'
+			//		}
+			//	},
+			//	contextmenu: contextmenu(this),
+			//	plugins: ['types', 'wholerow', 'contextmenu']
+			//})
+
+			var me = this
+			var adapter = new JstreeAdapter(this._$jstree, this._$jstree)
+			adapter.initContextMenu(function (file) {
+				var domId = file.id
+				var model = me._domIdToModel[domId]
+				if (file.isDir) {
+					return [{
+						label: 'create directory',
+						action: function () {
+							var relPath = path.join(model.get('path'), 'new directory')
+							me._addFile(relPath, true, true, true, true)
+						}
+					}, {
+						label: 'create file',
+						action: function () {
+							var relPath = path.join(model.get('path'), 'new file.md')
+							me._addFile(relPath, false, true, true, true)
+						}
+					}, {
+						label: 'delete directory',
+						action: function () {
+							me._deleteFile(model, true, true, true, true)
+						}
+					}, {
+						label: 'rename',
+						action: function () {
+
+						}
+					}]
+				} else { // file
+					return [{
+						label: 'delete file',
+						action: function () {
+							me._deleteFile(model, false, true, true, true)
+						}
+					}, {
+						label: 'rename',
+						action: function () {
+
+						}
+					}]
+				}
 			})
+
 
 			// 不知道为什么不能把这里的事件绑定放到events选项里
 			var me = this
 			this._$jstree.on('select_node.jstree', function (event, data) {
 				var domId = data.selected[0]
 				var file = me._domIdToModel[domId]
-				if (file.get('isDir')) {
-					me.trigger('selectDirectory', file)
-				} else {
-					me.trigger('selectFile', file)
-				}
+				me.trigger('selectFile', file)
+				me._$jstree.trigger('selectFile', [file])
 			})
 			this._jstree = this._$jstree.jstree()
 		},
