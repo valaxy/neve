@@ -1,5 +1,5 @@
 define(function (require, exports) {
-	var FileWatch = require('../watch/file-watch')
+	var FileWatch = require('../file-tree/watch/file-watch')
 
 	var DemoFileWatch = function () {
 

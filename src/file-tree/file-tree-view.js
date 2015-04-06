@@ -4,6 +4,7 @@ define(function (require) {
 	var fs = requireNode('fs')
 	var path = requireNode('path')
 	var watch = requireNode('watch')
+	var watch2 = require('../file-system/watch')
 
 	var JstreeAdapter = require('./jstree/js-adapter')
 	var FileModel = require('./file-model')
@@ -110,8 +111,7 @@ define(function (require) {
 			var fileAbsPath = curModel.absolutePath(me.model.get('root'))
 
 			async.series([
-				// judge exist
-				function (done) {
+				function (done) { // judge exist
 					if (updateFileSystem) {
 						fs.exists(fileAbsPath, function (exists) {
 							if (exists) {
@@ -124,18 +124,14 @@ define(function (require) {
 						done()
 					}
 				},
-
-				// update fileSystem if needed
-				function (done) {
+				function (done) { // update fileSystem if needed
 					if (updateFileSystem) {
 						fswrap.create(fileAbsPath, isDirectory, me._asyncDone(done))
 					} else {
 						done()
 					}
 				},
-
-				// update model if needed
-				function (done) {
+				function (done) { // update model if needed
 					if (updateModel) {
 						var dirModel = me.model.getFileByPath(dirPath)
 						me.model.add(curModel, dirModel) // no trigger anything
@@ -144,9 +140,7 @@ define(function (require) {
 					}
 					done()
 				},
-
-				// update dom if needed
-				function (done) {
+				function (done) { 	// update dom if needed
 					if (updateDom) {
 						var dirDomId = me._pathToDomId[dirPath]
 						var curDomId = me._fileTree.addFile({

@@ -8,7 +8,7 @@ define(function (require, exports) {
 		var l2 = new LinearLayout({direction: 'row'})
 		var topNav = new SimpleView({selector: '.top-nav'})
 		var statusBar = new SimpleView({selector: '.status-bar'})
-		var explorer = new SimpleView({selector: '.explorer'})
+		var explorer = new SimpleView({selector: '.file-tree'})
 		l1.appendView(topNav, {flex: '25px'})
 		l1.appendView(l2, {flex: 1})
 		l1.appendView(statusBar, {flex: '20px'})
