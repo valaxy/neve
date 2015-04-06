@@ -16,42 +16,6 @@ define(function (require, exports) {
 		l2.appendView(explorer, {flex: '200px'})
 		this._linearLayout = l2
 
-		//var $dom = treeLayout.init({
-		//	_schema: 'linear',
-		//	direction: 'column',
-		//	views: [{
-		//		_schema: 'view',
-		//		flex: '25px',
-		//		selector: '.top-nav'
-		//	}, {
-		//		_schema: 'linear',
-		//		direction: 'row',
-		//		flex: 1,
-		//		views: [{
-		//			_schema: 'view',
-		//			flex: '200px',
-		//			selector: '.explorer'
-		//		}, {
-		//			_schema: 'linear',
-		//			flex: 1,
-		//			direction: 'row',
-		//			views: [{
-		//				_schema: 'view',
-		//				flex: 1,
-		//				selector: '.editor'
-		//			}, {
-		//				_schema: 'view',
-		//				flex: 1,
-		//				selector: '.preview'
-		//			}]
-		//		}]
-		//	}, {
-		//		_schema: 'view',
-		//		flex: '20px',
-		//		selector: '.status-bar'
-		//	}]
-		//})
-
 		$('.everything').append($dom)
 	}
 
@@ -63,3 +27,40 @@ define(function (require, exports) {
 		this._linearLayout.removeViewAt(1)
 	}
 })
+
+
+//var $dom = treeLayout.init({
+//	_schema: 'linear',
+//	direction: 'column',
+//	views: [{
+//		_schema: 'view',
+//		flex: '25px',
+//		selector: '.top-nav'
+//	}, {
+//		_schema: 'linear',
+//		direction: 'row',
+//		flex: 1,
+//		views: [{
+//			_schema: 'view',
+//			flex: '200px',
+//			selector: '.explorer'
+//		}, {
+//			_schema: 'linear',
+//			flex: 1,
+//			direction: 'row',
+//			views: [{
+//				_schema: 'view',
+//				flex: 1,
+//				selector: '.editor'
+//			}, {
+//				_schema: 'view',
+//				flex: 1,
+//				selector: '.preview'
+//			}]
+//		}]
+//	}, {
+//		_schema: 'view',
+//		flex: '20px',
+//		selector: '.status-bar'
+//	}]
+//})

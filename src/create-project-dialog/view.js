@@ -2,10 +2,10 @@ define(function (require) {
 	var $ = require('jquery')
 	require('magnific-popup')
 	require('css!bower_components/magnific-popup/dist/magnific-popup')
-	require('css!bower_components/bootstrap/dist/css/bootstrap.min')
 	var path = require('bower_components/path/path')
 	var Project = require('../project-manager/project-model')
 	var fileDialog = require('bower_components/nw-file-dialog/index')
+	var loader = require('../loader/index')
 
 
 	/** Events: close */
@@ -56,7 +56,7 @@ define(function (require) {
 		open: function () {
 			$.magnificPopup.open({
 				items: {
-					src: this.$el,
+					src: this.$el.show(),
 					type: 'inline'
 				},
 				modal: true
@@ -64,11 +64,21 @@ define(function (require) {
 		},
 
 		close: function () {
+			this.$el.hide()
 			$.magnificPopup.close()
 			this.trigger('close')
 		},
 
 		initialize: function (options) {
+			var html = require('html!./index')
+			var style = require('style!bower_components/bootstrap/dist/css/bootstrap.min')
+
+			loader.loadDom('create-project-dialog', html).hide()
+			loader.loadStyle('create-project-dialog', style)
+
+			this.setElement($('.create-project-dialog'))
+
+
 			this._projectManager = options.projectManager
 
 			this._$name = this.$('.name')

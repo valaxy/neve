@@ -60,7 +60,7 @@ define(function (require, exports) {
 				setTimeout(function () {
 					var file = g.fileTree.getFileByPath('readme.md')
 					g.fileTree.get('project').set('openFile', file)
-				}, 1500)
+				}, 500)
 			})
 	}
 })

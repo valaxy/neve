@@ -3,6 +3,8 @@ define(function (require) {
 	var g = require('../home/global')
 	var $ = require('jquery')
 	var process = require('../process/process')
+	var html = require('text!./index.html')
+	var loader = require('../loader/index')
 
 	var Editor = Backbone.View.extend({
 		_onOpenFile: function (project, file) {
@@ -19,6 +21,7 @@ define(function (require) {
 		},
 
 		initialize: function (options) {
+			this.setElement(loader.loadHTML(html))
 			var projectManager = options.projectManager
 			var editor = g.editor = ace.edit(this.$('.ace')[0])
 			this._editor = editor

@@ -41,7 +41,6 @@ define(function (require) {
 			this.setElement(loader.loadHTML(html))
 
 			this._createProjectDialogView = new CreateProjectDialogView({
-				el: this.$('.create-project-dialog'),
 				projectManager: options.projectManager
 			})
 

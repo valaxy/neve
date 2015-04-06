@@ -3,6 +3,10 @@
 .file-tree {
 	@include slide-vertical;
 
+	.jstree {
+		height: 500px;
+	}
+
 	h1 {
 		border-bottom: 1px solid #ccc;
 		font-size:     1rem;
