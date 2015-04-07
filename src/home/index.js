@@ -40,13 +40,13 @@ define(function (require, exports) {
 				layout.init()
 				loading.dispose()
 
-				pandocPlugin.init({
-					projectManager: projectManager
-				})
-
-				//markdownPlugin.init({
+				//pandocPlugin.init({
 				//	projectManager: projectManager
 				//})
+
+				markdownPlugin.init({
+					projectManager: projectManager
+				})
 
 				g.projectManager.open(new ProjectModel({
 					name: 'CF',
