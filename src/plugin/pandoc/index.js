@@ -4,12 +4,12 @@ define(function (require, exports) {
 	var async = require('async')
 
 	var process = require('./process')
-	var loader = require('../loader/index')
-	var layout = require('../home/layout')
-	var Editor = require('../editor/editor')
+	var loader = require('../../loader/index')
+	var layout = require('../../home/layout')
+	var Editor = require('../../editor/editor')
 
-	var autoSave = require('../editor/auto-save')
-	var saveConfirm = require('../editor/save-confirm')
+	var autoSave = require('../../editor/auto-save')
+	var saveConfirm = require('../../editor/save-confirm')
 
 	exports.init = function (options) {
 		this._projectManager = options.projectManager

@@ -1,15 +1,15 @@
 define(function (require, exports) {
 	var fs = requireNode('fs')
 	var childProcess = requireNode('child_process')
-	var editorWatch = require('../editor/editor-watch')
+	var editorWatch = require('../../editor/editor-watch')
 	var INPUT_FILE = 'f://test/test.md'
 
 
 	exports.init = function () {
-		var $preview = $('.preview .content')
-
 		editorWatch.on('update', function (done, text) {
 			fs.writeFile(INPUT_FILE, text, function (err) {
+				var $preview = $('.preview .content')
+
 				if (err) {
 					$preview.html(err)
 				}
@@ -25,7 +25,7 @@ define(function (require, exports) {
 					$preview.html(stdout)
 					$preview[0].scrollTop = top
 
-					MathJax.Hub.Queue(['Typeset', MathJax.Hub, $('.preview .content')[0]])
+					MathJax.Hub.Queue(['Typeset', MathJax.Hub, $preview[0]])
 					done()
 				})
 			})

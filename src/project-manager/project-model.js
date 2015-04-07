@@ -1,7 +1,7 @@
 define(function (require) {
 	require('backbone')
 	var FileModel = require('../file-tree/file-model')
-	var path = require('bower_components/path/path')
+	var path = require('path')
 	var fs = requireNode('fs')
 
 	var ProjectModel = Backbone.RelationalModel.extend({

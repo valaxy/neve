@@ -5,7 +5,7 @@ define(function (require) {
 	var CreateProjectDialogView = require('../create-project-dialog/view')
 	var fileDialog = require('bower_components/nw-file-dialog/index')
 	var ProjectModel = require('../project-manager/project-model')
-	var path = require('bower_components/path/path') // todo 奇怪
+	var path = require('path') // todo 奇怪
 	var loader = require('../loader/index')
 	var HoverToPopInGroup = require('bower_components/jquery-interaction/src/hover-to-pop-in-group')
 	var dom = require('../utility/dom')

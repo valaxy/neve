@@ -1,13 +1,15 @@
 define(function (require, exports) {
-	var path = requireNode('path')
-	//var nodegit = requireNode('../../node_modules/nodegit/lib/nodegit')
+	//var nodegit = requireNode('nodegit')
 
 	var g = require('./global')
 	var layout = require('./layout')
 	var ProjectManager = require('../project-manager/project-manager')
 	var ProjectModel = require('../project-manager/project-model')
 	var Loading = require('../loading/index')
-	var pandocPlugin = require('../pandoc-plugin/index')
+
+	var pandocPlugin = require('../plugin/pandoc/index')
+	var markdownPlugin = require('../plugin/markdown/index')
+
 	var loader = require('../loader/index')
 
 	require('css!./index')
@@ -41,7 +43,11 @@ define(function (require, exports) {
 				pandocPlugin.init({
 					projectManager: projectManager
 				})
-				
+
+				//markdownPlugin.init({
+				//	projectManager: projectManager
+				//})
+
 				g.projectManager.open(new ProjectModel({
 					name: 'CF',
 					location: 'c:/project/help-test'

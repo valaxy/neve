@@ -9,7 +9,7 @@ define(function (require) {
 	var g = require('../home/global')
 
 	var fswrap = require('../file-system/fs-wrap')
-	var process = require('../pandoc-plugin/process')
+	//var process = require('./process')
 	var async = require('async')
 	require('jstree')
 

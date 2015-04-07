@@ -1,5 +1,5 @@
 define(function (require) {
-	var path = require('bower_components/path/path')
+	var path = require('path')
 
 	/** File or Directory */
 	var FileModel = Backbone.RelationalModel.extend({

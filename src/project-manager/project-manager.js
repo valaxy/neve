@@ -1,6 +1,6 @@
 define(function (require) {
 	var fs = requireNode('fs')
-	var path = require('bower_components/path/path')
+	var path = require('path')
 	var EventEmitter = require('bower_components/eventEmitter/EventEmitter.min')
 	var Set = require('bower_components/algorithm-data-structure/src/set/ordered-set')
 	var async = require('async')

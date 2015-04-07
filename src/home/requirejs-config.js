@@ -13,10 +13,14 @@ requirejs.config({
 		'javascript-state-machine': 'bower_components/javascript-state-machine/state-machine.min',
 		'path': 'bower_components/path/path',
 
+		'bundle': 'bower_components/requirejs-bundle/bundle',
 		'text': 'bower_components/requirejs-text/text',
 		'json': 'bower_components/requirejs-plugins/src/json',
 		'css': 'bower_components/require-css/css.min',
 		'style': 'src/requirejs-plugin/style',
 		'html': 'src/requirejs-plugin/html'
+	}
+	, "valaxy/requirejs-bundle": {
+		libBaseUrl: 'bower_components'
 	}
 })

@@ -2,7 +2,7 @@ define(function (require) {
 	var $ = require('jquery')
 	require('magnific-popup')
 	require('css!bower_components/magnific-popup/dist/magnific-popup')
-	var path = require('bower_components/path/path')
+	var path = require('path')
 	var Project = require('../project-manager/project-model')
 	var fileDialog = require('bower_components/nw-file-dialog/index')
 	var loader = require('../loader/index')

@@ -2,7 +2,7 @@ define(function (require) {
 	var fs = requireNode('fs')
 	var g = require('../home/global')
 	var $ = require('jquery')
-	var process = require('../pandoc-plugin/process')
+	//var process = require('./process')
 	var loader = require('../loader/index')
 
 	//var html = require('text!./index.html')
