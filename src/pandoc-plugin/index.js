@@ -3,17 +3,21 @@ define(function (require, exports) {
 	var SimpleView = require('bower_components/jquery-flex-layout/src/view/simple-view')
 	var async = require('async')
 
+	var process = require('./process')
 	var loader = require('../loader/index')
 	var layout = require('../home/layout')
 	var Editor = require('../editor/editor')
+
+	var autoSave = require('../editor/auto-save')
+	var saveConfirm = require('../editor/save-confirm')
 
 	exports.init = function (options) {
 		this._projectManager = options.projectManager
 
 		this._projectManager.on('open', function () {
-			loader.load('text!../editor/index.html',
-				'text!../preview/index.html',
-				'text!../editor-tab/index.html').done(function (editor, preview, editorTab) {
+			loader.load('html!../editor/index',
+				'html!../preview/index',
+				'html!../editor-tab/index').done(function (editor, preview, editorTab) {
 					var linear = new LinearLayout({direction: 'column'})
 					var linear2 = new LinearLayout({direction: 'row'})
 					var editor = new SimpleView({selector: $(editor)})
@@ -36,5 +40,14 @@ define(function (require, exports) {
 		this._projectManager.close('close', function () {
 
 		})
+
+
+		//autoSave.init({
+		//	projectManager: projectManager
+		//})
+
+		//saveConfirm.init()
+
+		process.init()
 	}
 })

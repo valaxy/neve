@@ -2,17 +2,16 @@ define(function (require, exports) {
 	var path = requireNode('path')
 	//var nodegit = requireNode('../../node_modules/nodegit/lib/nodegit')
 
-	var process = require('../process/process')
 	var g = require('./global')
 	var layout = require('./layout')
-	var autoSave = require('../editor/auto-save')
-	var saveConfirm = require('../editor/save-confirm')
 	var ProjectManager = require('../project-manager/project-manager')
 	var ProjectModel = require('../project-manager/project-model')
 	var Loading = require('../loading/index')
 	var pandocPlugin = require('../pandoc-plugin/index')
-	var css = require('css!./index')
 	var loader = require('../loader/index')
+
+	require('css!./index')
+	require('css!bower_components/normalize.css/normalize.css')
 
 
 	exports.init = function () {
@@ -42,15 +41,7 @@ define(function (require, exports) {
 				pandocPlugin.init({
 					projectManager: projectManager
 				})
-
-				//process.init()
-
-				//autoSave.init({
-				//	projectManager: projectManager
-				//})
-				//
-				//saveConfirm.init()
-
+				
 				g.projectManager.open(new ProjectModel({
 					name: 'CF',
 					location: 'c:/project/help-test'

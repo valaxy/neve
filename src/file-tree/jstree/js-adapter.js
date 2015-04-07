@@ -57,6 +57,15 @@ define(function (require) {
 				me._$root.trigger('selectFile', [file])
 			})
 
+			this._$root.on('dblclick.jstree', (function (event) {
+				var id = $(event.target).parent()[0].id
+				var file = this.getFile(id)
+				if (!file.isDir) {
+					var model = file.data
+					this._$root.trigger('openFile', [model])
+				}
+			}).bind(this))
+
 			// 这里的顺序很重要, 目前只测试出能放在最后执行, 原因不明
 			this._jstree = this._$root.jstree()  // jstree control handler
 		},

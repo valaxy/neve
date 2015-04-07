@@ -37,6 +37,6 @@ High Events:
     - addFile
     - updateFile
     - deleteFile
+    - openFile: dblclick to opened file, not directory
 
 Low Events:
-    - dblclick:

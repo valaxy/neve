@@ -9,7 +9,7 @@ define(function (require) {
 	var g = require('../home/global')
 
 	var fswrap = require('../file-system/fs-wrap')
-	var process = require('../process/process')
+	var process = require('../pandoc-plugin/process')
 	var async = require('async')
 	require('jstree')
 
@@ -29,13 +29,8 @@ define(function (require) {
 		_pathToDomId: {},
 
 		events: {
-			'dblclick.jstree': function (event) {
-				var domId = $(event.target).parent()[0].id
-				var file = this._fileTree.getFile(domId)
-				if (!file.isDir) {
-					var model = file.data
-					this._openFile(model, true, false)
-				}
+			openFile: function (event, file) {
+				this._openFile(file, true, false)
 			}
 		},
 
@@ -285,9 +280,11 @@ define(function (require) {
 
 
 		initialize: function (options) {
-			this.setElement(loader.loadDom('file-tree', html))
-			dom.appendStyle(this.$el[0], css1)
-			dom.appendStyle(this.$el[0], css2)
+			var root = loader.loadDom('file-tree', html)
+			this.setElement($(root).find('.file-tree'))
+
+			dom.appendStyle(root, css1)
+			dom.appendStyle(root, css2)
 
 			this._projectManager = options.projectManager
 			this._$jstree = this.$('.jstree')
