@@ -1,14 +1,62 @@
 @charset "utf-8";
-
+@import "../../bower_components/normalize.css/normalize.css";
 @import (less) "../../bower_components/font-awesome/css/font-awesome.css";
 .everything {
 	height:      100%;
 	line-height: 20px;
+	position:    relative;
 
 	i.views {
 		.fa;
 		&:extend(.fa-bars all);
 		margin-left: 5px;
-		cursor: pointer;
+		cursor:      pointer;
+	}
+
+	.menu {
+		position:   absolute;
+		left:       5px;
+		bottom:     25px;
+		list-style: none;
+		margin:     0;
+		padding:    0;
+		width:      200px;
+		background: white;
+		border:     1px solid #ccc;
+		display:    none;
+
+		li {
+			cursor: pointer;
+		}
+
+		:nth-child(1) {
+			i {
+				.fa;
+				&:extend(.fa-terminal all);
+			}
+			span:after {
+				content: "命令行终端";
+			}
+		}
+
+		:nth-child(2) {
+			i {
+				.fa;
+				&:extend(.fa-tasks all);
+			}
+			span:after {
+				content: "Todo列表";
+			}
+		}
+
+		:nth-child(3) {
+			i {
+				.fa;
+				&:extend(.fa-rotate-left all);
+			}
+			span:after {
+				content: "browser-sync";
+			}
+		}
 	}
 }
