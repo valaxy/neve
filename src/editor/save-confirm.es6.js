@@ -6,7 +6,16 @@ define(function (require, exports) {
 		var editor = options.editorView
 		var projectManager = options.projectManager
 
+		// init
+		var activeFile = projectManager.active()
 		var isSave = true
+
+		// confirm when change file
+		projectManager.on('openFile', function () {
+			activeFile = projectManager.active()
+			isSave = true
+		})
+
 
 		// change save flag to no-save
 		editor.on('change', function () {
@@ -24,9 +33,6 @@ define(function (require, exports) {
 		})
 		exitConfirm.on()
 
-		// confirm when change file
-		projectManager.on('openFile', function () {
-			alert()
-		})
+
 	}
 })

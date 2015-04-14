@@ -6,6 +6,7 @@ define(function (require, exports) {
 	var ProjectManager = require('../project-manager/project-manager')
 	var ProjectModel = require('../project-manager/project-model')
 	var Loading = require('../loading/index')
+	var fileWatcherLoader = require('../loader/file-watcher-loader')
 
 	var pandocPlugin = require('../plugin/pandoc/index')
 	var markdownPlugin = require('../plugin/markdown/index')
@@ -39,6 +40,8 @@ define(function (require, exports) {
 		).done(function () {
 				layout.init()
 				loading.dispose()
+
+				fileWatcherLoader.init()
 
 				//pandocPlugin.init({
 				//	projectManager: projectManager

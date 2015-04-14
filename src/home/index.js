@@ -7,6 +7,7 @@ var $__index_46_es6_46_js__ = (function() {
     var ProjectManager = require('../project-manager/project-manager');
     var ProjectModel = require('../project-manager/project-model');
     var Loading = require('../loading/index');
+    var fileWatcherLoader = require('../loader/file-watcher-loader');
     var pandocPlugin = require('../plugin/pandoc/index');
     var markdownPlugin = require('../plugin/markdown/index');
     var loader = require('../loader/index');
@@ -27,6 +28,7 @@ var $__index_46_es6_46_js__ = (function() {
       })).done(function() {
         layout.init();
         loading.dispose();
+        fileWatcherLoader.init();
         markdownPlugin.init({projectManager: projectManager});
         projectManager.open(new ProjectModel({
           name: 'CF',

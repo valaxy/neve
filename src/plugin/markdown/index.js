@@ -5,14 +5,11 @@ var $__index_46_es6_46_js__ = (function() {
     var LinearLayout = require('bower_components/jquery-flex-layout/src/view/linear-layout');
     var SimpleView = require('bower_components/jquery-flex-layout/src/view/simple-view');
     var async = require('async');
-    var process = require('./process');
+    var markdown = require('bundle!marked');
     var loader = require('../../loader/index');
     var layout = require('../../home/layout');
     var Editor = require('../../editor/editor');
     var fileWatcherLoader = require('../../loader/file-watcher-loader');
-    var autoSave = require('../../editor/auto-save');
-    var saveConfirm = require('../../editor/save-confirm');
-    var markdown = require('bundle!marked');
     exports.init = function(options) {
       this._projectManager = options.projectManager;
       this._projectManager.on('open', function() {
@@ -31,19 +28,19 @@ var $__index_46_es6_46_js__ = (function() {
             el: editor._$dom,
             projectManager: options.projectManager
           });
-          saveConfirm.init({
-            editorView: editorView,
-            projectManager: options.projectManager
-          });
         });
       });
-      this._projectManager.close('close', function() {});
-      process.init();
+      this._projectManager.on('close', function() {});
       fileWatcherLoader.load({
         name: 'markdown',
         description: 'compile markdown to html',
-        script: (function(input) {
-          console.log('file change: ' + input);
+        script: (function(input, callback) {
+          var $preview = $('.preview .content');
+          var html = markdown(input);
+          var top = $preview[0].scrollTop;
+          $preview.html(html);
+          $preview[0].scrollTop = top;
+          callback();
         })
       });
     };

@@ -1,14 +1,17 @@
 define(function (require, exports) {
+	var editorWatch = require('../editor/editor-watch')
+	var async = require('async')
 
 	var watchers = []
 
 	/** options:
 	 **     description: long text about the watcher
 	 **     name: name of the watcher
-	 **     program: string or a function
+	 **     program: string
+	 **     script: function
 	 **         input: text about the input file
 	 **         callback: call to write output
-	 **             output: text about the output file */
+	 */
 	exports.load = function (options = {
 		isEnabled: '',
 		arguments: '',              // args
@@ -28,6 +31,20 @@ define(function (require, exports) {
 		workingDir: ''
 	}) {
 		watchers.push(options)
+	}
+
+
+	exports.init = function () {
+		editorWatch.on('update', function (allDone, text) {
+			async.eachSeries(watchers, function (watcher, done) {
+				if (watcher.script) {
+					watcher.script(text, done)
+				}
+			}, function (err) {
+				allDone()
+			})
+		})
+		editorWatch.start()
 	}
 
 	exports.watcher = watchers
