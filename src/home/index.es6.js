@@ -48,7 +48,7 @@ define(function (require, exports) {
 					projectManager: projectManager
 				})
 
-				g.projectManager.open(new ProjectModel({
+				projectManager.open(new ProjectModel({
 					name: 'CF',
 					location: 'd:/test'
 				}))

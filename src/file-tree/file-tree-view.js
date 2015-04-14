@@ -15,8 +15,7 @@ define(function (require) {
 
 	var loader = require('../loader/index')
 	var html = require('text!./index.html')
-	var css1 = require('style!./index')
-	var css2 = require('style!bower_components/jstree/dist/themes/default/style')
+	var css = require('style!./index')
 	var dom = require('../utility/dom')
 
 
@@ -283,8 +282,7 @@ define(function (require) {
 			var root = loader.loadDom('file-tree', html)
 			this.setElement($(root).find('.file-tree'))
 
-			dom.appendStyle(root, css1)
-			dom.appendStyle(root, css2)
+			dom.appendStyle(root, css)
 
 			this._projectManager = options.projectManager
 			this._$jstree = this.$('.jstree')

@@ -28,7 +28,7 @@ var $__index_46_es6_46_js__ = (function() {
         layout.init();
         loading.dispose();
         markdownPlugin.init({projectManager: projectManager});
-        g.projectManager.open(new ProjectModel({
+        projectManager.open(new ProjectModel({
           name: 'CF',
           location: 'd:/test'
         }));

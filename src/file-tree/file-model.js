@@ -1,5 +1,6 @@
 define(function (require) {
 	var path = require('path')
+	require('backbone')
 
 	/** File or Directory */
 	var FileModel = Backbone.RelationalModel.extend({
