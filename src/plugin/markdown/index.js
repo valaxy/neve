@@ -20,11 +20,11 @@ var $__index_46_es6_46_js__ = (function() {
         var editor = new SimpleView({selector: $(editorHTML)});
         var preview = new SimpleView({selector: $(previewHTML)});
         var editorTab = new SimpleView({selector: $(editorTabHTML)});
-        linear2.appendView(editor, {flex: 1});
-        linear2.appendView(preview, {flex: 1});
-        linear.appendView(editorTab, {flex: '30px'});
-        linear.appendView(linear2, {flex: 1});
-        layout.appendAfterFileTree(linear, {flex: 1});
+        linear2.appendView(editor, {flex: '1'});
+        linear2.appendView(preview, {flex: '1'});
+        linear.appendView(editorTab, {flex: '0 30px'});
+        linear.appendView(linear2, {flex: '1'});
+        layout.appendAfterFileTree(linear, {flex: '1'});
         var editorView = new EditorView({
           el: editor._$dom,
           projectManager: options.projectManager
