@@ -12,6 +12,7 @@ define(function (require, exports) {
 	var markdownPlugin = require('../plugin/markdown/index')
 
 	var loader = require('../loader/index')
+	var editor = require('../editor/index')
 
 	require('css!./index')
 	require('css!bower_components/normalize.css/normalize.css')
@@ -19,7 +20,7 @@ define(function (require, exports) {
 
 	exports.init = function () {
 		var loading = new Loading
-
+		var editorView
 		var projectManager = g.projectManager = new ProjectManager
 
 		$.when(
@@ -42,6 +43,10 @@ define(function (require, exports) {
 				loading.dispose()
 
 				fileWatcherLoader.init()
+
+				editor.init({
+					projectManager: projectManager
+				})
 
 				//pandocPlugin.init({
 				//	projectManager: projectManager

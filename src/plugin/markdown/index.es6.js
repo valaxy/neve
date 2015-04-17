@@ -11,30 +11,13 @@ define(function (require, exports) {
 	var layoutLoader = require('../../loader/layout-loader')
 
 	exports.init = function (options) {
+		this._editorView = options.editorView
 		this._projectManager = options.projectManager
 
 		layoutLoader.load()
 
-		loader.load('html!../editor/index',
-			'html!../preview/index',
-			'html!../editor-tab/index').done(function (editorHTML, previewHTML, editorTabHTML) {
-				var linear = new LinearLayout({direction: 'column'})
-				var linear2 = new LinearLayout({direction: 'row'})
-				var editor = new SimpleView({selector: $(editorHTML)})
-				var preview = new SimpleView({selector: $(previewHTML)})
-				var editorTab = new SimpleView({selector: $(editorTabHTML)})
-				linear2.appendView(editor, {flex: '1'})
-				linear2.appendView(preview, {flex: '1'})
-				linear.appendView(editorTab, {flex: '0 30px'})
-				linear.appendView(linear2, {flex: '1'})
-				layout.appendAfterFileTree(linear, {flex: '1'})
-
-				// editor
-				var editorView = new EditorView({
-					el: editor._$dom,
-					projectManager: options.projectManager
-				})
-			})
+		//var editor = new SimpleView({selector: $(this._editorView.$el)})
+		//layout.load('editor', editor._$dom)
 
 		this._projectManager.on('open', function () {
 			// show view
