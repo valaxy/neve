@@ -16,7 +16,6 @@ var $__index_46_es6_46_js__ = (function() {
     require('css!bower_components/normalize.css/normalize.css');
     exports.init = function() {
       var loading = new Loading;
-      var editorView;
       var projectManager = g.projectManager = new ProjectManager;
       $.when(loader.load('../status-bar/index').done(function(StatusBar) {
         new StatusBar;

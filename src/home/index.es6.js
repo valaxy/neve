@@ -20,7 +20,6 @@ define(function (require, exports) {
 
 	exports.init = function () {
 		var loading = new Loading
-		var editorView
 		var projectManager = g.projectManager = new ProjectManager
 
 		$.when(

@@ -1,23 +1,13 @@
 define(function (require, exports) {
-	var LinearLayout = require('bower_components/jquery-flex-layout/src/view/linear-layout')
-	var SimpleView = require('bower_components/jquery-flex-layout/src/view/simple-view')
-	var async = require('async')
 	var markdown = require('bundle!marked')
-
 	var loader = require('../../loader/index')
 	var layout = require('../../home/layout')
-	var EditorView = require('../../editor/editor')
 	var fileWatcherLoader = require('../../loader/file-watcher-loader')
-	var layoutLoader = require('../../loader/layout-loader')
+	var html = require('html!./preview')
+
 
 	exports.init = function (options) {
-		this._editorView = options.editorView
 		this._projectManager = options.projectManager
-
-		layoutLoader.load()
-
-		//var editor = new SimpleView({selector: $(this._editorView.$el)})
-		//layout.load('editor', editor._$dom)
 
 		this._projectManager.on('open', function () {
 			// show view
@@ -25,6 +15,10 @@ define(function (require, exports) {
 
 		this._projectManager.on('close', function () {
 			// hide view
+		})
+
+		var $preview = layout.load2(html, function () {
+			// nothing
 		})
 
 		fileWatcherLoader.load({

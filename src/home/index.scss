@@ -2,7 +2,6 @@
 @import "../../bower_components/absolute-layout/src/absolute-layout";
 @import "../../bower_components/jquery-flex-layout/src/style/style";
 @import "../editor/index";
-@import "../preview/index";
 @import "../editor-tab/index";
 $COLOR: #aaa;
 
@@ -57,4 +56,24 @@ body {
 
 	position: absolute;
 	z-index:  1;
+}
+.everything {
+	.linear[data-direction=row] {
+		> .simple {
+			border-right: 1px solid #ccc;
+		}
+		> .simple:nth-last-of-type(1) {
+			border-right: none;
+		}
+	}
+
+	.linear[data-direction=column] {
+		> .simple {
+			border-bottom: 1px solid #ccc;
+		}
+		> .simple:nth-last-of-type(1) {
+			border-bottom: none;
+		}
+	}
+
 }
