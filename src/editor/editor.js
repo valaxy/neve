@@ -5,6 +5,7 @@ var $__editor_46_es6_46_js__ = (function() {
     var fs = requireNode('fs');
     var g = require('../home/global');
     var $ = require('jquery');
+    var ace = require('ace');
     var loader = require('../loader/index');
     var dom = require('../utility/dom');
     var html = require('html!./index');

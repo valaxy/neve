@@ -18,9 +18,15 @@ requirejs.config({
 		'json': 'bower_components/requirejs-plugins/src/json',
 		'css': 'bower_components/require-css/css.min',
 		'style': 'src/requirejs-plugin/style',
-		'html': 'src/requirejs-plugin/html'
+		'html': 'src/requirejs-plugin/html',
+		'ace': 'bower_components/ace-builds/src-noconflict/ace'
 	}
 	, "valaxy/requirejs-bundle": {
 		libBaseUrl: 'bower_components'
+	}
+	, shim: {
+		ace: {
+			exports: 'ace'
+		}
 	}
 })

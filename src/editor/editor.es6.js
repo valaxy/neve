@@ -2,8 +2,11 @@ define(function (require) {
 	var fs = requireNode('fs')
 	var g = require('../home/global')
 	var $ = require('jquery')
+	var ace = require('ace')
+
 	//var process = require('./process')
 	var loader = require('../loader/index')
+
 	var dom = require('../utility/dom')
 
 	var html = require('html!./index')
