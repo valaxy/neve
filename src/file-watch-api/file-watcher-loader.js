@@ -4,6 +4,8 @@ var $__file_45_watcher_45_loader_46_es6_46_js__ = (function() {
   define(function(require, exports) {
     var editorWatch = require('../editor/editor-watch');
     var async = require('async');
+    var Backbone = require('backbone');
+    var _ = require('underscore');
     var watchers = [];
     exports.load = function() {
       var options = arguments[0] !== (void 0) ? arguments[0] : {
@@ -26,7 +28,9 @@ var $__file_45_watcher_45_loader_46_es6_46_js__ = (function() {
       };
       watchers.push(options);
     };
-    exports.init = function() {
+    exports.init = function(options) {
+      var projectManager = options.projectManager;
+      var event = _.extend({}, Backbone.Events);
       editorWatch.on('update', function(allDone, text) {
         async.eachSeries(watchers, function(watcher, done) {
           if (watcher.script) {
@@ -37,6 +41,8 @@ var $__file_45_watcher_45_loader_46_es6_46_js__ = (function() {
         });
       });
       editorWatch.start();
+      event.listenTo(projectManager, 'open', (function(project) {}));
+      event.listenTo(projectManager, 'close', (function() {}));
     };
     exports.watcher = watchers;
   });

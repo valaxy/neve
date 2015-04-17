@@ -5,7 +5,7 @@ var $__index_46_es6_46_js__ = (function() {
     var markdown = require('bundle!marked');
     var loader = require('../../loader/index');
     var layout = require('../../home/layout');
-    var fileWatcherLoader = require('../../loader/file-watcher-loader');
+    var fileWatcherLoader = require('../../file-watch-api/file-watcher-loader');
     var html = require('html!./preview');
     exports.init = function(options) {
       this._projectManager = options.projectManager;
@@ -16,11 +16,11 @@ var $__index_46_es6_46_js__ = (function() {
         name: 'markdown',
         description: 'compile markdown to html',
         script: (function(input, callback) {
-          var $preview = $('.preview .content');
+          var $content = $preview.find('.content');
           var html = markdown(input);
-          var top = $preview[0].scrollTop;
-          $preview.html(html);
-          $preview[0].scrollTop = top;
+          var top = $content[0].scrollTop;
+          $content.html(html);
+          $content[0].scrollTop = top;
           callback();
         })
       });

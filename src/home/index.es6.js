@@ -6,7 +6,7 @@ define(function (require, exports) {
 	var ProjectManager = require('../project-manager/project-manager')
 	var ProjectModel = require('../project-manager/project-model')
 	var Loading = require('../loading/index')
-	var fileWatcherLoader = require('../loader/file-watcher-loader')
+	var fileWatcherLoader = require('../file-watch-api/file-watcher-loader')
 
 	var pandocPlugin = require('../plugin/pandoc/index')
 	var markdownPlugin = require('../plugin/markdown/index')
@@ -31,7 +31,7 @@ define(function (require, exports) {
 					projectManager: projectManager
 				})
 			}),
-			loader.load('../file-tree/file-tree-view', '../file-tree/file-tree-model').done(function (FileTreeView, FileTreeModel) {
+			loader.load('../file-tree/file-tree-view', '../project-manager/file-tree-model').done(function (FileTreeView, FileTreeModel) {
 				g.fileTree = (new FileTreeView({
 					model: new FileTreeModel,
 					projectManager: projectManager
@@ -41,7 +41,9 @@ define(function (require, exports) {
 				layout.init()
 				loading.dispose()
 
-				fileWatcherLoader.init()
+				fileWatcherLoader.init({
+					projectManager: projectManager
+				})
 
 				editor.init({
 					projectManager: projectManager

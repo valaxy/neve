@@ -1,6 +1,8 @@
 define(function (require, exports) {
 	var editorWatch = require('../editor/editor-watch')
 	var async = require('async')
+	var Backbone = require('backbone')
+	var _ = require('underscore')
 
 	var watchers = []
 
@@ -34,7 +36,10 @@ define(function (require, exports) {
 	}
 
 
-	exports.init = function () {
+	exports.init = function (options) {
+		var projectManager = options.projectManager
+		var event = _.extend({}, Backbone.Events)
+
 		editorWatch.on('update', function (allDone, text) {
 			async.eachSeries(watchers, function (watcher, done) {
 				if (watcher.script) {
@@ -45,6 +50,14 @@ define(function (require, exports) {
 			})
 		})
 		editorWatch.start()
+
+		event.listenTo(projectManager, 'open', (project) => {
+
+		})
+
+		event.listenTo(projectManager, 'close', () => {
+
+		})
 	}
 
 	exports.watcher = watchers
