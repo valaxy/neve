@@ -6,12 +6,11 @@ define(function (require) {
 
 	var JstreeAdapter = require('./jstree/js-adapter')
 	var FileModel = require('../project-manager/file-model')
-	var g = require('../home/global')
-
 	var fswrap = require('../file-system/fs-wrap')
-	//var process = require('./process')
 	var async = require('async')
+	var renameDialog = require('./rename-dialog/index')
 	require('jstree')
+
 
 	var loader = require('../loader/index')
 	var html = require('text!./index.html')
@@ -107,7 +106,8 @@ define(function (require) {
 					}, {
 						label: 'rename',
 						action: function () {
-
+							renameDialog.init()
+							renameDialog.show()
 						}
 					}]
 				} else { // file

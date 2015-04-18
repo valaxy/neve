@@ -62,12 +62,18 @@ define(function (require, exports) {
 					location: 'd:/test'
 				}))
 
-				// auto open
+				// for debug
 				setTimeout(function () {
+					// 打开文件
 					var file = g.fileTree.getFileByPath('readme.md')
 					g.fileTree.get('project').set('openFile', file)
 
+					// 状态条弹出
 					$('.status-bar::shadow .views').click()
+
+					// 弹出rename框
+					$($('.file-tree::shadow .jstree a')[0]).trigger('contextmenu')
+					$('.file-tree::shadow .jstree-contextmenu li:last-child a').click()
 				}, 500)
 			})
 	}

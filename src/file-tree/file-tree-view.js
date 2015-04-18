@@ -8,9 +8,9 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
     var watch2 = new (require('../file-system/watch'));
     var JstreeAdapter = require('./jstree/js-adapter');
     var FileModel = require('../project-manager/file-model');
-    var g = require('../home/global');
     var fswrap = require('../file-system/fs-wrap');
     var async = require('async');
+    var renameDialog = require('./rename-dialog/index');
     require('jstree');
     var loader = require('../loader/index');
     var html = require('text!./index.html');
@@ -85,7 +85,10 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
               })
             }, {
               label: 'rename',
-              action: function() {}
+              action: function() {
+                renameDialog.init();
+                renameDialog.show();
+              }
             }];
           } else {
             return [{
