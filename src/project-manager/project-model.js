@@ -36,14 +36,6 @@ var $__project_45_model_46_es6_46_js__ = (function() {
           me._manager.trigger('openFile', project, file);
         });
       },
-      saveOpen: function(content) {
-        var absolutePath = path.join(this.get('location'), this.get('openFile').get('path'));
-        fs.writeFile(absolutePath, content, function(err) {
-          if (err) {
-            alert(err);
-          }
-        });
-      },
       filter: function(file) {}
     }));
     return ProjectModel;

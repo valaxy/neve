@@ -8,8 +8,8 @@ define(function (require, exports) {
 	var layout = require('../../window/layout')
 	var Editor = require('../../editor/editor')
 
-	var autoSave = require('../../editor/auto-save')
-	var saveConfirm = require('../../editor/save-confirm')
+	//var autoSave = require('../../editor/auto-save')
+	//var saveConfirm = require('../../editor/save-confirm')
 
 	exports.init = function (options) {
 		this._projectManager = options.projectManager

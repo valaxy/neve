@@ -45,15 +45,15 @@ define(function (require) {
 		},
 
 
-		// save the opened file
-		saveOpen: function (content) {
-			var absolutePath = path.join(this.get('location'), this.get('openFile').get('path'))
-			fs.writeFile(absolutePath, content, function (err) {
-				if (err) {
-					alert(err)
-				}
-			})
-		},
+		//// save the opened file
+		//saveOpen: function (content) {
+		//	var absolutePath = path.join(this.get('location'), this.get('openFile').get('path'))
+		//	fs.writeFile(absolutePath, content, function (err) {
+		//		if (err) {
+		//			alert(err)
+		//		}
+		//	})
+		//},
 
 
 		// if this is project file return true, otherwise return false

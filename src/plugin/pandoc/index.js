@@ -9,8 +9,6 @@ var $__index_46_es6_46_js__ = (function() {
     var loader = require('../../loader/index');
     var layout = require('../../window/layout');
     var Editor = require('../../editor/editor');
-    var autoSave = require('../../editor/auto-save');
-    var saveConfirm = require('../../editor/save-confirm');
     exports.init = function(options) {
       this._projectManager = options.projectManager;
       this._projectManager.on('open', function() {

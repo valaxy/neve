@@ -2,6 +2,7 @@ define(function (require, exports) {
 	var markdown = require('bundle!marked')
 	var loader = require('../../loader/index')
 	var layout = require('../../window/layout')
+	var editor = require('../../editor/index')
 	var fileWatcherLoader = require('../../file-watch-api/file-watcher-loader')
 	var html = require('html!./preview')
 

@@ -4,6 +4,7 @@ define(function (require) {
 	var $ = require('jquery')
 	var ace = require('ace')
 	var loader = require('../loader/index')
+	var autoSave = require('./plugin/auto-save')
 
 	var dom = require('../utility/dom')
 	var html = require('html!./index')
@@ -37,6 +38,7 @@ define(function (require) {
 			editor.getSession().setMode("ace/mode/markdown")
 			editor.renderer.setShowGutter(false)
 
+
 			// fix about ace editor-------------------------------------
 			var style1 = document.getElementById('ace_editor')
 			var style2 = document.getElementById('ace-tm')
@@ -52,15 +54,18 @@ define(function (require) {
 			}, 100)
 			// fix about ace editor-------------------------------------
 
-			var me = this
 
 			// bind event when open a file in project
-			projectManager.on('openFile', function (project, file) {
+			projectManager.on('openFile', (project, file) => {
 				if (file) {
-					me._onOpenFile(project, file)
+					this._onOpenFile(project, file)
 				} else {
-					me._onCloseFile(project, file)
+					this._onCloseFile(project, file)
 				}
+			})
+
+			autoSave.init({
+				projectManager: projectManager
 			})
 		}
 	})

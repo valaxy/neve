@@ -7,6 +7,7 @@ var $__editor_46_es6_46_js__ = (function() {
     var $ = require('jquery');
     var ace = require('ace');
     var loader = require('../loader/index');
+    var autoSave = require('./plugin/auto-save');
     var dom = require('../utility/dom');
     var html = require('html!./index');
     var css = require('style!./index');
@@ -39,14 +40,14 @@ var $__editor_46_es6_46_js__ = (function() {
           var style4 = document.getElementById('ace-chrome');
           $__0.el.appendChild(style4);
         }), 100);
-        var me = this;
-        projectManager.on('openFile', function(project, file) {
+        projectManager.on('openFile', (function(project, file) {
           if (file) {
-            me._onOpenFile(project, file);
+            $__0._onOpenFile(project, file);
           } else {
-            me._onCloseFile(project, file);
+            $__0._onCloseFile(project, file);
           }
-        });
+        }));
+        autoSave.init({projectManager: projectManager});
       }
     });
     return Editor;

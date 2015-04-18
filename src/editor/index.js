@@ -4,12 +4,16 @@ var $__index_46_es6_46_js__ = (function() {
   define(function(require, exports) {
     var EditorView = require('./editor');
     var layout = require('../window/layout');
+    var editorView;
     exports.init = function(options) {
       var projectManager = options.projectManager;
-      var editorView = new EditorView({projectManager: projectManager});
+      editorView = new EditorView({projectManager: projectManager});
       layout.load2(editorView.el, function() {
         console.log('should dispose me');
       });
+    };
+    exports.getEditor = function() {
+      return editorView._editor;
     };
   });
   return {};
