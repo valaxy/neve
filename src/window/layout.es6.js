@@ -1,5 +1,4 @@
 define(function (require, exports) {
-	var treeLayout = require('bower_components/jquery-flex-layout/src/view/tree-layout')
 	var LinearLayout = require('bower_components/jquery-flex-layout/src/view/linear-layout')
 	var SimpleView = require('bower_components/jquery-flex-layout/src/view/simple-view')
 	var loader = require('../loader/index')
@@ -65,41 +64,24 @@ define(function (require, exports) {
 
 		return $innerRoot
 	}
+
+	/** options:
+	 **     dispose: function
+	 **     title: null or some no empty string
+	 */
+	exports.load3 = function (domOrHTML, options) {
+		var $outerRoot = $('<div>')
+		var $innerRoot = $(domOrHTML)
+		var shadowRoot = $outerRoot[0].createShadowRoot()
+		shadowRoot.appendChild($innerRoot[0])
+
+		var view = new SimpleView({
+			selector: $outerRoot
+		})
+		this._linearLayout.addViewAtEdge(view, 'right', {
+			flex: '1'
+		})
+
+		return $innerRoot
+	}
 })
-
-
-//var $dom = treeLayout.init({
-//	_schema: 'linear',
-//	direction: 'column',
-//	views: [{
-//		_schema: 'view',
-//		flex: '25px',
-//		selector: '.top-nav'
-//	}, {
-//		_schema: 'linear',
-//		direction: 'row',
-//		flex: 1,
-//		views: [{
-//			_schema: 'view',
-//			flex: '200px',
-//			selector: '.explorer'
-//		}, {
-//			_schema: 'linear',
-//			flex: 1,
-//			direction: 'row',
-//			views: [{
-//				_schema: 'view',
-//				flex: 1,
-//				selector: '.editor'
-//			}, {
-//				_schema: 'view',
-//				flex: 1,
-//				selector: '.preview'
-//			}]
-//		}]
-//	}, {
-//		_schema: 'view',
-//		flex: '20px',
-//		selector: '.status-bar'
-//	}]
-//})

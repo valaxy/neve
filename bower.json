@@ -1,8 +1,8 @@
 {
   "name": "neve",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "authors": [
-    "valaxy <valaxy.tian@gmail.com>"
+    "valaxy <valaxy@qq.com>"
   ],
   "license": "MIT",
   "ignore": [
@@ -43,7 +43,8 @@
     "requirejs": "~2.1.17",
     "markdown": "~0.5.0",
     "marked": "~0.3.3",
-    "jquery-contextmenu": "~0.5.2"
+    "jquery-contextmenu": "~0.5.2",
+    "backbone-event-propagation": "valaxy/backbone-event-propagation"
   },
   "devDependencies": {
     "qunit": "~1.18.0"

@@ -3,12 +3,9 @@ define(function (require) {
 	var g = require('../home/global')
 	var $ = require('jquery')
 	var ace = require('ace')
-
-	//var process = require('./process')
 	var loader = require('../loader/index')
 
 	var dom = require('../utility/dom')
-
 	var html = require('html!./index')
 	var css = require('style!./index')
 
@@ -21,7 +18,6 @@ define(function (require) {
 			})
 
 			this._editor.setValue(content)
-			//process.immediate()
 		},
 
 		_onCloseFile: function (project, file) {
@@ -49,7 +45,7 @@ define(function (require) {
 			this.el.appendChild(style2)
 			this.el.appendChild(style3)
 
-
+			// fix about css
 			setTimeout(() => {
 				var style4 = document.getElementById('ace-chrome')
 				this.el.appendChild(style4)

@@ -3,9 +3,10 @@ define(function (require) {
 	var FileModel = require('./file-model')
 	var FileTreeModel = require('./file-tree-model')
 	var path = require('path')
+	var propagation = require('backbone-event-propagation')
 	var fs = requireNode('fs')
 
-	var ProjectModel = Backbone.RelationalModel.extend({
+	var ProjectModel = propagation.mixin(Backbone.RelationalModel.extend({
 		defaults: {
 			name: '',             // unique identity of project
 			location: '',         // absolute path of local file system
@@ -29,6 +30,8 @@ define(function (require) {
 			}
 		}],
 
+		propagation: 'manager',
+
 		initialize: function () {
 			this._manager = null
 
@@ -37,7 +40,7 @@ define(function (require) {
 				if (file) {
 					me._manager.trigger('closeFile', project, file)
 				}
-				me._manager.trigger('openFile', [project, file])
+				me._manager.trigger('openFile', project, file)
 			})
 		},
 
@@ -57,7 +60,7 @@ define(function (require) {
 		filter: function (file) {
 
 		}
-	})
+	}))
 
 	return ProjectModel
 })

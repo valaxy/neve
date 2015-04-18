@@ -8,9 +8,19 @@ var $__project_45_manager_46_es6_46_js__ = (function() {
     var Set = require('bower_components/algorithm-data-structure/src/set/ordered-set');
     var async = require('async');
     var Backbone = require('backbone');
+    var Project = require('./project-model');
     require('backbone-relational');
-    var ProjectManager = Backbone.RelationalModel.extend({initialize: function() {
-        this._active = null;
+    var ProjectManager = Backbone.RelationalModel.extend({
+      relations: [{
+        key: 'active',
+        type: Backbone.HasOne,
+        relatedModel: Project,
+        reverseRelation: {
+          key: 'manager',
+          type: Backbone.HasOne
+        }
+      }],
+      initialize: function() {
         this._set = new Set(function(p1, p2) {
           if (p1.get('lastOpenedDate') && p2.get('lastOpenedDate')) {
             return p1.get('lastOpenedDate').getTime() - p2.get('lastOpenedDate').getTime();
@@ -20,7 +30,8 @@ var $__project_45_manager_46_es6_46_js__ = (function() {
             return 1;
           }
         });
-      }});
+      }
+    });
     ProjectManager.HistoryMaxCount = 20;
     ProjectManager.prototype.isExist = function(project) {
       return fs.existsSync(project.get('location'));
@@ -40,7 +51,7 @@ var $__project_45_manager_46_es6_46_js__ = (function() {
     };
     ProjectManager.prototype.open = function(project) {
       project._manager = this;
-      if (this._active) {
+      if (this.get('active')) {
         this.close();
       }
       if (this._set.count() >= ProjectManager.HistoryMaxCount) {
@@ -49,16 +60,16 @@ var $__project_45_manager_46_es6_46_js__ = (function() {
       this._set.remove(project);
       project.set('lastOpenedDate', new Date);
       this._set.add(project);
-      this._active = project;
+      this.set('active', project);
       this.trigger('open', project);
     };
     ProjectManager.prototype.close = function() {
-      var orignal = this._active;
-      this._active = null;
+      var orignal = this.get('active');
+      this.set('active', null);
       this.trigger('close', orignal);
     };
     ProjectManager.prototype.active = function() {
-      return this._active;
+      return this.get('active');
     };
     ProjectManager.prototype.openedHistory = function() {
       return this._set.toArray();

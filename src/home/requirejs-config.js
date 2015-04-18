@@ -11,6 +11,7 @@ var $__requirejs_45_config_46_es6_46_js__ = (function() {
       'underscore': 'bower_components/underscore/underscore-min',
       'backbone': 'bower_components/backbone/backbone',
       'backbone-relational': 'bower_components/backbone-relational/backbone-relational',
+      'backbone-event-propagation': 'bower_components/backbone-event-propagation/src/index',
       'jstree': 'bower_components/jstree/dist/jstree',
       'magnific-popup': 'bower_components/magnific-popup/dist/jquery.magnific-popup.min',
       'javascript-state-machine': 'bower_components/javascript-state-machine/state-machine.min',

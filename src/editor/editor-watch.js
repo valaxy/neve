@@ -5,7 +5,6 @@ var $__editor_45_watch_46_es6_46_js__ = (function() {
     var global = require('../home/global');
     var Timer = require('bower_components/timer/src/timer');
     var _ = require('underscore');
-    var $ = require('jquery');
     _.extend(exports, Backbone.Events);
     var timer;
     exports.start = function() {
@@ -19,7 +18,6 @@ var $__editor_45_watch_46_es6_46_js__ = (function() {
         immediate: true,
         task: function() {
           var value = global.editor.getValue();
-          console.log(value);
           if (value == lastValue) {
             this.next();
             return ;

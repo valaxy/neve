@@ -3,7 +3,7 @@ var $__index_46_es6_46_js__ = (function() {
   var __moduleName = "index.es6.js";
   define(function(require, exports) {
     var g = require('./global');
-    var layout = require('./layout');
+    var layout = require('../window/layout');
     var ProjectManager = require('../project-manager/project-manager');
     var ProjectModel = require('../project-manager/project-model');
     var Loading = require('../loading/index');

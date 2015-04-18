@@ -6,8 +6,9 @@ var $__project_45_model_46_es6_46_js__ = (function() {
     var FileModel = require('./file-model');
     var FileTreeModel = require('./file-tree-model');
     var path = require('path');
+    var propagation = require('backbone-event-propagation');
     var fs = requireNode('fs');
-    var ProjectModel = Backbone.RelationalModel.extend({
+    var ProjectModel = propagation.mixin(Backbone.RelationalModel.extend({
       defaults: {
         name: '',
         location: '',
@@ -24,6 +25,7 @@ var $__project_45_model_46_es6_46_js__ = (function() {
         relatedModel: FileTreeModel,
         reverseRelation: {type: Backbone.HasOne}
       }],
+      propagation: 'manager',
       initialize: function() {
         this._manager = null;
         var me = this;
@@ -31,7 +33,7 @@ var $__project_45_model_46_es6_46_js__ = (function() {
           if (file) {
             me._manager.trigger('closeFile', project, file);
           }
-          me._manager.trigger('openFile', [project, file]);
+          me._manager.trigger('openFile', project, file);
         });
       },
       saveOpen: function(content) {
@@ -43,7 +45,7 @@ var $__project_45_model_46_es6_46_js__ = (function() {
         });
       },
       filter: function(file) {}
-    });
+    }));
     return ProjectModel;
   });
   return {};

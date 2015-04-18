@@ -2,7 +2,7 @@ define(function (require, exports) {
 	//var nodegit = requireNode('nodegit')
 
 	var g = require('./global')
-	var layout = require('./layout')
+	var layout = require('../window/layout')
 	var ProjectManager = require('../project-manager/project-manager')
 	var ProjectModel = require('../project-manager/project-model')
 	var Loading = require('../loading/index')

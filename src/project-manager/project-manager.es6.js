@@ -5,7 +5,9 @@ define(function (require) {
 	var Set = require('bower_components/algorithm-data-structure/src/set/ordered-set')
 	var async = require('async')
 	var Backbone = require('backbone')
+	var Project = require('./project-model')
 	require('backbone-relational')
+
 
 
 	/** Events:
@@ -14,9 +16,18 @@ define(function (require) {
 	 **     - openFile: active project open a file
 	 **     - closeFile: active project close a file
 	 */
-	var ProjectManager = Backbone.RelationalModel.extend({
+	var ProjectManager =Backbone.RelationalModel.extend({
+		relations: [{
+			key: 'active',
+			type: Backbone.HasOne,
+			relatedModel: Project,
+			reverseRelation: {
+				key: 'manager',
+				type: Backbone.HasOne
+			}
+		}],
+
 		initialize: function () {
-			this._active = null
 			this._set = new Set(function (p1, p2) {
 				// some may not has open time
 				if (p1.get('lastOpenedDate') && p2.get('lastOpenedDate')) {
@@ -64,7 +75,7 @@ define(function (require) {
 	 **/
 	ProjectManager.prototype.open = function (project) {
 		project._manager = this
-		if (this._active) {
+		if (this.get('active')) {
 			this.close() // close first
 		}
 		if (this._set.count() >= ProjectManager.HistoryMaxCount) {
@@ -77,22 +88,22 @@ define(function (require) {
 		this._set.add(project)
 
 		// set active
-		this._active = project
+		this.set('active', project)
 		this.trigger('open', project)
 	}
 
 
 	/** Close current active project */
 	ProjectManager.prototype.close = function () {
-		var orignal = this._active
-		this._active = null
+		var orignal = this.get('active')
+		this.set('active', null)
 		this.trigger('close', orignal)
 	}
 
 
 	/** Return current active project */
 	ProjectManager.prototype.active = function () {
-		return this._active
+		return this.get('active')
 	}
 
 

@@ -4,7 +4,7 @@ var $__index_46_es6_46_js__ = (function() {
   define(function(require, exports) {
     var markdown = require('bundle!marked');
     var loader = require('../../loader/index');
-    var layout = require('../../home/layout');
+    var layout = require('../../window/layout');
     var fileWatcherLoader = require('../../file-watch-api/file-watcher-loader');
     var html = require('html!./preview');
     exports.init = function(options) {
