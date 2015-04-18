@@ -3,6 +3,7 @@ define(function (require) {
 	var utility = require('../utility/utility')
 	var path = requireNode('path')
 	var fs = requireNode('fs')
+	var fswrap = require('../file-system/fs-wrap')
 
 	var FileTreeModel = Backbone.RelationalModel.extend({
 		defaults: function () {
@@ -54,6 +55,26 @@ define(function (require) {
 			return this._add(dir)
 		},
 
+		exist: function (file) {
+			return !!this._pathToModel[file.get('path')]
+		},
+
+		createFile: function () {
+
+		},
+
+		deleteFile: function (file) {
+			if (this.exist(file)) {
+				var absolutePath = path.join(this.get('root'), file.get('path'))
+				fswrap.delete(absolutePath, file.get('isDir'), ()=> {
+					this.remove(file)
+				})
+				return true
+			} else {
+				return false
+			}
+		},
+
 		/** Remove the subtree whose root is node, return the node */
 		remove: function (file) {
 			file.cut()
@@ -64,7 +85,8 @@ define(function (require) {
 
 		_add: function (file) {
 			if (file.get('path') in this._pathToModel) {
-				throw 'file that has path of "' + file.get('path') + '" exist'
+				console.log('file that has path of "' + file.get('path') + '" exist')
+				return file.cid
 			}
 			this._pathToModel[file.get('path')] = file
 			this.get('files').add(file)

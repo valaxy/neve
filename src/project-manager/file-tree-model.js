@@ -6,6 +6,7 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
     var utility = require('../utility/utility');
     var path = requireNode('path');
     var fs = requireNode('fs');
+    var fswrap = require('../file-system/fs-wrap');
     var FileTreeModel = Backbone.RelationalModel.extend({
       defaults: function() {
         return {
@@ -40,6 +41,22 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
         this._pathToModel = {};
         return this._add(dir);
       },
+      exist: function(file) {
+        return !!this._pathToModel[file.get('path')];
+      },
+      createFile: function() {},
+      deleteFile: function(file) {
+        var $__0 = this;
+        if (this.exist(file)) {
+          var absolutePath = path.join(this.get('root'), file.get('path'));
+          fswrap.delete(absolutePath, file.get('isDir'), (function() {
+            $__0.remove(file);
+          }));
+          return true;
+        } else {
+          return false;
+        }
+      },
       remove: function(file) {
         file.cut();
         this._cut(file);
@@ -47,7 +64,8 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
       },
       _add: function(file) {
         if (file.get('path') in this._pathToModel) {
-          throw 'file that has path of "' + file.get('path') + '" exist';
+          console.log('file that has path of "' + file.get('path') + '" exist');
+          return file.cid;
         }
         this._pathToModel[file.get('path')] = file;
         this.get('files').add(file);

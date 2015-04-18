@@ -30,31 +30,6 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
           }
         };
       },
-      _deleteFile: function(fileModel, isDirectory, updateFileSystem, updateModel, updateDom) {
-        var absolutePath = path.join(this.model.get('root'), fileModel.get('path'));
-        var me = this;
-        async.series([function(done) {
-          if (updateFileSystem) {
-            fswrap.delete(absolutePath, isDirectory, me._asyncDone(done));
-          } else {
-            done();
-          }
-        }, function(done) {
-          if (updateModel) {
-            me.model.remove(fileModel);
-          }
-          done();
-        }, function(done) {
-          if (updateDom) {
-            me._fileTree.deleteFile(me._pathToDomId[fileModel.get('path')]);
-          }
-          done();
-        }], function(err) {
-          if (err) {
-            alert(err);
-          }
-        });
-      },
       _createRoot: function() {
         var model = new FileModel({
           path: '.',
@@ -122,28 +97,28 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
         }
       },
       _init: function() {
-        var me = this;
+        var $__0 = this;
         var adapter = this._fileTree = new JstreeAdapter(this._$jstree);
-        adapter.initContextMenu(function(file) {
+        adapter.initContextMenu((function(file) {
           var model = file.data;
           if (file.isDir) {
             return [{
               label: 'create directory',
-              action: function() {
+              action: (function() {
                 var relPath = path.join(model.get('path'), 'new directory');
-                me._addFile(relPath, true, true, true, true);
-              }
+                $__0._addFile(relPath, true, true, true, true);
+              })
             }, {
               label: 'create file',
-              action: function() {
+              action: (function() {
                 var relPath = path.join(model.get('path'), 'new file.md');
-                me._addFile(relPath, false, true, true, true);
-              }
+                $__0._addFile(relPath, false, true, true, true);
+              })
             }, {
               label: 'delete directory',
-              action: function() {
-                me._deleteFile(model, true, true, true, true);
-              }
+              action: (function() {
+                $__0.model.deleteFile(model);
+              })
             }, {
               label: 'rename',
               action: function() {}
@@ -151,15 +126,15 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
           } else {
             return [{
               label: 'delete file',
-              action: function() {
-                me._deleteFile(model, false, true, true, true);
-              }
+              action: (function() {
+                $__0.model.deleteFile(model);
+              })
             }, {
               label: 'rename',
               action: function() {}
             }];
           }
-        });
+        }));
       },
       _initWatch: function() {
         var me = this;
@@ -181,13 +156,18 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
           watch.createMonitor(me.model.get('root'), function(monitor) {
             monitor.on('created', function(absolutePath, stat) {
               var relPath = path.relative(me.model.get('root'), absolutePath);
-              me._addFile(relPath, stat.isDirectory(), false, true, true);
+              me.model.createFile(new FileModel({
+                path: relPath,
+                isDir: stat.isDirectory()
+              }));
             });
             monitor.on('changed', function(absolutePath) {});
             monitor.on('removed', function(absolutePath, stat) {
               var relPath = path.relative(me.model.get('root'), absolutePath);
-              var model = me.model.getFileByPath(relPath);
-              me._deleteFile(model, stat.isDirectory(), false, true, true);
+              var deletedFile = me.model.getFileByPath(relPath);
+              if (deletedFile) {
+                me.model.deleteFile(deletedFile);
+              }
             });
           });
           done();
@@ -214,7 +194,7 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
           }
         });
         this.listenTo(this.model, 'remove:files', function(file) {
-          console.log(file);
+          this._fileTree.deleteFile(this._pathToDomId[file.get('path')]);
         });
       },
       initialize: function(options) {

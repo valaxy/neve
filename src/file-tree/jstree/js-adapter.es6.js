@@ -68,13 +68,23 @@ define(function (require) {
 
 			// when default, context menu is added to document
 			$(document).on('context_show.vakata', (e, data) => {
-				console.log()
 				this._$root.parent().append(data.element.css({
 					display: 'block',
 					left: data.reference[0].offsetLeft + 'px',
 					top: data.reference[0].offsetTop + 'px'
 				})) // show fix
+
+				// fix about click don't work
+				data.element.find('a').mousedown(function () {
+					$(this).click()
+				})
 			})
+
+			$(document).on('context_hide.vakata', (e, data) => {
+
+				return false
+			})
+
 
 			// 这里的顺序很重要, 目前只测试出能放在最后执行, 原因不明
 			this._jstree = this._$root.jstree()  // jstree control handler

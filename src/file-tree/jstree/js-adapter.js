@@ -50,12 +50,17 @@ var $__js_45_adapter_46_es6_46_js__ = (function() {
           }
         }).bind(this));
         $(document).on('context_show.vakata', (function(e, data) {
-          console.log();
           $__0._$root.parent().append(data.element.css({
             display: 'block',
             left: data.reference[0].offsetLeft + 'px',
             top: data.reference[0].offsetTop + 'px'
           }));
+          data.element.find('a').mousedown(function() {
+            $(this).click();
+          });
+        }));
+        $(document).on('context_hide.vakata', (function(e, data) {
+          return false;
         }));
         this._jstree = this._$root.jstree();
       },

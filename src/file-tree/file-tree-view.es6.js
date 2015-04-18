@@ -43,41 +43,7 @@ define(function (require) {
 				}
 			}
 		},
-
-		// delete file and sync state between fs/model/dom
-		_deleteFile: function (fileModel, isDirectory, updateFileSystem, updateModel, updateDom) {
-			var absolutePath = path.join(this.model.get('root'), fileModel.get('path'))
-			var me = this
-			async.series([
-				function (done) {
-					if (updateFileSystem) {
-						fswrap.delete(absolutePath, isDirectory, me._asyncDone(done))
-					} else {
-						done()
-					}
-				},
-
-				function (done) {
-					if (updateModel) {
-						me.model.remove(fileModel)
-					}
-					done()
-				},
-
-				function (done) {
-					if (updateDom) {
-						me._fileTree.deleteFile(me._pathToDomId[fileModel.get('path')])
-					}
-					done()
-				}
-			], function (err) {
-				if (err) {
-					alert(err)
-				}
-			})
-
-		},
-
+		
 		_createRoot: function () {
 			var model = new FileModel({
 				path: '.',  // current path
@@ -160,27 +126,26 @@ define(function (require) {
 
 
 		_init: function () {
-			var me = this
 			var adapter = this._fileTree = new JstreeAdapter(this._$jstree)
-			adapter.initContextMenu(function (file) {
+			adapter.initContextMenu((file) => {
 				var model = file.data
 				if (file.isDir) {
 					return [{
 						label: 'create directory',
-						action: function () {
+						action: () => {
 							var relPath = path.join(model.get('path'), 'new directory')
-							me._addFile(relPath, true, true, true, true)
+							this._addFile(relPath, true, true, true, true)
 						}
 					}, {
 						label: 'create file',
-						action: function () {
+						action: () => {
 							var relPath = path.join(model.get('path'), 'new file.md')
-							me._addFile(relPath, false, true, true, true)
+							this._addFile(relPath, false, true, true, true)
 						}
 					}, {
 						label: 'delete directory',
-						action: function () {
-							me._deleteFile(model, true, true, true, true)
+						action: () => {
+							this.model.deleteFile(model)
 						}
 					}, {
 						label: 'rename',
@@ -191,8 +156,8 @@ define(function (require) {
 				} else { // file
 					return [{
 						label: 'delete file',
-						action: function () {
-							me._deleteFile(model, false, true, true, true)
+						action: () => {
+							this.model.deleteFile(model)
 						}
 					}, {
 						label: 'rename',
@@ -234,15 +199,20 @@ define(function (require) {
 					watch.createMonitor(me.model.get('root'), function (monitor) {
 						monitor.on('created', function (absolutePath, stat) {
 							var relPath = path.relative(me.model.get('root'), absolutePath)
-							me._addFile(relPath, stat.isDirectory(), false, true, true)
+							me.model.createFile(new FileModel({
+								path: relPath,
+								isDir: stat.isDirectory()
+							}))
 						})
 						monitor.on('changed', function (absolutePath) {
 							// do some change thing
 						})
 						monitor.on('removed', function (absolutePath, stat) {
 							var relPath = path.relative(me.model.get('root'), absolutePath)
-							var model = me.model.getFileByPath(relPath)
-							me._deleteFile(model, stat.isDirectory(), false, true, true)
+							var deletedFile = me.model.getFileByPath(relPath)
+							if (deletedFile) { // todo: 这个sb地方, 有时, 会执行两次
+								me.model.deleteFile(deletedFile)
+							}
 						})
 					})
 					// update when
@@ -276,7 +246,7 @@ define(function (require) {
 
 
 			this.listenTo(this.model, 'remove:files', function (file) {
-				console.log(file)
+				this._fileTree.deleteFile(this._pathToDomId[file.get('path')])
 			})
 		},
 
