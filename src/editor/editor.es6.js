@@ -32,6 +32,15 @@ define(function (require) {
 			this.setElement($(html))
 			dom.appendStyle(this.el, css)
 
+
+			var projectManager = options.projectManager
+			var editor = g.editor = ace.edit(this.$('.ace')[0])
+			this._editor = editor
+
+			editor.setTheme("ace/theme/chrome") // this bug
+			editor.getSession().setMode("ace/mode/markdown")
+			editor.renderer.setShowGutter(false)
+
 			// fix about ace editor-------------------------------------
 			var style1 = document.getElementById('ace_editor')
 			var style2 = document.getElementById('ace-tm')
@@ -39,15 +48,13 @@ define(function (require) {
 			this.el.appendChild(style1)
 			this.el.appendChild(style2)
 			this.el.appendChild(style3)
+
+
+			setTimeout(() => {
+				var style4 = document.getElementById('ace-chrome')
+				this.el.appendChild(style4)
+			}, 100)
 			// fix about ace editor-------------------------------------
-
-			var projectManager = options.projectManager
-			var editor = g.editor = ace.edit(this.$('.ace')[0])
-			this._editor = editor
-
-			editor.getSession().setMode("ace/mode/javascript")
-			editor.setTheme("ace/theme/github") // this bug
-			editor.renderer.setShowGutter(false)
 
 			var me = this
 

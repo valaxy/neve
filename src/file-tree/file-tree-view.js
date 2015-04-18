@@ -19,7 +19,7 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
     var FileTreeView = Backbone.View.extend({
       _pathToDomId: {},
       events: {openFile: function(event, file) {
-          this._openFile(file, true, false);
+          this.model.get('project').set('openFile', file);
         }},
       _asyncDone: function(done) {
         return function(err) {
@@ -164,6 +164,9 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
         });
         this.listenTo(this.model, 'remove:files', function(file) {
           this._fileTree.deleteFile(this._pathToDomId[file.get('path')]);
+        });
+        this.listenTo(this.model.get('project'), 'change:openFile', function(file) {
+          console.log(11111111111111);
         });
       },
       initialize: function(options) {

@@ -29,7 +29,7 @@ define(function (require) {
 
 		events: {
 			openFile: function (event, file) {
-				this._openFile(file, true, false)
+				this.model.get('project').set('openFile', file)
 			}
 		},
 
@@ -209,6 +209,10 @@ define(function (require) {
 
 			this.listenTo(this.model, 'remove:files', function (file) {
 				this._fileTree.deleteFile(this._pathToDomId[file.get('path')])
+			})
+
+			this.listenTo(this.model.get('project'), 'change:openFile', function (file) {
+				console.log(11111111111111)
 			})
 		},
 

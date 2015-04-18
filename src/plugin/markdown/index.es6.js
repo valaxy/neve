@@ -17,6 +17,12 @@ define(function (require, exports) {
 			// hide view
 		})
 
+
+		// this.listenTo(this._projectManager, '', function(){
+		// }, function() {
+		//    return this._projectManager.active()
+		// })
+
 		var $preview = layout.load2(html, function () {
 			// nothing
 		})
@@ -36,4 +42,10 @@ define(function (require, exports) {
 			}
 		})
 	}
+
+
+	exports.dispose = function () {
+
+	}
+
 })

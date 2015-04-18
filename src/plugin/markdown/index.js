@@ -25,6 +25,7 @@ var $__index_46_es6_46_js__ = (function() {
         })
       });
     };
+    exports.dispose = function() {};
   });
   return {};
 })();
