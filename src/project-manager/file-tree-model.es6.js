@@ -48,17 +48,10 @@ define(function (require) {
 
 		/** Set the root dir */
 		addRoot: function (dir) {
-			if (dir) {
-				this.set('rootDir', dir)
-				this.get('files').reset()
-				this._pathToModel = {}
-				return this._add(dir)
-			} else {
-				this.set('rootDir', dir)
-				this.get('files').reset()
-				this._pathToModel = {}
-				return null
-			}
+			this.set('rootDir', dir)
+			this.get('files').reset()
+			this._pathToModel = {}
+			return this._add(dir)
 		},
 
 		/** Remove the subtree whose root is node, return the node */

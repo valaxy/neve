@@ -33,22 +33,6 @@ define(function (require) {
 			}
 		},
 
-		_createRoot: function () {
-			var model = new FileModel({
-				path: '.',  // current path
-				isDir: true
-			})
-
-			var domId = this._fileTree.addFile({
-				label: this.model.get('root'),
-				isDir: true,
-				data: model
-			}, null)
-
-			this._pathToDomId['.'] = domId
-
-			this.model.addRoot(model)
-		},
 
 		_asyncDone: function (done) {
 			return function (err) {
@@ -94,6 +78,15 @@ define(function (require) {
 
 		},
 
+		_createRoot: function () {
+			var model = new FileModel({
+				path: '.',  // current path
+				isDir: true
+			})
+
+			this.model.addRoot(model)
+		},
+
 		// add a empty file and sync state between fs/model/dom
 		_addFile: function (curPath, isDirectory, updateFileSystem, updateModel, updateDom) {
 			var me = this
@@ -132,19 +125,6 @@ define(function (require) {
 					} else {
 						curModel = me.model.getFileByPath(curPath)
 					}
-					done()
-				},
-				function (done) { 	// update dom if needed
-					if (updateDom) {
-						var dirDomId = me._pathToDomId[dirPath]
-						var curDomId = me._fileTree.addFile({
-							label: path.basename(curPath),
-							type: curModel.get('isDir'),
-							data: curModel
-						}, dirDomId)
-						me._pathToDomId[curPath] = curDomId
-					}
-
 					done()
 				}
 			], function (err) {
@@ -275,6 +255,27 @@ define(function (require) {
 
 		_initModel: function () {
 			this.listenTo(this.model, 'add:files', function (file) {
+				var fileAbsPath = file.absolutePath(this.model.get('root'))
+				if (file.get('path') == '.') {
+					var curDomId = this._fileTree.addFile({
+						label: this.model.get('root'),
+						isDir: file.get('isDir'),
+						data: file
+					}, null)
+					this._pathToDomId['.'] = curDomId
+				} else {
+					var dirDomId = this._pathToDomId[file.dirpath()]
+					var curDomId = this._fileTree.addFile({
+						label: file.name(),
+						isDir: file.get('isDir'),
+						data: file
+					}, dirDomId)
+					this._pathToDomId[file.get('path')] = curDomId
+				}
+			})
+
+
+			this.listenTo(this.model, 'remove:files', function (file) {
 				console.log(file)
 			})
 		},

@@ -35,6 +35,12 @@ define(function (require) {
 			return path.dirname(this.get('path'))
 		},
 
+		/**
+		 **
+		 */
+		dirname: function () {
+
+		},
 
 		/** Rename file or directory */
 		rename: function (newName) {

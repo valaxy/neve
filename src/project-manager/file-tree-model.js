@@ -35,17 +35,10 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
         return this._add(child);
       },
       addRoot: function(dir) {
-        if (dir) {
-          this.set('rootDir', dir);
-          this.get('files').reset();
-          this._pathToModel = {};
-          return this._add(dir);
-        } else {
-          this.set('rootDir', dir);
-          this.get('files').reset();
-          this._pathToModel = {};
-          return null;
-        }
+        this.set('rootDir', dir);
+        this.get('files').reset();
+        this._pathToModel = {};
+        return this._add(dir);
       },
       remove: function(file) {
         file.cut();

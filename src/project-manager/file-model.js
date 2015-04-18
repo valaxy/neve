@@ -23,6 +23,7 @@ var $__file_45_model_46_es6_46_js__ = (function() {
       dirpath: function() {
         return path.dirname(this.get('path'));
       },
+      dirname: function() {},
       rename: function(newName) {
         if (!newName) {
           return false;

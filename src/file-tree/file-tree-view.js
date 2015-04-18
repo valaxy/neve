@@ -21,19 +21,6 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
       events: {openFile: function(event, file) {
           this._openFile(file, true, false);
         }},
-      _createRoot: function() {
-        var model = new FileModel({
-          path: '.',
-          isDir: true
-        });
-        var domId = this._fileTree.addFile({
-          label: this.model.get('root'),
-          isDir: true,
-          data: model
-        }, null);
-        this._pathToDomId['.'] = domId;
-        this.model.addRoot(model);
-      },
       _asyncDone: function(done) {
         return function(err) {
           if (err) {
@@ -68,6 +55,13 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
           }
         });
       },
+      _createRoot: function() {
+        var model = new FileModel({
+          path: '.',
+          isDir: true
+        });
+        this.model.addRoot(model);
+      },
       _addFile: function(curPath, isDirectory, updateFileSystem, updateModel, updateDom) {
         var me = this;
         var dirPath = path.dirname(curPath);
@@ -100,17 +94,6 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
             me.model.add(curModel, dirModel);
           } else {
             curModel = me.model.getFileByPath(curPath);
-          }
-          done();
-        }, function(done) {
-          if (updateDom) {
-            var dirDomId = me._pathToDomId[dirPath];
-            var curDomId = me._fileTree.addFile({
-              label: path.basename(curPath),
-              type: curModel.get('isDir'),
-              data: curModel
-            }, dirDomId);
-            me._pathToDomId[curPath] = curDomId;
           }
           done();
         }], function(err) {
@@ -212,6 +195,25 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
       },
       _initModel: function() {
         this.listenTo(this.model, 'add:files', function(file) {
+          var fileAbsPath = file.absolutePath(this.model.get('root'));
+          if (file.get('path') == '.') {
+            var curDomId = this._fileTree.addFile({
+              label: this.model.get('root'),
+              isDir: file.get('isDir'),
+              data: file
+            }, null);
+            this._pathToDomId['.'] = curDomId;
+          } else {
+            var dirDomId = this._pathToDomId[file.dirpath()];
+            var curDomId = this._fileTree.addFile({
+              label: file.name(),
+              isDir: file.get('isDir'),
+              data: file
+            }, dirDomId);
+            this._pathToDomId[file.get('path')] = curDomId;
+          }
+        });
+        this.listenTo(this.model, 'remove:files', function(file) {
           console.log(file);
         });
       },
