@@ -1,2 +1,2 @@
 cd ../
-browser-sync start --server --files src/**
+browser-sync start --server --files "src/**, test/**"

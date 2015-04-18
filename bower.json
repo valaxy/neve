@@ -46,6 +46,6 @@
     "jquery-contextmenu": "~0.5.2"
   },
   "devDependencies": {
-    "qunit": "~1.16.0"
+    "qunit": "~1.18.0"
   }
 }

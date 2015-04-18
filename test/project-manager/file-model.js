@@ -4,25 +4,6 @@ define(function (require) {
 
 	QUnit.module('FileModel')
 
-	QUnit.test('name()/dirpath()', function (assert) {
-		var file = new FileModel({
-			path: 'a'
-		})
-		assert.equal(file.name(), 'a')
-		assert.equal(file.dirpath(), '.')
-
-		var file2 = new FileModel({
-			path: 'a/b'
-		})
-		assert.equal(file2.name(), 'b')
-		assert.equal(file2.dirpath(), 'a')
-
-		var file3 = new FileModel({
-			path: 'a/b/c.md'
-		})
-		assert.equal(file3.name(), 'c.md')
-		assert.equal(file3.dirpath(), 'a/b')
-	})
 
 	QUnit.test('rename()', function (assert) {
 		var file = new FileModel({
@@ -76,5 +57,34 @@ define(function (require) {
 		root.addFile(n1)
 		assert.ok(!root.isLeaf())
 		assert.ok(n1.isLeaf())
+	})
+
+	QUnit.test('name()', function (assert) {
+		assert.equal(new FileModel({path: '.'}).name(), '.')
+		assert.equal(new FileModel({path: 'a'}).name(), 'a')
+		assert.equal(new FileModel({path: 'a/b'}).name(), 'b')
+		assert.equal(new FileModel({path: 'a/b/c.md'}).name(), 'c.md')
+	})
+
+	QUnit.test('nameWithoutExtension()', function (assert) {
+		assert.equal(new FileModel({path: '.'}).nameWithoutExtension(), '.')
+	})
+
+	QUnit.test('dirpath()', function (assert) {
+		//assert.equal(new FileModel({path: '/'}).dirpath(), '.')     // absolute path, can not be abs path
+		assert.equal(new FileModel({path: '.'}).dirpath(), '.')      // relative path, 'dot'
+		assert.equal(new FileModel({path: 'aa'}).dirpath(), '.')     // relative path
+		assert.equal(new FileModel({path: 'aa/bb'}).dirpath(), 'aa') // relative path
+		assert.equal(new FileModel({path: 'aa/bb/cc'}).dirpath(), 'aa/bb')
+		assert.equal(new FileModel({path: 'aa/bb/../cc'}, {parse: true}).dirpath(), 'aa')
+		assert.equal(new FileModel({path: './aa/bb'}, {parse: true}).dirpath(), 'aa')
+		assert.equal(new FileModel({path: 'aa/bb.md'}).dirpath(), 'aa')
+	})
+
+	QUnit.test('dirname()', function (assert) {
+		assert.equal(new FileModel({path: '.'}).dirname(), '.')
+		assert.equal(new FileModel({path: 'aa'}).dirname(), '.')
+		assert.equal(new FileModel({path: 'aa/bb'}).dirname(), 'aa')
+		assert.equal(new FileModel({path: 'aa/bb/cc'}).dirname(), 'bb')
 	})
 })

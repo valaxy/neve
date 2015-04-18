@@ -12,6 +12,10 @@ var $__file_45_model_46_es6_46_js__ = (function() {
           isOpen: false
         };
       },
+      parse: function(attrs) {
+        attrs.path = path.normalize(attrs.path);
+        return attrs;
+      },
       relations: [{
         key: 'children',
         type: Backbone.HasMany,
@@ -20,10 +24,14 @@ var $__file_45_model_46_es6_46_js__ = (function() {
       name: function() {
         return path.basename(this.get('path'));
       },
+      nameWithoutExtension: function() {},
+      nameWithoutAllExtension: function() {},
       dirpath: function() {
         return path.dirname(this.get('path'));
       },
-      dirname: function() {},
+      dirname: function() {
+        return path.basename(this.dirpath());
+      },
       rename: function(newName) {
         if (!newName) {
           return false;

@@ -6,10 +6,15 @@ define(function (require) {
 	var FileModel = Backbone.RelationalModel.extend({
 		defaults: function () {
 			return {
-				path: '',        // relative path of root
+				path: '',        // relative path of root, '.' or something2
 				isDir: true,    // if it is a directory
 				isOpen: false   // if it is opend by editor, multiply files can be opend at same time, imply or exply
 			}
+		},
+
+		parse: function (attrs) {
+			attrs.path = path.normalize(attrs.path)
+			return attrs
 		},
 
 		relations: [{
@@ -28,6 +33,14 @@ define(function (require) {
 			return path.basename(this.get('path'))
 		},
 
+		nameWithoutExtension: function () {
+			// no imp
+		},
+
+		nameWithoutAllExtension: function () {
+			// no imp
+		},
+
 
 		/** Get the base directory path of file or directory.
 		 ** If it's root dir, return '.' */
@@ -38,7 +51,7 @@ define(function (require) {
 
 		/** /aa/bb/cc -> cc */
 		dirname: function () {
-
+			return path.basename(this.dirpath())
 		},
 
 
