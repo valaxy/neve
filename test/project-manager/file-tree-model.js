@@ -1,6 +1,6 @@
 define(function (require) {
-	var FileTreeModel = require('src/file-tree/file-tree-model')
-	var FileModel = require('src/file-tree/file-model')
+	var FileTreeModel = require('src/project-manager/file-tree-model')
+	var FileModel = require('src/project-manager/file-model')
 
 	module('FileTreeModel')
 

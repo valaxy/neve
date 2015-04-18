@@ -1,10 +1,10 @@
 define(function (require) {
-	var FileTreeModel = require('src/file-tree/file-tree-model')
-	var FileModel = require('src/file-tree/file-model')
+	var FileTreeModel = require('src/project-manager/file-tree-model')
+	var FileModel = require('src/project-manager/file-model')
 
-	module('FileModel')
+	QUnit.module('FileModel')
 
-	test('name()/dirpath()', function (assert) {
+	QUnit.test('name()/dirpath()', function (assert) {
 		var file = new FileModel({
 			path: 'a'
 		})
@@ -24,7 +24,7 @@ define(function (require) {
 		assert.equal(file3.dirpath(), 'a/b')
 	})
 
-	test('rename()', function (assert) {
+	QUnit.test('rename()', function (assert) {
 		var file = new FileModel({
 			path: 'a/b/c.md'
 		})
@@ -34,17 +34,17 @@ define(function (require) {
 		assert.equal(file.rename(''), false)
 	})
 
-	test('absolutePath()', function (assert) {
+	QUnit.test('absolutePath()', function (assert) {
 		var file = new FileModel({path: 'a/b'})
 		var ftree = new FileTreeModel({
 			root: 'd:/'
 		})
-		ftree.add(file)
+		ftree.addRoot(file)
 		assert.equal(file.absolutePath(), 'd:/a/b')
 	})
 
 
-	test('addFile()/cut()/parent/children', function (assert) {
+	QUnit.test('addFile()/cut()/parent/children', function (assert) {
 		var root = new FileModel
 		assert.equal(root.get('children').length, 0)
 
@@ -68,7 +68,7 @@ define(function (require) {
 	})
 
 
-	test('isLeaf()', function (assert) {
+	QUnit.test('isLeaf()', function (assert) {
 		var root = new FileModel
 		assert.ok(root.isLeaf())
 

@@ -52,7 +52,7 @@ define(function (require) {
 
 			this.model.addRoot(model)
 		},
-		
+
 		_renameFile: function (file, newName, updateFileSystem, updateModel, updateDom) {
 			// 有点麻烦, 暂时不实现
 		},

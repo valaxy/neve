@@ -12,17 +12,14 @@ html
             window.requireNode = window.require
             window.require = undefined
 
-        // this components can not package them to AMD for now
         script(src="../../bower_components/qunit/qunit/qunit.js")
-        script(src="../../bower_components/ace-builds/src-min-noconflict/ace.js")
-        script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///D:/neve/src/mathjax-config/config")
 
         // startup
         script(src="../../bower_components/requirejs/require.js")
         script(src="../../src/home/requirejs-config.js")
         script.
             require([
-                'test/home/test',
+                'test/unit/test',
                 'backbone',
                 'backbone-relational'
             ], function (test) {
