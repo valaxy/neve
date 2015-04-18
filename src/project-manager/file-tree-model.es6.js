@@ -59,8 +59,12 @@ define(function (require) {
 			return !!this._pathToModel[file.get('path')]
 		},
 
-		createFile: function () {
-
+		createFile: function (file) {
+			var fileAbsPath = file.absolutePath(this.get('root'))
+			fswrap.create(fileAbsPath, file.get('isDir'), () => {
+				var dirModel = this.getFileByPath(file.dirpath())
+				this.add(file, dirModel) // no trigger anything
+			})
 		},
 
 		deleteFile: function (file) {

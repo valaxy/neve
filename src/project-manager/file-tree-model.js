@@ -44,7 +44,14 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
       exist: function(file) {
         return !!this._pathToModel[file.get('path')];
       },
-      createFile: function() {},
+      createFile: function(file) {
+        var $__0 = this;
+        var fileAbsPath = file.absolutePath(this.get('root'));
+        fswrap.create(fileAbsPath, file.get('isDir'), (function() {
+          var dirModel = $__0.getFileByPath(file.dirpath());
+          $__0.add(file, dirModel);
+        }));
+      },
       deleteFile: function(file) {
         var $__0 = this;
         if (this.exist(file)) {

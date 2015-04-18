@@ -37,46 +37,6 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
         });
         this.model.addRoot(model);
       },
-      _addFile: function(curPath, isDirectory, updateFileSystem, updateModel, updateDom) {
-        var me = this;
-        var dirPath = path.dirname(curPath);
-        var curModel = new FileModel({
-          path: curPath,
-          isDir: isDirectory
-        });
-        var fileAbsPath = curModel.absolutePath(me.model.get('root'));
-        async.series([function(done) {
-          if (updateFileSystem) {
-            fs.exists(fileAbsPath, function(exists) {
-              if (exists) {
-                done((isDirectory ? 'directory' : 'file') + ' is exist');
-              } else {
-                done();
-              }
-            });
-          } else {
-            done();
-          }
-        }, function(done) {
-          if (updateFileSystem) {
-            fswrap.create(fileAbsPath, isDirectory, me._asyncDone(done));
-          } else {
-            done();
-          }
-        }, function(done) {
-          if (updateModel) {
-            var dirModel = me.model.getFileByPath(dirPath);
-            me.model.add(curModel, dirModel);
-          } else {
-            curModel = me.model.getFileByPath(curPath);
-          }
-          done();
-        }], function(err) {
-          if (err) {
-            alert(err);
-          }
-        });
-      },
       _renameFile: function(file, newName, updateFileSystem, updateModel, updateDom) {},
       _clearFile: function(updateModel, updateDom) {
         if (updateDom) {
@@ -105,14 +65,18 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
             return [{
               label: 'create directory',
               action: (function() {
-                var relPath = path.join(model.get('path'), 'new directory');
-                $__0._addFile(relPath, true, true, true, true);
+                $__0.model.createFile(new FileModel({
+                  path: path.join(model.get('path'), 'new directory'),
+                  isDir: true
+                }));
               })
             }, {
               label: 'create file',
               action: (function() {
-                var relPath = path.join(model.get('path'), 'new file.md');
-                $__0._addFile(relPath, false, true, true, true);
+                $__0.model.createFile(new FileModel({
+                  path: path.join(model.get('path'), 'new file.md'),
+                  isDir: false
+                }));
               })
             }, {
               label: 'delete directory',
@@ -148,7 +112,12 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
               var absolutePath = absolutePaths[i];
               var relPath = path.relative(me.model.get('root'), absolutePath);
               var stat = files[absolutePath];
-              me._addFile(relPath, stat.isDirectory(), false, true, true);
+              var f = new FileModel({
+                path: relPath,
+                isDir: stat.isDirectory()
+              });
+              var dirModel = me.model.getFileByPath(f.dirpath());
+              me.model.add(f, dirModel);
             }
             done();
           });

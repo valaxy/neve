@@ -43,7 +43,7 @@ define(function (require) {
 				}
 			}
 		},
-		
+
 		_createRoot: function () {
 			var model = new FileModel({
 				path: '.',  // current path
@@ -52,54 +52,7 @@ define(function (require) {
 
 			this.model.addRoot(model)
 		},
-
-		// add a empty file and sync state between fs/model/dom
-		_addFile: function (curPath, isDirectory, updateFileSystem, updateModel, updateDom) {
-			var me = this
-			var dirPath = path.dirname(curPath) // '.' or 'a'
-			var curModel = new FileModel({
-				path: curPath,
-				isDir: isDirectory
-			})
-			var fileAbsPath = curModel.absolutePath(me.model.get('root'))
-
-			async.series([
-				function (done) { // judge exist
-					if (updateFileSystem) {
-						fs.exists(fileAbsPath, function (exists) {
-							if (exists) {
-								done((isDirectory ? 'directory' : 'file') + ' is exist')
-							} else {
-								done()
-							}
-						})
-					} else {
-						done()
-					}
-				},
-				function (done) { // update fileSystem if needed
-					if (updateFileSystem) {
-						fswrap.create(fileAbsPath, isDirectory, me._asyncDone(done))
-					} else {
-						done()
-					}
-				},
-				function (done) { // update model if needed
-					if (updateModel) {
-						var dirModel = me.model.getFileByPath(dirPath)
-						me.model.add(curModel, dirModel) // no trigger anything
-					} else {
-						curModel = me.model.getFileByPath(curPath)
-					}
-					done()
-				}
-			], function (err) {
-				if (err) {
-					alert(err)
-				}
-			})
-		},
-
+		
 		_renameFile: function (file, newName, updateFileSystem, updateModel, updateDom) {
 			// 有点麻烦, 暂时不实现
 		},
@@ -133,14 +86,18 @@ define(function (require) {
 					return [{
 						label: 'create directory',
 						action: () => {
-							var relPath = path.join(model.get('path'), 'new directory')
-							this._addFile(relPath, true, true, true, true)
+							this.model.createFile(new FileModel({
+								path: path.join(model.get('path'), 'new directory'),
+								isDir: true
+							}))
 						}
 					}, {
 						label: 'create file',
 						action: () => {
-							var relPath = path.join(model.get('path'), 'new file.md')
-							this._addFile(relPath, false, true, true, true)
+							this.model.createFile(new FileModel({
+								path: path.join(model.get('path'), 'new file.md'),
+								isDir: false
+							}))
 						}
 					}, {
 						label: 'delete directory',
@@ -189,7 +146,12 @@ define(function (require) {
 							var absolutePath = absolutePaths[i]
 							var relPath = path.relative(me.model.get('root'), absolutePath) // '' or 'a/1.txt'
 							var stat = files[absolutePath]
-							me._addFile(relPath, stat.isDirectory(), false, true, true)
+							var f = new FileModel({
+								path: relPath,
+								isDir: stat.isDirectory()
+							})
+							var dirModel = me.model.getFileByPath(f.dirpath())
+							me.model.add(f, dirModel)
 						}
 						done()
 					})
