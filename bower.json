@@ -44,7 +44,8 @@
     "markdown": "~0.5.0",
     "marked": "~0.3.3",
     "jquery-contextmenu": "~0.5.2",
-    "backbone-event-propagation": "valaxy/backbone-event-propagation"
+    "backbone-event-propagation": "valaxy/backbone-event-propagation",
+    "mustache": "~2.0.0"
   },
   "devDependencies": {
     "qunit": "~1.18.0"

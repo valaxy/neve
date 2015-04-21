@@ -23,8 +23,8 @@ define(function (require, exports) {
 		var projectManager = g.projectManager = new ProjectManager
 
 		$.when(
-			loader.load('../status-bar/index').done(function (StatusBar) {
-				new StatusBar
+			loader.load('../status-bar/view').done(function (StatusBarView) {
+				new StatusBarView
 			}),
 			loader.load('../top-nav/index').done(function (TopNavView) {
 				new TopNavView({

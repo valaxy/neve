@@ -13,6 +13,7 @@ define(function (require, exports) {
 
 		layout.load2(editorView.el, {
 			title: 'Editor',
+			icon: 'fa fa-paragraph',
 			dispose: function () {
 				console.log('should dispose me')
 			}

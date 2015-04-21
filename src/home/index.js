@@ -17,8 +17,8 @@ var $__index_46_es6_46_js__ = (function() {
     exports.init = function() {
       var loading = new Loading;
       var projectManager = g.projectManager = new ProjectManager;
-      $.when(loader.load('../status-bar/index').done(function(StatusBar) {
-        new StatusBar;
+      $.when(loader.load('../status-bar/view').done(function(StatusBarView) {
+        new StatusBarView;
       }), loader.load('../top-nav/index').done(function(TopNavView) {
         new TopNavView({projectManager: projectManager});
       }), loader.load('../file-tree/file-tree-view', '../project-manager/file-tree-model').done(function(FileTreeView, FileTreeModel) {

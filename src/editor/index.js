@@ -10,6 +10,7 @@ var $__index_46_es6_46_js__ = (function() {
       editorView = new EditorView({projectManager: projectManager});
       layout.load2(editorView.el, {
         title: 'Editor',
+        icon: 'fa fa-paragraph',
         dispose: function() {
           console.log('should dispose me');
         }
