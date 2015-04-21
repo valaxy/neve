@@ -5,6 +5,8 @@ var $__layout_46_es6_46_js__ = (function() {
     var LinearLayout = require('bower_components/jquery-flex-layout/src/view/linear-layout');
     var SimpleView = require('bower_components/jquery-flex-layout/src/view/simple-view');
     var loader = require('../loader/index');
+    var html = require('html!./window-view');
+    var mustache = require('mustache');
     exports.init = function() {
       var l1 = new LinearLayout({direction: 'column'});
       var mainContent = new LinearLayout({direction: 'row'});
@@ -26,28 +28,21 @@ var $__layout_46_es6_46_js__ = (function() {
     exports.closeAfterFileTree = function() {
       this._linearLayout.removeViewAt(1);
     };
-    exports.load = function(name, domOrHTML) {
-      var $realRoot = $('<div>').addClass(name);
-      var shadowRoot = $realRoot[0].createShadowRoot();
-      shadowRoot.appendChild($(domOrHTML)[0]);
-      var view = new SimpleView({selector: $realRoot});
-      this._linearLayout.addViewAtEdge(view, 'right', {flex: '1'});
-    };
-    exports.load2 = function(domOrHTML, dispose) {
-      var $outerRoot = $('<div>');
+    exports.load2 = function(domOrHTML) {
+      var options = arguments[1] !== (void 0) ? arguments[1] : {};
+      var $outerRoot;
+      var $wrap;
+      if (options.title) {
+        $wrap = $(mustache.render(html, {title: options.title}));
+        $outerRoot = $('<div>');
+        $wrap.append($outerRoot);
+      } else {
+        $wrap = $outerRoot = $('<div>');
+      }
       var $innerRoot = $(domOrHTML);
       var shadowRoot = $outerRoot[0].createShadowRoot();
       shadowRoot.appendChild($innerRoot[0]);
-      var view = new SimpleView({selector: $outerRoot});
-      this._linearLayout.addViewAtEdge(view, 'right', {flex: '1'});
-      return $innerRoot;
-    };
-    exports.load3 = function(domOrHTML, options) {
-      var $outerRoot = $('<div>');
-      var $innerRoot = $(domOrHTML);
-      var shadowRoot = $outerRoot[0].createShadowRoot();
-      shadowRoot.appendChild($innerRoot[0]);
-      var view = new SimpleView({selector: $outerRoot});
+      var view = new SimpleView({selector: $wrap});
       this._linearLayout.addViewAtEdge(view, 'right', {flex: '1'});
       return $innerRoot;
     };

@@ -23,7 +23,8 @@ var $__requirejs_45_config_46_es6_46_js__ = (function() {
       'style': 'src/requirejs-plugin/style',
       'html': 'src/requirejs-plugin/html',
       'ace': 'bower_components/ace-builds/src-noconflict/ace',
-      'jquery-contextmenu': 'bower_components/jquery-contextmenu/contextmenu.js'
+      'jquery-contextmenu': 'bower_components/jquery-contextmenu/contextmenu',
+      'mustache': 'bower_components/mustache/mustache'
     },
     "valaxy/requirejs-bundle": {libBaseUrl: 'bower_components'},
     shim: {ace: {exports: 'ace'}}

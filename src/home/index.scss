@@ -75,5 +75,17 @@ body {
 			border-bottom: none;
 		}
 	}
-
+}
+// about window view
+.everything {
+	.simple {
+		h1 {
+			height:        20px;
+			line-height:   20px;
+			font-size:     1rem;
+			margin:        0;
+			border-bottom: 1px solid #ccc;
+			padding-left:  5px;
+		}
+	}
 }

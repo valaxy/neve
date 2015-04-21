@@ -11,8 +11,11 @@ define(function (require, exports) {
 			projectManager: projectManager
 		})
 
-		layout.load2(editorView.el, function () {
-			console.log('should dispose me')
+		layout.load2(editorView.el, {
+			title: 'Editor',
+			dispose: function () {
+				console.log('should dispose me')
+			}
 		})
 	}
 

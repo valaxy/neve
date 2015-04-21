@@ -72,8 +72,8 @@ define(function (require, exports) {
 					$('.status-bar::shadow .views').click()
 
 					// 弹出rename框
-					$($('.file-tree::shadow .jstree a')[0]).trigger('contextmenu')
-					$('.file-tree::shadow .jstree-contextmenu li:last-child a').click()
+					//$($('.file-tree::shadow .jstree a')[0]).trigger('contextmenu')
+					//$('.file-tree::shadow .jstree-contextmenu li:last-child a').click()
 				}, 500)
 			})
 	}

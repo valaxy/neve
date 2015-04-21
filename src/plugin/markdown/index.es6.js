@@ -24,9 +24,13 @@ define(function (require, exports) {
 		//    return this._projectManager.active()
 		// })
 
-		var $preview = layout.load2(html, function () {
-			// nothing
+		var $preview = layout.load2(html, {
+			title: 'Preview',
+			dispose: function () {
+				// nothing
+			}
 		})
+
 
 		fileWatcherLoader.load({
 			name: 'markdown',

@@ -8,8 +8,11 @@ var $__index_46_es6_46_js__ = (function() {
     exports.init = function(options) {
       var projectManager = options.projectManager;
       editorView = new EditorView({projectManager: projectManager});
-      layout.load2(editorView.el, function() {
-        console.log('should dispose me');
+      layout.load2(editorView.el, {
+        title: 'Editor',
+        dispose: function() {
+          console.log('should dispose me');
+        }
       });
     };
     exports.getEditor = function() {

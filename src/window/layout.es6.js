@@ -2,6 +2,9 @@ define(function (require, exports) {
 	var LinearLayout = require('bower_components/jquery-flex-layout/src/view/linear-layout')
 	var SimpleView = require('bower_components/jquery-flex-layout/src/view/simple-view')
 	var loader = require('../loader/index')
+	var html = require('html!./window-view')
+	var mustache = require('mustache')
+
 
 	exports.init = function () {
 		var l1 = new LinearLayout({direction: 'column'})
@@ -31,52 +34,31 @@ define(function (require, exports) {
 		this._linearLayout.removeViewAt(1)
 	}
 
-	/** @deprecated */
-	exports.load = function (name, domOrHTML) {
-		var $realRoot = $('<div>').addClass(name)
-		var shadowRoot = $realRoot[0].createShadowRoot()
-		shadowRoot.appendChild($(domOrHTML)[0])
-
-		var view = new SimpleView({
-			selector: $realRoot
-		})
-		this._linearLayout.addViewAtEdge(view, 'right', {
-			flex: '1'
-		})
-	}
-
-
+	
 	/** domOrHTML:
-	 ** dispose:
-	 */
-	exports.load2 = function (domOrHTML, dispose) {
-		var $outerRoot = $('<div>')
-		var $innerRoot = $(domOrHTML)
-		var shadowRoot = $outerRoot[0].createShadowRoot()
-		shadowRoot.appendChild($innerRoot[0])
-
-		var view = new SimpleView({
-			selector: $outerRoot
-		})
-		this._linearLayout.addViewAtEdge(view, 'right', {
-			flex: '1'
-		})
-
-		return $innerRoot
-	}
-
-	/** options:
+	 ** options:
 	 **     dispose: function
 	 **     title: null or some no empty string
 	 */
-	exports.load3 = function (domOrHTML, options) {
-		var $outerRoot = $('<div>')
+	exports.load2 = function (domOrHTML, options = {}) {
+		var $outerRoot
+		var $wrap
+		if (options.title) {
+			$wrap = $(mustache.render(html, {
+				title: options.title
+			}))
+			$outerRoot = $('<div>')
+			$wrap.append($outerRoot)
+		} else {
+			$wrap = $outerRoot = $('<div>')
+		}
+
 		var $innerRoot = $(domOrHTML)
 		var shadowRoot = $outerRoot[0].createShadowRoot()
 		shadowRoot.appendChild($innerRoot[0])
 
 		var view = new SimpleView({
-			selector: $outerRoot
+			selector: $wrap
 		})
 		this._linearLayout.addViewAtEdge(view, 'right', {
 			flex: '1'
@@ -84,4 +66,5 @@ define(function (require, exports) {
 
 		return $innerRoot
 	}
+
 })

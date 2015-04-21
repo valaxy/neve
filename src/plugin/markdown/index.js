@@ -12,7 +12,10 @@ var $__index_46_es6_46_js__ = (function() {
       this._projectManager = options.projectManager;
       this._projectManager.on('open', function() {});
       this._projectManager.on('close', function() {});
-      var $preview = layout.load2(html, function() {});
+      var $preview = layout.load2(html, {
+        title: 'Preview',
+        dispose: function() {}
+      });
       fileWatcherLoader.load({
         name: 'markdown',
         description: 'compile markdown to html',
