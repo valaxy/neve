@@ -5,7 +5,6 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
     var FileModel = require('./file-model');
     var utility = require('../utility/utility');
     var path = requireNode('path');
-    var fs = requireNode('fs');
     var fswrap = require('../file-system/fs-wrap');
     var FileTreeModel = Backbone.RelationalModel.extend({
       defaults: function() {
@@ -44,11 +43,19 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
       exist: function(file) {
         return !!this._pathToModel[file.get('path')];
       },
+      rename: function(file, newName) {
+        fswrap.rename(file.absolutePath(this.get('root')), newName, function(err) {
+          if (err) {
+            throw new Error(err);
+          }
+          file.set('name', newName);
+        });
+      },
       createFile: function(file) {
         var $__0 = this;
         var fileAbsPath = file.absolutePath(this.get('root'));
         fswrap.create(fileAbsPath, file.get('isDir'), (function() {
-          var dirModel = $__0.getFileByPath(file.dirpath());
+          var dirModel = $__0.getFileByPath(file.get('dirpath'));
           $__0.add(file, dirModel);
         }));
       },

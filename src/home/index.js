@@ -8,6 +8,7 @@ var $__index_46_es6_46_js__ = (function() {
     var ProjectModel = require('../project-manager/project-model');
     var Loading = require('../loading/index');
     var fileWatcherLoader = require('../file-watch-api/file-watcher-loader');
+    var stackAnalysis = require('stack-analysis');
     var pandocPlugin = require('../plugin/pandoc/index');
     var markdownPlugin = require('../plugin/markdown/index');
     var loader = require('../loader/index');
@@ -40,6 +41,8 @@ var $__index_46_es6_46_js__ = (function() {
           var file = g.fileTree.getFileByPath('readme.md');
           g.fileTree.get('project').set('openFile', file);
           $('.status-bar::shadow .views').click();
+          $($('.file-tree::shadow .jstree a')[1]).trigger('contextmenu');
+          $('.file-tree::shadow .jstree-contextmenu li:last-child a').click();
         }, 500);
       });
     };

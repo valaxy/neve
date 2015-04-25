@@ -1,10 +1,10 @@
-div.rename-dialog
-    div.head
-        span Rename
-    div
+rename-dialog
+    dialog-title
+        | Rename:
+        name
+    dialog-body
         div
-            span.file
-            input
+            input(type="text").new-name
         div
-            button Confirm
-            button Cancel
+            button.confirm Confirm
+            button.cancel Cancel

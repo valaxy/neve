@@ -73,6 +73,9 @@ var $__js_45_adapter_46_es6_46_js__ = (function() {
         }, 'last', function() {});
         return domId;
       },
+      renameFile: function(id, name) {
+        this._jstree.rename_node(id, name);
+      },
       updateFile: function(id, file) {},
       deleteFile: function(id) {
         this._jstree.delete_node(id);

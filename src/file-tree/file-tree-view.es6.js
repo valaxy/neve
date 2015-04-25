@@ -107,7 +107,7 @@ define(function (require) {
 						label: 'rename',
 						action: function () {
 							renameDialog.init()
-							renameDialog.show()
+							renameDialog.show(model)
 						}
 					}]
 				} else { // file
@@ -118,8 +118,12 @@ define(function (require) {
 						}
 					}, {
 						label: 'rename',
-						action: function () {
-
+						action: () => {
+							var domId = this._pathToDomId[model.get('path')]
+							this.listenTo(model, 'change:name', function (model, name) {
+								this._fileTree.renameFile(domId, name)
+							})
+							renameDialog.show(model)
 						}
 					}]
 				}
@@ -150,7 +154,7 @@ define(function (require) {
 								path: relPath,
 								isDir: stat.isDirectory()
 							})
-							var dirModel = me.model.getFileByPath(f.dirpath())
+							var dirModel = me.model.getFileByPath(f.get('dirpath'))
 							me.model.add(f, dirModel)
 						}
 						done()
@@ -196,9 +200,9 @@ define(function (require) {
 					}, null)
 					this._pathToDomId['.'] = curDomId
 				} else {
-					var dirDomId = this._pathToDomId[file.dirpath()]
+					var dirDomId = this._pathToDomId[file.get('dirpath')]
 					var curDomId = this._fileTree.addFile({
-						label: file.name(),
+						label: file.get('name'),
 						isDir: file.get('isDir'),
 						data: file
 					}, dirDomId)

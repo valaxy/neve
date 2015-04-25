@@ -4,13 +4,13 @@ var $__file_45_model_46_es6_46_js__ = (function() {
   define(function(require) {
     var path = require('path');
     require('backbone');
+    require('backbone.epoxy');
+    require('backbone-computedfields');
     var FileModel = Backbone.RelationalModel.extend({
-      defaults: function() {
-        return {
-          path: '',
-          isDir: true,
-          isOpen: false
-        };
+      defaults: {
+        path: '',
+        isDir: true,
+        isOpen: false
       },
       parse: function(attrs) {
         attrs.path = path.normalize(attrs.path);
@@ -21,24 +21,30 @@ var $__file_45_model_46_es6_46_js__ = (function() {
         type: Backbone.HasMany,
         reverseRelation: {key: 'parent'}
       }],
-      name: function() {
-        return path.basename(this.get('path'));
+      computed: {
+        name: {
+          get: function() {
+            return path.basename(this.get('path'));
+          },
+          set: function(value) {
+            var pathValue = path.join(this.get('dirpath'), value);
+            this.set('path', pathValue);
+          }
+        },
+        nameWithoutExtension: {
+          depends: [],
+          get: function() {}
+        },
+        dirpath: {get: function() {
+            return path.dirname(this.get('path'));
+          }}
       },
-      nameWithoutExtension: function() {},
+      initialize: function() {
+        this.computedFields = new Backbone.ComputedFields(this);
+      },
       nameWithoutAllExtension: function() {},
-      dirpath: function() {
-        return path.dirname(this.get('path'));
-      },
       dirname: function() {
         return path.basename(this.dirpath());
-      },
-      rename: function(newName) {
-        if (!newName) {
-          return false;
-        }
-        var newPath = path.join(this.dirpath(), newName);
-        this.set('path', newPath);
-        return true;
       },
       absolutePath: function(root) {
         root = root ? root : this.get('tree').get('root');

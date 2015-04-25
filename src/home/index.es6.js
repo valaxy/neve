@@ -7,6 +7,7 @@ define(function (require, exports) {
 	var ProjectModel = require('../project-manager/project-model')
 	var Loading = require('../loading/index')
 	var fileWatcherLoader = require('../file-watch-api/file-watcher-loader')
+	var stackAnalysis = require('stack-analysis')
 
 	var pandocPlugin = require('../plugin/pandoc/index')
 	var markdownPlugin = require('../plugin/markdown/index')
@@ -62,6 +63,7 @@ define(function (require, exports) {
 					location: 'd:/test'
 				}))
 
+
 				// for debug
 				setTimeout(function () {
 					// 打开文件
@@ -72,9 +74,12 @@ define(function (require, exports) {
 					$('.status-bar::shadow .views').click()
 
 					// 弹出rename框
-					//$($('.file-tree::shadow .jstree a')[0]).trigger('contextmenu')
-					//$('.file-tree::shadow .jstree-contextmenu li:last-child a').click()
+					$($('.file-tree::shadow .jstree a')[1]).trigger('contextmenu')
+					$('.file-tree::shadow .jstree-contextmenu li:last-child a').click()
 				}, 500)
+
+				//console.log(new Error().stack)
+				//console.log(stackAnalysis())
 			})
 	}
 })

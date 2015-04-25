@@ -87,7 +87,7 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
               label: 'rename',
               action: function() {
                 renameDialog.init();
-                renameDialog.show();
+                renameDialog.show(model);
               }
             }];
           } else {
@@ -98,7 +98,13 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
               })
             }, {
               label: 'rename',
-              action: function() {}
+              action: (function() {
+                var domId = $__0._pathToDomId[model.get('path')];
+                $__0.listenTo(model, 'change:name', function(model, name) {
+                  this._fileTree.renameFile(domId, name);
+                });
+                renameDialog.show(model);
+              })
             }];
           }
         }));
@@ -119,7 +125,7 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
                 path: relPath,
                 isDir: stat.isDirectory()
               });
-              var dirModel = me.model.getFileByPath(f.dirpath());
+              var dirModel = me.model.getFileByPath(f.get('dirpath'));
               me.model.add(f, dirModel);
             }
             done();
@@ -156,9 +162,9 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
             }, null);
             this._pathToDomId['.'] = curDomId;
           } else {
-            var dirDomId = this._pathToDomId[file.dirpath()];
+            var dirDomId = this._pathToDomId[file.get('dirpath')];
             var curDomId = this._fileTree.addFile({
-              label: file.name(),
+              label: file.get('name'),
               isDir: file.get('isDir'),
               data: file
             }, dirDomId);

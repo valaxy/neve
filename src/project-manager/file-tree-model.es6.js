@@ -2,7 +2,6 @@ define(function (require) {
 	var FileModel = require('./file-model')
 	var utility = require('../utility/utility')
 	var path = requireNode('path')
-	var fs = requireNode('fs')
 	var fswrap = require('../file-system/fs-wrap')
 
 	var FileTreeModel = Backbone.RelationalModel.extend({
@@ -59,10 +58,25 @@ define(function (require) {
 			return !!this._pathToModel[file.get('path')]
 		},
 
+		//-----------------------------------------------------------
+		// File System Depend
+		//-----------------------------------------------------------
+
+		/** Rename file or directory */
+		rename: function (file, newName) {
+			fswrap.rename(file.absolutePath(this.get('root')), newName, function (err) {
+				if (err) {
+					throw new Error(err)
+				}
+				file.set('name', newName)
+			})
+		},
+
+
 		createFile: function (file) {
 			var fileAbsPath = file.absolutePath(this.get('root'))
 			fswrap.create(fileAbsPath, file.get('isDir'), () => {
-				var dirModel = this.getFileByPath(file.dirpath())
+				var dirModel = this.getFileByPath(file.get('dirpath'))
 				this.add(file, dirModel) // no trigger anything
 			})
 		},

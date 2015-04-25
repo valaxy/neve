@@ -9,6 +9,9 @@ requirejs.config({
 		'backbone': 'bower_components/backbone/backbone',
 		'backbone-relational': 'bower_components/backbone-relational/backbone-relational',
 		'backbone-event-propagation': 'bower_components/backbone-event-propagation/src/index',
+		'backbone.epoxy': 'bower_components/backbone.epoxy/backbone.epoxy',
+		'backbone-computedfields': 'bower_components/backbone-computedfields/lib/amd/backbone.computedfields',
+		'cocktail': 'bower_components/cocktail/Cocktail',
 		'jstree': 'bower_components/jstree/dist/jstree',
 		'magnific-popup': 'bower_components/magnific-popup/dist/jquery.magnific-popup.min',
 		'javascript-state-machine': 'bower_components/javascript-state-machine/state-machine.min',
@@ -22,7 +25,8 @@ requirejs.config({
 		'html': 'src/requirejs-plugin/html',
 		'ace': 'bower_components/ace-builds/src-noconflict/ace',
 		'jquery-contextmenu': 'bower_components/jquery-contextmenu/contextmenu',
-		'mustache': 'bower_components/mustache/mustache'
+		'mustache': 'bower_components/mustache/mustache',
+		'stack-analysis': 'bower_components/stack-analysis/index'
 	}
 	, "valaxy/requirejs-bundle": {
 		libBaseUrl: 'bower_components'

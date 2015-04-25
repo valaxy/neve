@@ -1,15 +1,17 @@
 define(function (require) {
 	var path = require('path')
 	require('backbone')
+	require('backbone.epoxy')
+	require('backbone-computedfields')
+	//var Cocktail = require('cocktail')
+
 
 	/** File or Directory */
 	var FileModel = Backbone.RelationalModel.extend({
-		defaults: function () {
-			return {
-				path: '',        // relative path of root, '.' or something2
-				isDir: true,    // if it is a directory
-				isOpen: false   // if it is opend by editor, multiply files can be opend at same time, imply or exply
-			}
+		defaults: {
+			path: '',        // relative path of root, '.' or something2
+			isDir: true,    // if it is a directory
+			isOpen: false   // if it is opend by editor, multiply files can be opend at same time, imply or exply
 		},
 
 		parse: function (attrs) {
@@ -27,25 +29,43 @@ define(function (require) {
 			}
 		}],
 
+		computed: {
+			/** Get or set name of file or directory. */
+			name: {
+				get: function () {
+					return path.basename(this.get('path'))
+				},
+				set: function (value) {
+					var pathValue = path.join(this.get('dirpath'), value)
+					this.set('path', pathValue)
+				}
+			},
 
-		/** Get name of file or directory. */
-		name: function () {
-			return path.basename(this.get('path'))
+
+			nameWithoutExtension: {
+				depends: [],
+				get: function () {
+					// no imp
+				}
+			},
+
+
+			/** Get the base directory path of file or directory.
+			 ** If it's root dir, return '.' */
+			dirpath: {
+				get: function () {
+					return path.dirname(this.get('path'))
+				}
+			}
 		},
 
-		nameWithoutExtension: function () {
-			// no imp
+		initialize: function () {
+			this.computedFields = new Backbone.ComputedFields(this)
 		},
+
 
 		nameWithoutAllExtension: function () {
 			// no imp
-		},
-
-
-		/** Get the base directory path of file or directory.
-		 ** If it's root dir, return '.' */
-		dirpath: function () {
-			return path.dirname(this.get('path'))
 		},
 
 
@@ -54,26 +74,12 @@ define(function (require) {
 			return path.basename(this.dirpath())
 		},
 
-
-		/** Rename file or directory */
-		rename: function (newName) {
-			if (!newName) {
-				return false
-			}
-
-			var newPath = path.join(this.dirpath(), newName)
-			this.set('path', newPath)
-			return true
-		},
-
-
 		/** Get absolute path of file or directory
 		 ** @params root path, optional */
 		absolutePath: function (root) {
 			root = root ? root : this.get('tree').get('root')
 			return path.join(root, this.get('path'))
 		},
-
 
 		/** Check if it is a leaf */
 		isLeaf: function () {

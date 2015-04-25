@@ -1,8 +1,38 @@
 @charset "utf-8";
+@import "../../../bower_components/bourbon/app/assets/stylesheets/_bourbon";
+@import "../../../bower_components/neat/app/assets/stylesheets/_neat";
+@import "../../../bower_components/magnific-popup/dist/magnific-popup.css";
 
-.rename-dialog {
+rename-dialog {
+	display:    block;
 	background: white;
-	width:      50%;
-	height:     200px;
+	width:      40%;
 	margin:     auto;
+
+	dialog-title {
+		display:       block;
+		height:        25px;
+		line-height:   25px;
+		padding-left:  5px;
+		border-bottom: 1px solid #ccc;
+	}
+
+	dialog-body {
+		display: block;
+		margin:  5px;
+
+		input {
+			width: 100%;
+		}
+
+		> div {
+			margin-bottom: 5px;
+		}
+
+		button {
+			margin-right:  5px;
+			margin-bottom: 5px;
+		}
+	}
+
 }

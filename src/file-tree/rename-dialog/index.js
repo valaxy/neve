@@ -7,14 +7,42 @@ var $__index_46_es6_46_js__ = (function() {
     var css = require('style!./index');
     var dom = require('../../utility/dom');
     require('magnific-popup');
-    require('css!bower_components/magnific-popup/dist/magnific-popup');
-    var View = Backbone.View.extend({initialize: function() {
+    require('backbone.epoxy');
+    var View = Backbone.Epoxy.View.extend({
+      events: {
+        'click .confirm': function() {
+          this.model.get('tree').rename(this.model, 'xxxx');
+          $.magnificPopup.close();
+        },
+        'click .cancel': function() {
+          $.magnificPopup.close();
+        }
+      },
+      bindings: {},
+      initialize: function() {
         this.setElement($(html));
         dom.appendStyle(this.el, css);
-      }});
-    var view = new View;
-    exports.init = function() {};
-    exports.show = function() {
+        this.render();
+      },
+      render: function() {
+        this.$('dialog-title name').html(this.model.get('name'));
+      },
+      setModel: function(file) {
+        this.removeBindings();
+        this.undelegateEvents();
+        this.model = file;
+        this.delegateEvents();
+        this.applyBindings();
+        this.render();
+      }
+    });
+    var view;
+    exports.show = function(file) {
+      if (!view) {
+        view = new View({model: file});
+      } else {
+        view.setModel(file);
+      }
       $.magnificPopup.open({
         items: {
           src: view.$el,
@@ -22,9 +50,6 @@ var $__index_46_es6_46_js__ = (function() {
         },
         modal: true
       });
-    };
-    exports.hide = function() {
-      $.magnificPopup.close();
     };
   });
   return {};

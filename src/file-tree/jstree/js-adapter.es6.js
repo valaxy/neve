@@ -103,6 +103,11 @@ define(function (require) {
 			return domId
 		},
 
+		renameFile: function (id, name) {
+			this._jstree.rename_node(id, name)
+
+		},
+
 		updateFile: function (id, file) {
 
 		},
