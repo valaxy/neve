@@ -5,4 +5,7 @@ node_modules/
 # compile you own css/html
 *.html
 *.css
+*.js
 *.js.map
+
+!*.es6.js
