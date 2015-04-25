@@ -5,10 +5,10 @@ var $__file_45_tree_45_view_46_es6_46_js__ = (function() {
     var fs = requireNode('fs');
     var path = requireNode('path');
     var watch = requireNode('watch');
+    var fswrap = require('../file-system/fs-wrap');
     var watch2 = new (require('../file-system/watch'));
     var JstreeAdapter = require('./jstree/js-adapter');
     var FileModel = require('../project-manager/file-model');
-    var fswrap = require('../file-system/fs-wrap');
     var async = require('async');
     var renameDialog = require('./rename-dialog/index');
     require('jstree');

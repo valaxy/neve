@@ -37,13 +37,7 @@ var $__index_46_es6_46_js__ = (function() {
           name: 'CF',
           location: 'd:/test'
         }));
-        setTimeout(function() {
-          var file = g.fileTree.getFileByPath('readme.md');
-          g.fileTree.get('project').set('openFile', file);
-          $('.status-bar::shadow .views').click();
-          $($('.file-tree::shadow .jstree a')[1]).trigger('contextmenu');
-          $('.file-tree::shadow .jstree-contextmenu li:last-child a').click();
-        }, 500);
+        setTimeout(function() {}, 500);
       });
     };
   });

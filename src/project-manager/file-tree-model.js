@@ -43,12 +43,14 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
       exist: function(file) {
         return !!this._pathToModel[file.get('path')];
       },
-      rename: function(file, newName) {
+      rename: function(file, newName, callback) {
         fswrap.rename(file.absolutePath(this.get('root')), newName, function(err) {
           if (err) {
-            throw new Error(err);
+            callback(err);
+            return ;
           }
           file.set('name', newName);
+          callback();
         });
       },
       createFile: function(file) {

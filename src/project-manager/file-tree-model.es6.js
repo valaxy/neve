@@ -63,12 +63,14 @@ define(function (require) {
 		//-----------------------------------------------------------
 
 		/** Rename file or directory */
-		rename: function (file, newName) {
+		rename: function (file, newName, callback) {
 			fswrap.rename(file.absolutePath(this.get('root')), newName, function (err) {
 				if (err) {
-					throw new Error(err)
+					callback(err)
+					return
 				}
 				file.set('name', newName)
+				callback()
 			})
 		},
 

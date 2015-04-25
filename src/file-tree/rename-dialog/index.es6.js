@@ -9,8 +9,14 @@ define(function (require, exports) {
 	var View = Backbone.Epoxy.View.extend({
 		events: {
 			'click .confirm': function () {
-				this.model.get('tree').rename(this.model, 'xxxx')
-				$.magnificPopup.close()
+				var newName = this.$('dialog-body .new-name').val()
+				this.model.get('tree').rename(this.model, newName, function (err) {
+					if (err) {
+						alert(err)
+						return
+					}
+					$.magnificPopup.close()
+				})
 			},
 			'click .cancel': function () {
 				$.magnificPopup.close()
@@ -26,6 +32,7 @@ define(function (require, exports) {
 		},
 		render: function () {
 			this.$('dialog-title name').html(this.model.get('name'))
+			this.$('dialog-body .new-name').val(this.model.get('name'))
 		},
 		setModel: function (file) {
 			this.removeBindings()

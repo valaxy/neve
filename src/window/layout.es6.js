@@ -5,28 +5,33 @@ define(function (require, exports) {
 	var html = require('html!./window-view')
 	var mustache = require('mustache')
 	var Window = require('./window')
-
+	var WindowView = require('./window-view')
 
 	var windows = []
+	var welcome = new SimpleView({selector: $('<div><h1>Welcome</h1></div>')})
 
 	exports.init = function () {
-		var l1 = new LinearLayout({direction: 'column'})
-		var mainContent = new LinearLayout({direction: 'row'})
+		var root = new LinearLayout({direction: 'column'})
 		var topNav = new SimpleView({selector: '.top-nav'})
 		var statusBar = new SimpleView({selector: '.status-bar'})
-		var explorer = new SimpleView({selector: '.file-tree'})
-		var emptyWorkplace = new SimpleView({selector: $('<div></div>')})
-		l1.appendView(topNav, {flex: '0 25px'})
-		l1.appendView(mainContent, {flex: '1'})
-		l1.appendView(statusBar, {flex: '0 20px'})
-		var $dom = l1._$dom
+		var mainContent = new LinearLayout({direction: 'row'})
 
-		mainContent.appendView(explorer, {flex: '0 200px'})
-		//mainContent.appendView(emptyWorkplace, {flex: '1'})
+		root.appendView(topNav, {flex: '0 25px'})
+		root.appendView(mainContent, {flex: '1', resizeableBefore: false})
+		root.appendView(statusBar, {flex: '0 20px', resizeableBefore: false})
+
+		mainContent.appendView(welcome, {flex: '1'})
 
 		this._linearLayout = mainContent
+		$('.everything').append(root.$dom())
 
-		$('.everything').append($dom)
+
+		// add explorer
+		this.load2($('.file-tree'), {
+			position: 'left',
+			flex: '0 300px',
+			title: 'explorer'
+		})
 	}
 
 	exports.appendAfterFileTree = function (view, config) {
@@ -50,8 +55,10 @@ define(function (require, exports) {
 		},
 		title = null,
 		position = 'right',
-		icon = ''
-		}) {
+		icon = '',
+		flex = '1'}) {
+
+
 		var $outerRoot
 		var $wrap
 		if (title) {
@@ -69,15 +76,28 @@ define(function (require, exports) {
 		shadowRoot.appendChild($innerRoot[0])
 
 		var view = new SimpleView({selector: $wrap})
-		this._linearLayout.addViewAtEdge(view, position, {flex: '1'})
+		console.log(this._linearLayout.getViewAt(0))
+		// load by judge
+		if (this._linearLayout.getViewAt(0) == welcome) {
+			welcome.replaceWith(view)
+		} else {
+			this._linearLayout.addViewAtEdge(view, position, {flex: flex})
+		}
 
+
+		var window = new Window({
+			name: title,
+			icon: icon
+		})
 		windows.push({
-			model: new Window({
-				name: title,
-				icon: icon
-			}),
+			model: window,
 			view: view,
 			dispose: dispose
+		})
+
+		new WindowView({
+			model: window,
+			el: $wrap
 		})
 
 		return $innerRoot
