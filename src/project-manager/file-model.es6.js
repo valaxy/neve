@@ -8,8 +8,10 @@ define(function (require) {
 
 
 	/** File or Directory */
+	var id = 0
 	var FileModel = propagation.mixin(Backbone.RelationalModel.extend({
 		defaults: {
+			id: '',
 			path: '',        // relative path of root, '.' or something2
 			isDir: true,    // if it is a directory
 			isOpen: false   // if it is opend by editor, multiply files can be opend at same time, imply or exply
@@ -31,7 +33,8 @@ define(function (require) {
 		}],
 
 		computed: {
-			/** Get or set name of file or directory. */
+			/** File name or Directory name.
+			 **/
 			name: {
 				get: function () {
 					return path.basename(this.get('path'))
@@ -43,10 +46,60 @@ define(function (require) {
 			},
 
 
+			/** index.html    -> index
+			 ** index.html.md -> index.html
+			 ** index.        -> index
+			 ** .             -> ''
+			 */
 			nameWithoutExtension: {
-				depends: [],
-				get: function () {
+				depends: ['name'],
+				get: function (fields) {
 					// no imp
+				}
+			},
+
+			nameWithoutAllExtension: {
+				depends: ['name'],
+				get: function (fields) {
+					// no imp
+				}
+			},
+
+
+			/** index.html    -> 'html'
+			 ** index.html.md -> 'md'
+			 ** index.        -> ''
+			 ** .             -> ''
+			 */
+			extension: {
+				depends: ['name'],
+				get: function (fields) {
+					var ext = path.extname(fields.name)
+					return ext == '' || ext == '.' ? '' : ext.substr(1)
+				}
+			},
+
+
+			/** index.html    -> 'html'
+			 ** index.html.md -> 'html.md'
+			 ** index.        -> ''
+			 ** .             -> ''
+			 */
+			allExtensions: {
+				depends: ['name'],
+				get: function (fields) {
+					var name = fields.name
+					var total = ''
+					while (true) {
+						var ext = path.extname(name)
+						if (ext == '' || ext == '.') {
+							break
+						} else {
+							name = path.basename(name, ext)
+							total = ext.substr(1) + '.' + total
+						}
+					}
+					return total
 				}
 			},
 
@@ -62,13 +115,10 @@ define(function (require) {
 
 		propagation: 'tree',
 
+
 		initialize: function () {
 			this.computedFields = new Backbone.ComputedFields(this)
-		},
-
-
-		nameWithoutAllExtension: function () {
-			// no imp
+			//this.set('id', new Date() + '-' + id++)
 		},
 
 
