@@ -1,9 +1,9 @@
 @charset "utf-8";
 @import "../../../bower_components/absolute-layout/src/absolute-layout";
 @import "style/style";
+
 .preview {
-	border-left: 1px solid #ccc;
-	padding:     10px;
+	padding: 10px;
 	@include slide-vertical;
 
 	.content {

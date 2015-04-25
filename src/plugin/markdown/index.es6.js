@@ -5,6 +5,8 @@ define(function (require, exports) {
 	var editor = require('../../editor/index')
 	var fileWatcherLoader = require('../../file-watch-api/file-watcher-loader')
 	var html = require('html!./preview')
+	var css = require('style!./preview')
+	var dom = require('../../utility/dom')
 
 
 	exports.init = function (options) {
@@ -30,6 +32,7 @@ define(function (require, exports) {
 				// nothing
 			}
 		})
+		dom.appendStyle($preview[0], css)
 
 
 		fileWatcherLoader.load({

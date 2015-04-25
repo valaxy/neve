@@ -67,8 +67,8 @@ define(function (require, exports) {
 				// for debug
 				setTimeout(function () {
 					// 打开文件
-					//var file = g.fileTree.getFileByPath('readme.md')
-					//g.fileTree.get('project').set('openFile', file)
+					var file = g.fileTree.getFileByPath('readme.md')
+					g.fileTree.get('project').set('openFile', file)
 
 					// 状态条弹出
 					//$('.status-bar::shadow .views').click()
