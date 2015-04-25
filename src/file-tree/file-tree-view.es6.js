@@ -119,10 +119,6 @@ define(function (require) {
 					}, {
 						label: 'rename',
 						action: () => {
-							var domId = this._pathToDomId[model.get('path')]
-							this.listenTo(model, 'change:name', function (model, name) {
-								this._fileTree.renameFile(domId, name)
-							})
 							renameDialog.show(model)
 						}
 					}]
@@ -242,6 +238,14 @@ define(function (require) {
 				this._clearFile(true, true)
 			})
 
+
+			// change file name
+			this.listenTo(this.model, 'change:name', function (file, name, options, source) {
+				if (source instanceof FileModel) {
+					var domId = this._pathToDomId[file.previous('path')]
+					this._fileTree.renameFile(domId, name)
+				}
+			})
 
 		}
 	})

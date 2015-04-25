@@ -3,11 +3,12 @@ define(function (require) {
 	require('backbone')
 	require('backbone.epoxy')
 	require('backbone-computedfields')
+	var propagation = require('backbone-event-propagation')
 	//var Cocktail = require('cocktail')
 
 
 	/** File or Directory */
-	var FileModel = Backbone.RelationalModel.extend({
+	var FileModel = propagation.mixin(Backbone.RelationalModel.extend({
 		defaults: {
 			path: '',        // relative path of root, '.' or something2
 			isDir: true,    // if it is a directory
@@ -59,6 +60,8 @@ define(function (require) {
 			}
 		},
 
+		propagation: 'tree',
+
 		initialize: function () {
 			this.computedFields = new Backbone.ComputedFields(this)
 		},
@@ -104,7 +107,7 @@ define(function (require) {
 				return this
 			}
 		}
-	})
+	}))
 
 	return FileModel
 })
