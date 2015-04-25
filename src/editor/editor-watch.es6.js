@@ -17,7 +17,7 @@ define(function (require, exports) {
 		var me = this
 		var lastValue = null
 		timer = new Timer({
-			interval: 1000 * 2,
+			interval: 1000,
 			immediate: true,
 			task: function () {
 				var value = global.editor.getValue()

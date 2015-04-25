@@ -1,7 +1,7 @@
 define(function (require, exports) {
 	var EditorView = require('./editor')
 	var layout = require('../window/layout')
-
+	var dom = require('../utility/dom')
 	var editorView
 
 	exports.init = function (options) {

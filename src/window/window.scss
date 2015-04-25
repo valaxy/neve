@@ -1,15 +1,25 @@
 @charset "utf-8";
 
 .window {
-	h1 {
-		font-weight: normal;
-	}
-	right-icons {
-		float: right;
+	display:        flex;
+	flex-direction: column;
 
-		close {
-			color:  red;
-			cursor: pointer;
+	h1 {
+		flex:        0 25px;
+		font-weight: normal;
+
+		right-icons {
+			float: right;
+
+			close {
+				color:  red;
+				cursor: pointer;
+			}
 		}
 	}
+
+	.content {
+		flex: 1;
+	}
+
 }

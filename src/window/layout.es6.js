@@ -70,6 +70,7 @@ define(function (require, exports) {
 		} else {
 			$wrap = $outerRoot = $('<div>')
 		}
+		$outerRoot.addClass('content')
 
 		var $innerRoot = $(domOrHTML)
 		var shadowRoot = $outerRoot[0].createShadowRoot()

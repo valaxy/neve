@@ -36,8 +36,10 @@ define(function (require) {
 
 			editor.setTheme("ace/theme/chrome") // this bug
 			editor.getSession().setMode("ace/mode/markdown")
-			editor.renderer.setShowGutter(false)
-
+			//editor.renderer.setShowGutter(false)
+			//editor.setOptions({
+			//	maxLines: Infinity
+			//});
 
 			// fix about ace editor-------------------------------------
 			var style1 = document.getElementById('ace_editor')
@@ -51,7 +53,7 @@ define(function (require) {
 			setTimeout(() => {
 				var style4 = document.getElementById('ace-chrome')
 				this.el.appendChild(style4)
-			}, 100)
+			}, 500)
 			// fix about ace editor-------------------------------------
 
 
