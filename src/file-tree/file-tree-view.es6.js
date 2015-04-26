@@ -174,6 +174,7 @@ define(function (require) {
 							var relPath = path.relative(this.model.get('root'), absolutePath)
 							var file = this.model.getFileByPath(relPath)
 							if (file.get('modifiedTime').getTime() != prevStat.mtime.getTime()) {
+								file.modify(currentStat)
 								console.log(absolutePath + ' file changed! you must replace it')
 							}
 						})
@@ -243,6 +244,7 @@ define(function (require) {
 			this._projectManager.on('open', (project) => {
 				this.model.set('root', project.get('location'))
 				this.model.set('project', project)
+				project.set('fileTree', this.model)
 				this._initModel()
 				this._initWatch()
 			})

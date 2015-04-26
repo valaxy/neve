@@ -1,10 +1,15 @@
 define(function (require, exports) {
+	var FileModel = require('../project-manager/file-model')
 	var editorWatch = require('../editor/editor-watch')
 	var async = require('async')
 	var Backbone = require('backbone')
 	var _ = require('underscore')
+	var propagation = require('backbone-event-propagation')
+	var minimatch = requireNode('minimatch')
 
 	var watchers = []
+	var event = _.extend({}, Backbone.Events, propagation.mixin())
+
 
 	/** options:
 	 **     description: long text about the watcher
@@ -15,48 +20,81 @@ define(function (require, exports) {
 	 **         callback: call to write output
 	 */
 	exports.load = function (options = {
-		isEnabled: '',
-		arguments: '',              // args
+		isEnabled        : '',
+		arguments        : '', // args
 		checkSyntaxErrors: '',
-		description: '',
-		exitCodeBehavior: '',
-		fileExtension: '',
-		immediateSync: '',
-		name: '',                   // watch name
-		output: '',
-		outputFilters: '',
-		outputFromStdout: '',
-		passParentEnvs: '',
-		program: '',                // cmd to execute
-		scopeName: '',
-		trackOnlyRoot: '',
-		workingDir: ''
+		description      : '', // human readable string for long text
+		exitCodeBehavior : '',
+		fileExtension    : '',
+		filter           : '', // regexp || glob matcher
+		immediateSync    : '',
+		name             : '', // human readable string for short text
+		output           : '',
+		outputFilters    : '',
+		outputFromStdout : '',
+		passParentEnvs   : '',
+		program          : '', // shell command to execute
+		script           : '', // js function to execute, choose program or script, script first
+		scopeName        : '',
+		trackOnlyRoot    : '',
+		workingDir       : ''
 	}) {
 		watchers.push(options)
 	}
 
 
-	exports.init = function (options) {
-		var projectManager = options.projectManager
-		var event = _.extend({}, Backbone.Events)
+	// 执行手表
+	// @depreted
+	var execWatches = function (text, callback) {
+		async.eachSeries(watchers, function (watcher, done) {
+			if (watcher.script) {
+				watcher.script(text, done)
+			}
+		}, callback)
+	}
 
-		editorWatch.on('update', function (allDone, text) {
-			async.eachSeries(watchers, function (watcher, done) {
+	var execWatches2 = function (file, text, callback) {
+		async.eachSeries(watchers, function (watcher, done) {
+			if (watcher.filter) {
+				if (minimatch(file.get('path'), watcher.filter)) {
+					if (watcher.script) {
+						watcher.script(text, done)
+					} else {
+
+					}
+				}
+			} else {
 				if (watcher.script) {
 					watcher.script(text, done)
+				} else {
+
 				}
-			}, function (err) {
+			}
+		}, callback)
+	}
+
+
+	var initForFileTree = function (fileTree) {
+		event.listenToPro(fileTree, 'file', 'modify', function (file) {
+			execWatches2(file, 'nothing', function () {
+				console.log('all is done')
+			})
+		})
+	}
+
+
+	exports.init = function (options) {
+		var projectManager = options.projectManager
+
+		editorWatch.on('update', function (allDone, text) {
+			execWatches(text, function (err) {
 				allDone()
 			})
 		})
 		editorWatch.start()
 
 		event.listenTo(projectManager, 'open', (project) => {
-
-		})
-
-		event.listenTo(projectManager, 'close', () => {
-
+			initForFileTree(project.get('fileTree'))
 		})
 	}
 

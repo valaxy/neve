@@ -4,38 +4,54 @@ define(function (require) {
 	var path = require('path')
 	var fswrap = require('../file-system/fs-wrap')
 	var Backbone = require('backbone')
+	var propagation = require('backbone-event-propagation')
 	require('backbone-relational')
 
 
-	var FileTreeModel = Backbone.RelationalModel.extend({
+	/** Events:
+	 **     addFile
+	 **     modifyFile
+	 **     deleteFile
+	 */
+	var FileTreeModel = propagation.mixin(Backbone.RelationalModel.extend({
 		defaults: function () {
 			return {
 				project: null,
-				root: '' // absolute path of file system
+				root   : '' // absolute path of file system
 			}
 		},
 
 		relations: [{
 			/** The root directory */
-			key: 'rootDir',
-			type: Backbone.HasOne,
-			relatedModel: FileModel,
+			key            : 'rootDir',
+			type           : Backbone.HasOne,
+			relatedModel   : FileModel,
 			reverseRelation: {
 				type: Backbone.HasOne
 			}
 		}, {
 			/** All the files that in this tree */
-			key: 'files',
-			type: Backbone.HasMany,
-			relatedModel: FileModel,
+			key            : 'files',
+			type           : Backbone.HasMany,
+			relatedModel   : FileModel,
 			reverseRelation: {
 				key: 'tree'
 			}
 		}],
 
 
+		propagation: {
+			name   : 'file-tree',
+			targets: []
+		},
+
+
 		initialize: function () {
 			this._pathToModel = {} // path -> model
+
+			this.listenTo(this, 'add:files', function (file) {
+				this.trigger('addFile', file)
+			})
 		},
 
 		/** Return a file the match the relative path */
@@ -57,15 +73,13 @@ define(function (require) {
 			return this._add(dir)
 		},
 
-		add2: function (a){
+		add2: function (a) {
 
 		},
 
 		exist: function (file) {
 			return !!this._pathToModel[file.get('path')]
 		},
-
-
 
 
 		//-----------------------------------------------------------
@@ -138,7 +152,7 @@ define(function (require) {
 				me._cut(child)
 			})
 		}
-	})
+	}))
 
 	return FileTreeModel
 })

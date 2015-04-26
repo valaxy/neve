@@ -11,6 +11,7 @@ define(function (require, exports) {
 
 	var pandocPlugin = require('../plugin/pandoc/index')
 	var markdownPlugin = require('../plugin/markdown/index')
+	var scssPlugin = require('../plugin/scss/index')
 
 	var loader = require('../loader/index')
 	var editor = require('../editor/index')
@@ -33,7 +34,7 @@ define(function (require, exports) {
 		}),
 		loader.load('../file-tree/file-tree-view', '../project-manager/file-tree-model').done(function (FileTreeView, FileTreeModel) {
 			g.fileTree = (new FileTreeView({
-				model: new FileTreeModel,
+				model         : new FileTreeModel,
 				projectManager: projectManager
 			})).model
 		})
@@ -53,12 +54,18 @@ define(function (require, exports) {
 			//	projectManager: projectManager
 			//})
 
+			//----------------------------------------------------------------
+			// load all plugins
+			//----------------------------------------------------------------
 			markdownPlugin.init({
 				projectManager: projectManager
 			})
 
+			scssPlugin.init()
+
+
 			projectManager.open(new ProjectModel({
-				name: 'CF',
+				name    : 'CF',
 				location: 'd:/test'
 			}))
 
@@ -70,7 +77,7 @@ define(function (require, exports) {
 				g.fileTree.get('project').set('openFile', file)
 
 				// 状态条弹出
-				//$('.status-bar::shadow .views').click()
+				$('.status-bar::shadow .views').click()
 
 				// 弹出rename框
 				//$($('.file-tree::shadow .jstree a')[1]).trigger('contextmenu')

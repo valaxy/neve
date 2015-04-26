@@ -12,8 +12,8 @@ define(function (require) {
 	var FileModel = propagation.mixin(Backbone.RelationalModel.extend({}, {
 		createByStat: function (path, stat) {
 			return new FileModel({
-				path: path,
-				isDir: stat.isDirectory(),
+				path        : path,
+				isDir       : stat.isDirectory(),
 				modifiedTime: stat.mtime
 			})
 		}
@@ -21,10 +21,10 @@ define(function (require) {
 	_.extend(FileModel.prototype, {
 		defaults: function () {
 			return {
-				id: id(),
-				path: '',        // relative path of root, '.' or something2
-				isDir: true,    // if it is a directory
-				isOpen: false,   // if it is opend by editor, multiply files can be opend at same time, imply or exply
+				id          : id(),
+				path        : '',        // relative path of root, '.' or something2
+				isDir       : true,    // if it is a directory
+				isOpen      : false,   // if it is opend by editor, multiply files can be opend at same time, imply or exply
 				modifiedTime: null
 			}
 		},
@@ -36,9 +36,9 @@ define(function (require) {
 
 		relations: [{
 			/** Children */
-			key: 'children',
-			relatedModel: FileModel,
-			type: Backbone.HasMany,
+			key            : 'children',
+			relatedModel   : FileModel,
+			type           : Backbone.HasMany,
 			reverseRelation: {
 				key: 'parent'
 			}
@@ -49,10 +49,10 @@ define(function (require) {
 			 **/
 			name: {
 				depends: ['path'],
-				get: function (fields) {
+				get    : function (fields) {
 					return path.basename(fields.path)
 				},
-				set: function (value, fields) {
+				set    : function (value, fields) {
 					var pathValue = path.join(this.get('dirpath'), value)
 					fields.path = pathValue
 					return this
@@ -67,7 +67,7 @@ define(function (require) {
 			 */
 			extension: {
 				depends: ['name'],
-				get: function (fields) {
+				get    : function (fields) {
 					var ext = path.extname(fields.name)
 					return ext == '' || ext == '.' ? '' : ext.substr(1)
 				}
@@ -81,7 +81,7 @@ define(function (require) {
 			 */
 			allExtensions: {
 				depends: ['name'],
-				get: function (fields) {
+				get    : function (fields) {
 					var name = fields.name
 					var total = ''
 					while (true) {
@@ -106,7 +106,7 @@ define(function (require) {
 			 */
 			nameWithoutExtension: {
 				depends: ['name', 'extension'],
-				get: function (fields) {
+				get    : function (fields) {
 					return path.basename(fields.name, '.' + fields.extension)
 				}
 			},
@@ -120,7 +120,7 @@ define(function (require) {
 			 */
 			nameWithoutAllExtension: {
 				depends: ['name', 'allExtensions'],
-				get: function (fields) {
+				get    : function (fields) {
 					return path.basename(fields.name, '.' + fields.allExtensions)
 				}
 			},
@@ -130,13 +130,16 @@ define(function (require) {
 			 ** If it's root dir, return '.' */
 			dirpath: {
 				depends: ['path'],
-				get: function (fields) {
+				get    : function (fields) {
 					return path.dirname(fields.path)
 				}
 			}
 		},
 
-		propagation: 'tree',
+		propagation: {
+			name   : 'file',
+			targets: 'tree'
+		},
 
 		initialize: function () {
 			this.computedFields = new Backbone.ComputedFields(this)
@@ -178,6 +181,11 @@ define(function (require) {
 			} else {
 				return this
 			}
+		},
+
+		modify: function (stat) {
+			this.set('modifiedTime', stat.mtime)
+			this.trigger('modify')
 		}
 	})
 

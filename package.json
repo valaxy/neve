@@ -1,32 +1,33 @@
 {
-    "main": "src/home/index.html",
-    "node-remote": "<local>;http://10.33.68.96:63343",
-    "name": "markdown-editor",
-    "version": "0.0.0",
-    "description": "There is nothing you can use",
-    "directories": {
-        "test": "test"
-    },
-    "dependencies": {
-        "nodegit": "^0.2.7",
-        "temp": "^0.8.1",
-        "trash": "^1.3.0",
-        "watch": "^0.13.0"
-    },
-    "devDependencies": {
-        "bower-combo": "git://github.com/valaxy/bower-dependency-generate"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/valaxy/markdown-editor.git"
-    },
-    "author": "",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/valaxy/markdown-editor/issues"
-    },
-    "homepage": "https://github.com/valaxy/markdown-editor"
+  "main": "src/home/index.html",
+  "node-remote": "<local>;http://10.33.68.96:63343",
+  "name": "markdown-editor",
+  "version": "0.0.0",
+  "description": "There is nothing you can use",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "minimatch": "^2.0.4",
+    "nodegit": "^0.2.7",
+    "temp": "^0.8.1",
+    "trash": "^1.3.0",
+    "watch": "^0.13.0"
+  },
+  "devDependencies": {
+    "bower-combo": "git://github.com/valaxy/bower-dependency-generate"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/valaxy/markdown-editor.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/valaxy/markdown-editor/issues"
+  },
+  "homepage": "https://github.com/valaxy/markdown-editor"
 }

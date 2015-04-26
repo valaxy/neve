@@ -8,7 +8,7 @@ requirejs.config({
 		'underscore': 'bower_components/underscore/underscore-min',
 		'backbone': 'bower_components/backbone/backbone',
 		'backbone-relational': 'bower_components/backbone-relational/backbone-relational',
-		'backbone-event-propagation': 'bower_components/backbone-event-propagation/src/index',
+		'backbone-event-propagation': 'bower_components/backbone-event-propagation/index',
 		'backbone.epoxy': 'bower_components/backbone.epoxy/backbone.epoxy',
 		'backbone-computedfields': 'bower_components/backbone-computedfields/lib/amd/backbone.computedfields',
 		'cocktail': 'bower_components/cocktail/Cocktail',
