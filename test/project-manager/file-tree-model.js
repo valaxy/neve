@@ -4,7 +4,7 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
   define(function(require) {
     var FileTreeModel = require('src/project-manager/file-tree-model');
     var FileModel = require('src/project-manager/file-model');
-    module('FileTreeModel');
+    QUnit.module('FileTreeModel');
     test('get("files").get(id)', function(assert) {
       var tree = new FileTreeModel;
       var n1 = new FileModel({path: '1'});
@@ -30,11 +30,11 @@ var $__file_45_tree_45_model_46_es6_46_js__ = (function() {
       var n2 = new FileModel({path: '2'});
       tree.add(n2, n1);
       assert.equal(tree.get('files').length, 2);
-      assert.ok(n2.get('parent'), n1);
+      assert.equal(n2.get('parent'), n1);
       var n3 = new FileModel({path: '3'});
       var n3id = tree.add(n3, n1);
       assert.equal(tree.get('files').length, 3);
-      assert.ok(n3.get('parent'), n1);
+      assert.equal(n3.get('parent'), n1);
       assert.equal(tree.get('files').get(n3id), n3);
     });
     test('addRoot(): add to empty tree', function(assert) {

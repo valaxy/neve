@@ -1,20 +1,23 @@
 define(function (require) {
 	var path = require('path')
-	require('backbone')
-	require('backbone.epoxy')
-	require('backbone-computedfields')
+	var id = require('../utility/id')
+	var Backbone = require('backbone')
 	var propagation = require('backbone-event-propagation')
-	//var Cocktail = require('cocktail')
+	var _ = require('underscore')
+	require('backbone-relational')
+	require('backbone-computedfields')
 
 
 	/** File or Directory */
-	var id = 0
-	var FileModel = propagation.mixin(Backbone.RelationalModel.extend({
-		defaults: {
-			id: '',
-			path: '',        // relative path of root, '.' or something2
-			isDir: true,    // if it is a directory
-			isOpen: false   // if it is opend by editor, multiply files can be opend at same time, imply or exply
+	var FileModel = propagation.mixin(Backbone.RelationalModel.extend({})) // purpose is for ref FileModel itself
+	_.extend(FileModel.prototype, {
+		defaults: function () {
+			return {
+				id: id(),
+				path: '',        // relative path of root, '.' or something2
+				isDir: true,    // if it is a directory
+				isOpen: false   // if it is opend by editor, multiply files can be opend at same time, imply or exply
+			}
 		},
 
 		parse: function (attrs) {
@@ -25,7 +28,7 @@ define(function (require) {
 		relations: [{
 			/** Children */
 			key: 'children',
-			//relatedModel: FileModel, ref itself
+			relatedModel: FileModel,
 			type: Backbone.HasMany,
 			reverseRelation: {
 				key: 'parent'
@@ -33,35 +36,17 @@ define(function (require) {
 		}],
 
 		computed: {
-			/** File name or Directory name.
+			/** File name or Directory name. todo: 重构name和path, 应该保存name而不是保存path
 			 **/
 			name: {
-				get: function () {
-					return path.basename(this.get('path'))
+				depends: ['path'],
+				get: function (fields) {
+					return path.basename(fields.path)
 				},
-				set: function (value) {
+				set: function (value, fields) {
 					var pathValue = path.join(this.get('dirpath'), value)
-					this.set('path', pathValue)
-				}
-			},
-
-
-			/** index.html    -> index
-			 ** index.html.md -> index.html
-			 ** index.        -> index
-			 ** .             -> ''
-			 */
-			nameWithoutExtension: {
-				depends: ['name'],
-				get: function (fields) {
-					// no imp
-				}
-			},
-
-			nameWithoutAllExtension: {
-				depends: ['name'],
-				get: function (fields) {
-					// no imp
+					fields.path = pathValue
+					return this
 				}
 			},
 
@@ -99,7 +84,35 @@ define(function (require) {
 							total = ext.substr(1) + '.' + total
 						}
 					}
-					return total
+					return total == '' ? total : total.substr(0, total.length - 1)
+				}
+			},
+
+
+			/** index.html    -> index
+			 ** index.html.md -> index.html
+			 ** index.        -> index
+			 ** index         -> index
+			 ** .             -> ''
+			 */
+			nameWithoutExtension: {
+				depends: ['name', 'extension'],
+				get: function (fields) {
+					return path.basename(fields.name, '.' + fields.extension)
+				}
+			},
+
+
+			/** index.html    -> index
+			 ** index.html.md -> index
+			 ** index.        -> index
+			 ** index         -> index
+			 ** .             -> ''
+			 */
+			nameWithoutAllExtension: {
+				depends: ['name', 'allExtensions'],
+				get: function (fields) {
+					return path.basename(fields.name, '.' + fields.allExtensions)
 				}
 			},
 
@@ -107,14 +120,14 @@ define(function (require) {
 			/** Get the base directory path of file or directory.
 			 ** If it's root dir, return '.' */
 			dirpath: {
-				get: function () {
-					return path.dirname(this.get('path'))
+				depends: ['path'],
+				get: function (fields) {
+					return path.dirname(fields.path)
 				}
 			}
 		},
 
 		propagation: 'tree',
-
 
 		initialize: function () {
 			this.computedFields = new Backbone.ComputedFields(this)
@@ -157,7 +170,7 @@ define(function (require) {
 				return this
 			}
 		}
-	}))
+	})
 
 	return FileModel
 })

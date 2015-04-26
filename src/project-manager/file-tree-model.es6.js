@@ -1,8 +1,11 @@
 define(function (require) {
 	var FileModel = require('./file-model')
 	var utility = require('../utility/utility')
-	var path = requireNode('path')
+	var path = require('path')
 	var fswrap = require('../file-system/fs-wrap')
+	var Backbone = require('backbone')
+	require('backbone-relational')
+
 
 	var FileTreeModel = Backbone.RelationalModel.extend({
 		defaults: function () {
@@ -21,7 +24,7 @@ define(function (require) {
 				type: Backbone.HasOne
 			}
 		}, {
-			/** All the files that is this tree */
+			/** All the files that in this tree */
 			key: 'files',
 			type: Backbone.HasMany,
 			relatedModel: FileModel,

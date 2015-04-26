@@ -2,7 +2,7 @@ define(function (require) {
 	var FileTreeModel = require('src/project-manager/file-tree-model')
 	var FileModel = require('src/project-manager/file-model')
 
-	module('FileTreeModel')
+	QUnit.module('FileTreeModel')
 
 	test('get("files").get(id)', function (assert) {
 		var tree = new FileTreeModel
@@ -14,6 +14,7 @@ define(function (require) {
 		})
 		var id1 = tree.addRoot(n1)
 		var id2 = tree.add(n2, n1)
+
 
 		assert.equal(tree.get('files').get(id1), n1)
 		assert.equal(tree.get('files').get(id2), n2)
@@ -46,14 +47,14 @@ define(function (require) {
 		})
 		tree.add(n2, n1)
 		assert.equal(tree.get('files').length, 2)
-		assert.ok(n2.get('parent'), n1)
+		assert.equal(n2.get('parent'), n1)
 
 		var n3 = new FileModel({
 			path: '3'
 		})
 		var n3id = tree.add(n3, n1)
 		assert.equal(tree.get('files').length, 3)
-		assert.ok(n3.get('parent'), n1)
+		assert.equal(n3.get('parent'), n1)
 		assert.equal(tree.get('files').get(n3id), n3)
 	})
 

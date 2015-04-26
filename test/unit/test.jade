@@ -18,10 +18,4 @@ html
         script(src="../../bower_components/requirejs/require.js")
         script(src="../../src/home/requirejs-config.js")
         script.
-            require([
-                'test/unit/test',
-                'backbone',
-                'backbone-relational'
-            ], function (test) {
-                test.init()
-            })
+            require(['test/unit/test'])

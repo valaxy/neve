@@ -5,6 +5,7 @@ define(function (require) {
 	var path = require('path')
 	var propagation = require('backbone-event-propagation')
 	var fs = requireNode('fs')
+	var Backbone = require('backbone')
 
 	var ProjectModel = propagation.mixin(Backbone.RelationalModel.extend({
 		defaults: {

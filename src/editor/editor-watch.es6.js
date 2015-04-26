@@ -2,6 +2,7 @@ define(function (require, exports) {
 	var global = require('../home/global')
 	var Timer = require('bower_components/timer/src/timer')
 	var _ = require('underscore')
+	var Backbone = require('backbone')
 
 	_.extend(exports, Backbone.Events)
 

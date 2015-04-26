@@ -150,7 +150,8 @@ define(function (require) {
 								path: relPath,
 								isDir: stat.isDirectory()
 							})
-							var dirModel = me.model.getFileByPath(f.get('dirpath'))
+							//var dirModel = me.model.getFileByPath(f.get('dirpath'))
+							var dirModel = me.model.getFileByPath(f.dirpath())
 							me.model.add(f, dirModel)
 						}
 						done()
@@ -196,7 +197,7 @@ define(function (require) {
 					}, null)
 					this._pathToDomId['.'] = curDomId
 				} else {
-					var dirDomId = this._pathToDomId[file.get('dirpath')]
+					var dirDomId = this._pathToDomId[file.dirpath()]
 					var curDomId = this._fileTree.addFile({
 						label: file.get('name'),
 						isDir: file.get('isDir'),
@@ -206,13 +207,24 @@ define(function (require) {
 				}
 			})
 
+			setTimeout(()=> {
+				console.log(this.model.get('files'))
+			}, 2000)
 
 			this.listenTo(this.model, 'remove:files', function (file) {
 				this._fileTree.deleteFile(this._pathToDomId[file.get('path')])
 			})
 
 			this.listenTo(this.model.get('project'), 'change:openFile', function (file) {
-				console.log(11111111111111)
+			})
+
+
+			// change file name
+			this.listenTo(this.model, 'change:name', function (file, name, options, source) {
+				if (source instanceof FileModel) {
+					var domId = this._pathToDomId[file.previous('path')]
+					this._fileTree.renameFile(domId, name)
+				}
 			})
 		},
 
@@ -238,14 +250,6 @@ define(function (require) {
 				this._clearFile(true, true)
 			})
 
-
-			// change file name
-			this.listenTo(this.model, 'change:name', function (file, name, options, source) {
-				if (source instanceof FileModel) {
-					var domId = this._pathToDomId[file.previous('path')]
-					this._fileTree.renameFile(domId, name)
-				}
-			})
 
 		}
 	})
