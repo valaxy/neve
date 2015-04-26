@@ -27,7 +27,7 @@ define(function (require, exports) {
 		// })
 
 		var $preview = layout.load2(html, {
-			title: 'Preview',
+			title  : 'Preview',
 			dispose: function () {
 				// nothing
 			}
@@ -36,9 +36,10 @@ define(function (require, exports) {
 
 
 		fileWatcherLoader.load({
-			name: 'markdown',
+			name       : 'markdown',
 			description: 'compile markdown to html',
-			script: (input, callback) => {
+			filter     : 'xxxxxxxxxxxyyyy', // 暂时禁用它的功能调试用
+			script     : (input, callback) => {
 				var $content = $preview.find('.content')
 				var html = markdown(input)
 

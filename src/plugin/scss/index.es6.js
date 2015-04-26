@@ -3,8 +3,16 @@ define(function (require, exports) {
 
 	exports.init = function () {
 		fileWatcherLoader.load({
-			filter: '*.scss',
-			program: 'scss --no-cache --update --sourcemap=none {{$name}}:{{$nameWithoutExtension$}}.css'
+			name       : 'scss',
+			description: 'compile .scss to .css',
+			filter     : '*.scss',
+			program    : 'scss',
+			arguments  : [
+				'--no-cache',
+				'--update',
+				'--sourcemap=none',
+				'{{name}}:{{nameWithoutExtension}}.css'
+			]
 		})
 	}
 })

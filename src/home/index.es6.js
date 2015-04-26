@@ -12,6 +12,7 @@ define(function (require, exports) {
 	var pandocPlugin = require('../plugin/pandoc/index')
 	var markdownPlugin = require('../plugin/markdown/index')
 	var scssPlugin = require('../plugin/scss/index')
+	var jadePlugin = require('../plugin/jade/index')
 
 	var loader = require('../loader/index')
 	var editor = require('../editor/index')
@@ -60,8 +61,8 @@ define(function (require, exports) {
 			markdownPlugin.init({
 				projectManager: projectManager
 			})
-
 			scssPlugin.init()
+			jadePlugin.init()
 
 
 			projectManager.open(new ProjectModel({

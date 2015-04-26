@@ -44,8 +44,8 @@ define(function (require) {
 		},
 
 		_createRoot: function () {
-			var model = new FileModel({
-				path: '.',  // current path
+			var model = new FileModel({ // todo, root文件夹没有用stat来标记
+				path : '.',  // current path
 				isDir: true
 			})
 
@@ -83,28 +83,28 @@ define(function (require) {
 				var model = file.data
 				if (file.isDir) {
 					return [{
-						label: 'create directory',
+						label : 'create directory',
 						action: () => {
 							this.model.createFile(new FileModel({
-								path: path.join(model.get('path'), 'new directory'),
+								path : path.join(model.get('path'), 'new directory'),
 								isDir: true
 							}))
 						}
 					}, {
-						label: 'create file',
+						label : 'create file',
 						action: () => {
 							this.model.createFile(new FileModel({
-								path: path.join(model.get('path'), 'new file.md'),
+								path : path.join(model.get('path'), 'new file.md'),
 								isDir: false
 							}))
 						}
 					}, {
-						label: 'delete directory',
+						label : 'delete directory',
 						action: () => {
 							this.model.deleteFile(model)
 						}
 					}, {
-						label: 'rename',
+						label : 'rename',
 						action: function () {
 							renameDialog.init()
 							renameDialog.show(model)
@@ -112,12 +112,12 @@ define(function (require) {
 					}]
 				} else { // file
 					return [{
-						label: 'delete file',
+						label : 'delete file',
 						action: () => {
 							this.model.deleteFile(model)
 						}
 					}, {
-						label: 'rename',
+						label : 'rename',
 						action: () => {
 							renameDialog.show(model)
 						}
@@ -146,11 +146,7 @@ define(function (require) {
 							var absolutePath = absolutePaths[i]
 							var relPath = path.relative(me.model.get('root'), absolutePath) // '' or 'a/1.txt'
 							var stat = files[absolutePath]
-							var f = new FileModel({
-								path: relPath,
-								isDir: stat.isDirectory(),
-								modifiedTime: stat.mtime
-							})
+							var f = FileModel.createByStat(relPath, stat)
 							var dirModel = me.model.getFileByPath(f.get('dirpath'))
 							me.model.add(f, dirModel)
 						}
@@ -173,7 +169,7 @@ define(function (require) {
 						monitor.on('changed', (absolutePath, currentStat, prevStat) => {
 							var relPath = path.relative(this.model.get('root'), absolutePath)
 							var file = this.model.getFileByPath(relPath)
-							if (file.get('modifiedTime').getTime() != prevStat.mtime.getTime()) {
+							if (file.get('modifiedTime').getTime() == prevStat.mtime.getTime()) {
 								file.modify(currentStat)
 								console.log(absolutePath + ' file changed! you must replace it')
 							}
@@ -201,7 +197,7 @@ define(function (require) {
 					var curDomId = this._fileTree.addFile({
 						label: this.model.get('root'),
 						isDir: file.get('isDir'),
-						data: file
+						data : file
 					}, null)
 					this._pathToDomId['.'] = curDomId
 				} else {
@@ -209,7 +205,7 @@ define(function (require) {
 					var curDomId = this._fileTree.addFile({
 						label: file.get('name'),
 						isDir: file.get('isDir'),
-						data: file
+						data : file
 					}, dirDomId)
 					this._pathToDomId[file.get('path')] = curDomId
 				}
