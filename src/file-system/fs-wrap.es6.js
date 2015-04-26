@@ -10,10 +10,26 @@ define(function (require, exports) {
 	/** Create file or directory
 	 */
 	exports.create = function (absolutePath, isDirectory, callback) {
+		var getStat = function () {
+			fs.stat(absolutePath, function (err, stat) {
+				callback(err, stat)
+			})
+		}
+
 		if (isDirectory) {
-			fs.mkdir(absolutePath, callback)
+			fs.mkdir(absolutePath, function (err) {
+				if (err) {
+					callback(err)
+				}
+				getStat(callback)
+			})
 		} else {
-			fs.writeFile(absolutePath, '', callback)
+			fs.writeFile(absolutePath, '', function (err) {
+				if (err) {
+					callback(err)
+				}
+				getStat(callback)
+			})
 		}
 	}
 

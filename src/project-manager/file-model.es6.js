@@ -9,14 +9,23 @@ define(function (require) {
 
 
 	/** File or Directory */
-	var FileModel = propagation.mixin(Backbone.RelationalModel.extend({})) // purpose is for ref FileModel itself
+	var FileModel = propagation.mixin(Backbone.RelationalModel.extend({}, {
+		createByStat: function (path, stat) {
+			return new FileModel({
+				path: path,
+				isDir: stat.isDirectory(),
+				modifiedTime: stat.mtime
+			})
+		}
+	})) // purpose is for ref FileModel itself
 	_.extend(FileModel.prototype, {
 		defaults: function () {
 			return {
 				id: id(),
 				path: '',        // relative path of root, '.' or something2
 				isDir: true,    // if it is a directory
-				isOpen: false   // if it is opend by editor, multiply files can be opend at same time, imply or exply
+				isOpen: false,   // if it is opend by editor, multiply files can be opend at same time, imply or exply
+				modifiedTime: null
 			}
 		},
 

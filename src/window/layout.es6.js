@@ -77,7 +77,7 @@ define(function (require, exports) {
 		shadowRoot.appendChild($innerRoot[0])
 
 		var view = new SimpleView({selector: $wrap})
-		console.log(this._linearLayout.getViewAt(0))
+
 		// load by judge
 		if (this._linearLayout.getViewAt(0) == welcome) {
 			welcome.replaceWith(view)

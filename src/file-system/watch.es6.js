@@ -1,8 +1,8 @@
-define(function (require, exports) {
+define(function () {
 	var watch = requireNode('watch')
 
 	var FileTreeWatch = function () {
-
+		// nothing
 	}
 
 	FileTreeWatch.prototype.walkAllFiles = function (root, options, callback) {
@@ -15,7 +15,17 @@ define(function (require, exports) {
 		})
 	}
 
-	FileTreeWatch.prototype.watch = function (onCreate, onChange, onRemove) {
+
+	/** Events:
+	 **     created
+	 **     changed
+	 **     removed??
+	 **/
+	FileTreeWatch.prototype.startWatch = function (rootDir) {
+
+	}
+
+	FileTreeWatch.prototype.stopWatch = function () {
 
 	}
 

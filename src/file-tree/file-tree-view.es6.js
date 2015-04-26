@@ -148,10 +148,10 @@ define(function (require) {
 							var stat = files[absolutePath]
 							var f = new FileModel({
 								path: relPath,
-								isDir: stat.isDirectory()
+								isDir: stat.isDirectory(),
+								modifiedTime: stat.mtime
 							})
-							//var dirModel = me.model.getFileByPath(f.get('dirpath'))
-							var dirModel = me.model.getFileByPath(f.dirpath())
+							var dirModel = me.model.getFileByPath(f.get('dirpath'))
 							me.model.add(f, dirModel)
 						}
 						done()
@@ -159,22 +159,29 @@ define(function (require) {
 				},
 				(done)=> {
 					// update when change
-					watch.createMonitor(me.model.get('root'), function (monitor) {
-						monitor.on('created', function (absolutePath, stat) {
-							var relPath = path.relative(me.model.get('root'), absolutePath)
-							me.model.createFile(new FileModel({
-								path: relPath,
-								isDir: stat.isDirectory()
-							}))
+					watch.createMonitor(this.model.get('root'), (monitor) => {
+						monitor.on('created', (absolutePath, stat) => {
+							var filePath = path.relative(this.model.get('root'), absolutePath)
+							if (this.model.getFileByPath(filePath)) {
+								console.log('exist')
+							} else {
+								var file = FileModel.createByStat(filePath, stat)
+								var dir = this.model.getFileByPath(file.get('dirpath'))
+								this.model.add(file, dir)
+							}
 						})
-						monitor.on('changed', function (absolutePath) {
-							// do some change thing
+						monitor.on('changed', (absolutePath, currentStat, prevStat) => {
+							var relPath = path.relative(this.model.get('root'), absolutePath)
+							var file = this.model.getFileByPath(relPath)
+							if (file.get('modifiedTime').getTime() != prevStat.mtime.getTime()) {
+								console.log(absolutePath + ' file changed! you must replace it')
+							}
 						})
-						monitor.on('removed', function (absolutePath, stat) {
-							var relPath = path.relative(me.model.get('root'), absolutePath)
-							var deletedFile = me.model.getFileByPath(relPath)
+						monitor.on('removed', (absolutePath, stat) => {
+							var relPath = path.relative(this.model.get('root'), absolutePath)
+							var deletedFile = this.model.getFileByPath(relPath)
 							if (deletedFile) { // todo: 这个sb地方, 有时, 会执行两次
-								me.model.deleteFile(deletedFile)
+								this.model.deleteFile(deletedFile)
 							}
 						})
 					})
@@ -197,7 +204,7 @@ define(function (require) {
 					}, null)
 					this._pathToDomId['.'] = curDomId
 				} else {
-					var dirDomId = this._pathToDomId[file.dirpath()]
+					var dirDomId = this._pathToDomId[file.get('dirpath')]
 					var curDomId = this._fileTree.addFile({
 						label: file.get('name'),
 						isDir: file.get('isDir'),
@@ -206,10 +213,6 @@ define(function (require) {
 					this._pathToDomId[file.get('path')] = curDomId
 				}
 			})
-
-			setTimeout(()=> {
-				console.log(this.model.get('files'))
-			}, 2000)
 
 			this.listenTo(this.model, 'remove:files', function (file) {
 				this._fileTree.deleteFile(this._pathToDomId[file.get('path')])

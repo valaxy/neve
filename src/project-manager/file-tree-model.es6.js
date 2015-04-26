@@ -57,15 +57,23 @@ define(function (require) {
 			return this._add(dir)
 		},
 
+		add2: function (a){
+
+		},
+
 		exist: function (file) {
 			return !!this._pathToModel[file.get('path')]
 		},
+
+
+
 
 		//-----------------------------------------------------------
 		// File System Depend
 		//-----------------------------------------------------------
 
-		/** Rename file or directory */
+		/** Rename file or directory
+		 **/
 		rename: function (file, newName, callback) {
 			fswrap.rename(file.absolutePath(this.get('root')), newName, function (err) {
 				if (err) {
@@ -78,9 +86,15 @@ define(function (require) {
 		},
 
 
+		/** Create file or directory
+		 */
 		createFile: function (file) {
 			var fileAbsPath = file.absolutePath(this.get('root'))
-			fswrap.create(fileAbsPath, file.get('isDir'), () => {
+			fswrap.create(fileAbsPath, file.get('isDir'), (err, stat) => {
+				if (err) {
+					alert(err)
+				}
+				file.set('modifiedTime', stat.mtime)
 				var dirModel = this.getFileByPath(file.get('dirpath'))
 				this.add(file, dirModel) // no trigger anything
 			})
