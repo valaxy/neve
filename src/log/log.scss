@@ -1,6 +1,11 @@
 @charset "utf-8";
 
 log {
+	display:    block;
+	overflow-x: hidden;
+	overflow-y: auto;
+	height:     100%;
+
 	pre {
 		margin: 0;
 	}
