@@ -3,7 +3,6 @@ requirejs.config({
 
 	paths: {
 		'async'                     : 'bower_components/async/lib/async',
-		'uri'                       : 'bower_components/uri.js/src/URI.min',
 		'jquery'                    : 'bower_components/jquery/dist/jquery.min',
 		'jquery-ui'                 : 'bower_components/jquery-ui/jquery-ui.min',
 		'underscore'                : 'bower_components/underscore/underscore-min',
@@ -27,7 +26,8 @@ requirejs.config({
 		'jquery-contextmenu'        : 'bower_components/jquery-contextmenu/contextmenu',
 		'mustache'                  : 'bower_components/mustache/mustache',
 		'stack-analysis'            : 'bower_components/stack-analysis/index',
-		'art-template'              : 'bower_components/artTemplate/dist/template-debug'
+		'art-template'              : 'bower_components/artTemplate/dist/template-debug',
+		'URIjs'                     : 'bower_components/URIjs/src'
 	},
 
 	"valaxy/requirejs-bundle": {

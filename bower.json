@@ -55,7 +55,8 @@
     "cocktail": "~0.5.10",
     "backbone-computedfields": "~0.0.10",
     "underscore": "~1.8.3",
-    "artTemplate": "aui/artTemplate#master"
+    "artTemplate": "aui/artTemplate#master",
+    "URIjs": "~1.15.0"
   },
   "devDependencies": {
     "qunit": "~1.18.0"
