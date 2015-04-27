@@ -54,38 +54,25 @@ body {
 
 // about border
 .everything {
-	.file-tree {
-		border-right: 1px solid $COLOR;
-	}
-	.top-nav {
-		border-bottom: 1px solid $COLOR;
-	}
-	.status-bar {
-		border-top: 1px solid $COLOR;
-	}
-	.explorer {
-		border-right: 1px solid $COLOR;
-	}
-
-	position: absolute;
+	position: absolute; // todo, 不知道这里有什么用
 	z-index:  1;
 }
 
 .everything {
 	.linear[data-direction=row] {
-		> .simple {
+		> .view {
 			border-right: 1px solid #ccc;
 		}
-		> .simple:nth-last-of-type(1) {
+		> .view:nth-last-of-type(1) {
 			border-right: none;
 		}
 	}
 
 	.linear[data-direction=column] {
-		> .simple {
+		> .view {
 			border-bottom: 1px solid #ccc;
 		}
-		> .simple:nth-last-of-type(1) {
+		> .view:nth-last-of-type(1) {
 			border-bottom: none;
 		}
 	}

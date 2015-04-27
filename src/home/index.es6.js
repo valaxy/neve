@@ -8,6 +8,7 @@ define(function (require, exports) {
 	var Loading = require('../loading/index')
 	var fileWatcherLoader = require('../file-watch-api/file-watcher-loader')
 	var stackAnalysis = require('stack-analysis')
+	var log = require('../log/log')
 
 	var pandocPlugin = require('../plugin/pandoc/index')
 	var markdownPlugin = require('../plugin/markdown/index')
@@ -43,6 +44,7 @@ define(function (require, exports) {
 			layout.init()
 			loading.dispose()
 
+
 			fileWatcherLoader.init({
 				projectManager: projectManager
 			})
@@ -51,9 +53,6 @@ define(function (require, exports) {
 				projectManager: projectManager
 			})
 
-			//pandocPlugin.init({
-			//	projectManager: projectManager
-			//})
 
 			//----------------------------------------------------------------
 			// load all plugins
@@ -70,6 +69,8 @@ define(function (require, exports) {
 				location: 'd:/test'
 			}))
 
+			log.init()
+
 
 			// for debug
 			setTimeout(function () {
@@ -78,15 +79,16 @@ define(function (require, exports) {
 				g.fileTree.get('project').set('openFile', file)
 
 				// 状态条弹出
-				$('.status-bar::shadow .views').click()
+				//$('.status-bar::shadow .views').click()
 
 				// 弹出rename框
 				//$($('.file-tree::shadow .jstree a')[1]).trigger('contextmenu')
 				//$('.file-tree::shadow .jstree-contextmenu li:last-child a').click()
 			}, 500)
-
-			//console.log(new Error().stack)
-			//console.log(stackAnalysis())
 		})
 })
 
+
+//pandocPlugin.init({
+//	projectManager: projectManager
+//})

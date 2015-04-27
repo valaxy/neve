@@ -7,6 +7,7 @@ define(function (require, exports) {
 	var html = require('html!./preview')
 	var css = require('style!./preview')
 	var dom = require('../../utility/dom')
+	var log = require('../../log/log')()
 
 
 	exports.init = function (options) {
@@ -47,9 +48,13 @@ define(function (require, exports) {
 				var top = $content[0].scrollTop
 				$content.html(html)
 				$content[0].scrollTop = top
+
+				log.log('markdown render')
 				callback()
 			}
 		})
+
+		//log.log('markdown plugin has been loaded')
 	}
 
 

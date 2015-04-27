@@ -48,6 +48,8 @@ define(function (require, exports) {
 	 **     dispose: function
 	 **     title: null or some no empty string
 	 **     position: 'left' | 'right'(default) | 'bottom'
+	 **     flex: css
+	 **     icon: icon class
 	 */
 	exports.load2 = function (domOrHTML, {
 		dispose = () => {
@@ -82,6 +84,9 @@ define(function (require, exports) {
 		if (this._linearLayout.getViewAt(0) == welcome) {
 			welcome.replaceWith(view)
 		} else {
+			if (title == 'Log') {
+				console.log(this._linearLayout)
+			}
 			this._linearLayout.addViewAtEdge(view, position, {flex: flex})
 		}
 

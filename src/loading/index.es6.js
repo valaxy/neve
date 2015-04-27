@@ -12,7 +12,7 @@ define(function (require) {
 		},
 		dispose: function () {
 			var me = this
-			this.$el.fadeOut(1000, function () {
+			this.$el.fadeOut(500, function () {
 				me.$el.remove()
 			})
 		},
