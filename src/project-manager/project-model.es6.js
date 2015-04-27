@@ -9,29 +9,33 @@ define(function (require) {
 
 	var ProjectModel = propagation.mixin(Backbone.RelationalModel.extend({
 		defaults: {
-			name: '',             // unique identity of project
-			location: '',         // absolute path of local file system
+			name          : '',             // unique identity of project
+			location      : '',         // absolute path of local file system
 			lastOpenedDate: null // opened time
 		},
 
 		relations: [{
 			/** Opened File */
-			type: Backbone.HasOne,
-			key: 'openFile',
-			relatedModel: FileModel,
+			type           : Backbone.HasOne,
+			key            : 'openFile',
+			relatedModel   : FileModel,
 			reverseRelation: {
 				type: Backbone.HasOne
 			}
 		}, {
-			type: Backbone.HasOne,
-			key: 'fileTree',
-			relatedModel: FileTreeModel,
+			type           : Backbone.HasOne,
+			key            : 'fileTree',
+			relatedModel   : FileTreeModel,
 			reverseRelation: {
+				key : 'project',
 				type: Backbone.HasOne
 			}
 		}],
 
-		propagation: 'manager',
+		propagation: {
+			name   : 'project',
+			targets: 'manager'
+		},
 
 		initialize: function () {
 			this._manager = null

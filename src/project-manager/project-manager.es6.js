@@ -6,8 +6,8 @@ define(function (require) {
 	var async = require('async')
 	var Backbone = require('backbone')
 	var Project = require('./project-model')
+	var propagation = require('backbone-event-propagation')
 	require('backbone-relational')
-
 
 
 	/** Events:
@@ -16,13 +16,13 @@ define(function (require) {
 	 **     - openFile: active project open a file
 	 **     - closeFile: active project close a file
 	 */
-	var ProjectManager =Backbone.RelationalModel.extend({
+	var ProjectManager = propagation.mixin(Backbone.RelationalModel.extend({
 		relations: [{
-			key: 'active',
-			type: Backbone.HasOne,
-			relatedModel: Project,
+			key            : 'active',
+			type           : Backbone.HasOne,
+			relatedModel   : Project,
 			reverseRelation: {
-				key: 'manager',
+				key : 'manager',
 				type: Backbone.HasOne
 			}
 		}],
@@ -39,7 +39,7 @@ define(function (require) {
 				}
 			})
 		}
-	})
+	}))
 
 
 	ProjectManager.HistoryMaxCount = 20

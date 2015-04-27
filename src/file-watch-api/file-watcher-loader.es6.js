@@ -105,15 +105,31 @@ define(function (require, exports) {
 	}
 
 	var projectManager
+	var editor
 	exports.init = function (options) {
 		projectManager = options.projectManager
+		editor = options.editor // todo, 这样真的好吗
 
+		// exec when first open file
+		projectManager.listenToPro(projectManager, 'project', 'change:openFile', function () {
+			execWatches(editor.getEditor().getValue(), function (err) {
+				if (err) {
+					console.log(err)
+				}
+			})
+		})
+
+		// exec when editor update
 		editorWatch.on('update', function (allDone, text) {
 			execWatches(text, function (err) {
 				allDone()
 			})
 		})
-		editorWatch.start()
+
+		editorWatch.start({
+			projectManager: projectManager,
+			editor        : editor
+		})
 
 		event.listenTo(projectManager, 'open', (project) => {
 			initForFileTree(project.get('fileTree'))

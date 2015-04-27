@@ -29,8 +29,8 @@ define(function (require, exports) {
 		// add explorer
 		this.load2($('.file-tree'), {
 			position: 'left',
-			flex: '0 300px',
-			title: 'explorer'
+			flex    : '0 300px',
+			title   : 'explorer'
 		})
 	}
 
@@ -84,9 +84,6 @@ define(function (require, exports) {
 		if (this._linearLayout.getViewAt(0) == welcome) {
 			welcome.replaceWith(view)
 		} else {
-			if (title == 'Log') {
-				console.log(this._linearLayout)
-			}
 			this._linearLayout.addViewAtEdge(view, position, {flex: flex})
 		}
 
@@ -96,14 +93,14 @@ define(function (require, exports) {
 			icon: icon
 		})
 		windows.push({
-			model: window,
-			view: view,
+			model  : window,
+			view   : view,
 			dispose: dispose
 		})
 
 		new WindowView({
 			model: window,
-			el: $wrap
+			el   : $wrap
 		})
 
 		return $innerRoot

@@ -32,17 +32,6 @@ define(function (require) {
 			}
 		},
 
-
-		_asyncDone: function (done) {
-			return function (err) {
-				if (err) {
-					done(err)
-				} else {
-					done()
-				}
-			}
-		},
-
 		_createRoot: function () {
 			var model = new FileModel({ // todo, root文件夹没有用stat来标记
 				path : '.',  // current path
@@ -50,10 +39,6 @@ define(function (require) {
 			})
 
 			this.model.addRoot(model)
-		},
-
-		_renameFile: function (file, newName, updateFileSystem, updateModel, updateDom) {
-			// 有点麻烦, 暂时不实现
 		},
 
 		_clearFile: function (updateModel, updateDom) {
@@ -153,7 +138,7 @@ define(function (require) {
 						done()
 					})
 				},
-				(done)=> {
+				(done)=> { // because createMonitor may be deleted by walker mistakly, so create monitor after walk
 					// update when change
 					watch.createMonitor(this.model.get('root'), (monitor) => {
 						monitor.on('created', (absolutePath, stat) => {
@@ -182,12 +167,9 @@ define(function (require) {
 							}
 						})
 					})
-					// update when
 					done()
 				}
-			], function () {
-
-			})
+			])
 		},
 
 		_initModel: function () {

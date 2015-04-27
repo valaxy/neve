@@ -1,6 +1,5 @@
 define(function (require) {
 	var fs = requireNode('fs')
-	var g = require('../home/global')
 	var $ = require('jquery')
 	var ace = require('ace')
 	var loader = require('../loader/index')
@@ -25,13 +24,17 @@ define(function (require) {
 			this.$el.hide()
 		},
 
+		getValue: function () {
+			return this._editor.getValue()
+		},
+
 		initialize: function (options) {
 			this.setElement($(html))
 			dom.appendStyle(this.el, css)
 
 
 			var projectManager = options.projectManager
-			var editor = g.editor = ace.edit(this.$('.ace')[0])
+			var editor = this._editor = ace.edit(this.$('.ace')[0])
 			this._editor = editor
 
 			editor.setTheme("ace/theme/chrome") // this bug

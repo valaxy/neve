@@ -45,12 +45,13 @@ define(function (require, exports) {
 			loading.dispose()
 
 
-			fileWatcherLoader.init({
+			editor.init({
 				projectManager: projectManager
 			})
 
-			editor.init({
-				projectManager: projectManager
+			fileWatcherLoader.init({
+				projectManager: projectManager,
+				editor        : editor
 			})
 
 

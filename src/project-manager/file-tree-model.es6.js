@@ -42,7 +42,7 @@ define(function (require) {
 
 		propagation: {
 			name   : 'file-tree',
-			targets: []
+			targets: 'project'
 		},
 
 
