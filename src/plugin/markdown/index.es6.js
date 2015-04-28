@@ -10,23 +10,7 @@ define(function (require, exports) {
 	var log = require('../../log/log')()
 
 
-	exports.init = function (options) {
-		this._projectManager = options.projectManager
-
-		this._projectManager.on('open', function () {
-			// show view
-		})
-
-		this._projectManager.on('close', function () {
-			// hide view
-		})
-
-
-		// this.listenTo(this._projectManager, '', function(){
-		// }, function() {
-		//    return this._projectManager.active()
-		// })
-
+	exports.init = function () {
 		var $preview = layout.load2(html, {
 			title  : 'Preview',
 			dispose: function () {
