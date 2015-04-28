@@ -1,9 +1,10 @@
 @charset "utf-8";
+@import "../utility/style";
+
 $COLOR: #aaa;
 
 :host {
-	display:  block;
-	position: relative;
+	@include host;
 }
 
 //::-webkit-scrollbar {
@@ -29,11 +30,11 @@ $COLOR: #aaa;
 	.ace_content {
 		//	//overflow-x: hidden;
 		//	//overflow-y: hidden;
-		//	position:   absolute;
-		//	top:        0;
-		//	bottom:     0;
-		//	left:       0;
-		//	right:      0;
-		min-height: 100%;
+		//position:   absolute;
+		//top:        0;
+		//bottom:     0;
+		//left:       0;
+		//right:      0;
+		//min-height: 100%;
 	}
 }

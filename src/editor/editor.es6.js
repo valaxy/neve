@@ -41,7 +41,7 @@ define(function (require) {
 			editor.getSession().setMode("ace/mode/markdown")
 			//editor.renderer.setShowGutter(false)
 			//editor.setOptions({
-			//	maxLines: Infinity
+			//	maxLines: 50
 			//});
 
 			// fix about ace editor-------------------------------------

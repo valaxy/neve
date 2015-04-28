@@ -1,4 +1,9 @@
 @charset "utf-8";
+@import "../utility/style";
+
+:host {
+	@include host;
+}
 
 log {
 	display:    block;
