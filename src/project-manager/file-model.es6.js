@@ -23,9 +23,10 @@ define(function (require) {
 			return {
 				id          : id(),
 				path        : '',        // relative path of root, '.' or something2
-				isDir       : true,    // if it is a directory
-				isOpen      : false,   // if it is opend by editor, multiply files can be opend at same time, imply or exply
-				modifiedTime: null
+				isDir       : true,     // if it is a directory
+				isOpen      : false,    // if it is opend by editor, multiply files can be opend at same time, imply or exply
+				modifiedTime: null,
+				value       : null      // text in the editor
 			}
 		},
 
@@ -138,7 +139,7 @@ define(function (require) {
 
 		propagation: {
 			name   : 'file',
-			targets: 'tree'
+			targets: 'openedProject'
 		},
 
 		initialize: function () {
@@ -183,8 +184,13 @@ define(function (require) {
 			}
 		},
 
-		modify: function (stat) {
-			this.set('modifiedTime', stat.mtime)
+		modify: function (stat, value) {
+			if (stat) {
+				this.set('modifiedTime', stat.mtime)
+			}
+			if (typeof value == 'string') {
+				this.set('value', value)
+			}
 			this.trigger('modify')
 		}
 	})

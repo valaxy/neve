@@ -76,7 +76,7 @@ define(function (require, exports) {
 			setTimeout(function () {
 				// 打开文件
 				var file = projectManager.active().getFileByPath('readme.md')
-				projectManager.active().set('openFile', file)
+				projectManager.active().changeOpenFile(file)
 
 				// 状态条弹出
 				//$('.status-bar::shadow .views').click()

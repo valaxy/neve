@@ -11,7 +11,7 @@ define(function (require, exports) {
 
 
 	var watchers = []
-	var event = _.extend({}, Backbone.Events, propagation.mixin())
+	var lis = _.extend({}, Backbone.Events, propagation.mixin())
 
 
 	/** options:
@@ -46,17 +46,6 @@ define(function (require, exports) {
 	}
 
 
-	// 执行手表
-	// @depreted
-	var execWatches = function (text, callback) {
-		async.eachSeries(watchers, function (watcher, done) {
-			if (watcher.script) {
-				watcher.script(text, done)
-			}
-		}, callback)
-	}
-
-
 	var buildShellCmd = function (watcher) {
 		var cmd = watcher.program + ' ' + watcher.arguments.join(' ')
 		return cmd
@@ -64,7 +53,7 @@ define(function (require, exports) {
 
 
 	// execute the watcher
-	var execWatch2 = function (watcher, file, done) {
+	var execWatch = function (watcher, file, done) {
 		if (watcher.script) {
 			watcher.script(file, done)
 		} else { // program
@@ -85,10 +74,10 @@ define(function (require, exports) {
 		}
 	}
 
-	var execWatches2 = function (file, callback) {
+	var execWatches = function (file, callback) {
 		async.eachSeries(watchers, function (watcher, done) {
 			if (!watcher.filter || minimatch(file.get('path'), watcher.filter)) {
-				execWatch2(watcher, file, done)
+				execWatch(watcher, file, done)
 			} else {
 				done()
 			}
@@ -96,23 +85,14 @@ define(function (require, exports) {
 	}
 
 
-	var initForProject = function (project) {
-		event.listenToPro(project, 'file', 'modify', function (e) {
-			execWatches2(e.file, function () {
-				console.log('all is done')
-			})
-		})
-	}
-
 	var projectManager
-	var editor
 	exports.init = function (options) {
 		projectManager = options.projectManager
-		editor = options.editor // todo, 这样真的好吗
+		var editor = options.editor // todo, 这样真的好吗
 
 		// exec when first open file
-		projectManager.listenToPro(projectManager, 'project', 'change:openFile', function () {
-			execWatches(editor.getEditor().getValue(), function (err) {
+		lis.listenToPro(projectManager, 'project', 'change:openFile', function (project, file) {
+			execWatches(file, function (err) {
 				if (err) {
 					console.log(err)
 				}
@@ -120,19 +100,20 @@ define(function (require, exports) {
 		})
 
 		// exec when editor update
-		editorWatch.on('update', function (allDone, text) {
-			execWatches(text, function (err) {
-				allDone()
+		lis.listenToPro(projectManager, 'file project', 'modify', function (e) { // todo, file project?????
+			execWatches(e.file, function (err) {
+				if (err) {
+					console.log(err)
+				}
+				console.log('all is done')
 			})
 		})
 
+
+		// todo, 不应该放在这里
 		editorWatch.start({
 			projectManager: projectManager,
 			editor        : editor
-		})
-
-		event.listenTo(projectManager, 'open', (project) => {
-			initForProject(project)
 		})
 	}
 

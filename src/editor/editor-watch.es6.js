@@ -25,6 +25,7 @@ define(function (require, exports) {
 			immediate: true,
 			task     : function () {
 				var value = editor.getEditor().getValue()
+
 				if (lastValue === undefined) { // no open file
 					this.next()
 					return
@@ -39,7 +40,10 @@ define(function (require, exports) {
 					return
 				}
 				lastValue = value
-				me.trigger('update', done, value)
+				var file = projectManager.active().get('openFile')
+				file.modify(null, value)
+				this.next()
+				//me.trigger('update', done, file)
 			}
 		})
 

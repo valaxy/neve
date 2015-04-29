@@ -26,12 +26,17 @@ define(function (require) {
 		}
 	}
 
+	var getTime = function () {
+		var now = new Date
+		return '[' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ']'
+	}
+
 	Build.prototype.log = function (msg) {
-		view.append('[' + this._name + '] ' + msg)
+		view.append('[' + this._name + '] ' + getTime() + ' ' + msg)
 	}
 
 	Build.prototype.error = function (msg) {
-		view.append('[' + this._name + '] ' + msg)
+		view.append('[' + this._name + '] ' + getTime() + ' ' + msg)
 	}
 
 	var api = function () {

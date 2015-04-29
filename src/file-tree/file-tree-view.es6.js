@@ -27,7 +27,7 @@ define(function (require) {
 		_pathToDomId: {},
 
 		events: {
-			openFile: function (event, file) {
+			openFile: function (event, file) { // todo, 这里的file真的是domain file吗
 				this.model.set('openFile', file)
 			}
 		},

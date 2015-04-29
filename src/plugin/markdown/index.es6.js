@@ -23,10 +23,10 @@ define(function (require, exports) {
 		fileWatcherLoader.load({
 			name       : 'markdown',
 			description: 'compile markdown to html',
-			filter     : 'xxxxxxxxxxxyyyy', // 暂时禁用它的功能调试用
-			script     : (input, callback) => {
+			filter     : '*.md',
+			script     : (file, callback) => {
 				var $content = $preview.find('.content')
-				var html = markdown(input)
+				var html = markdown(file.get('value'))
 
 				// recover the scroll postion
 				var top = $content[0].scrollTop

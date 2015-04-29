@@ -22,6 +22,7 @@ define(function (require) {
 			key            : 'openFile',
 			relatedModel   : FileModel,
 			reverseRelation: {
+				key: 'openedProject',
 				type: Backbone.HasOne
 			}
 		}, {
@@ -48,15 +49,13 @@ define(function (require) {
 		},
 
 		initialize: function () {
-			this._manager = null
 			this._pathToModel = {} // path -> model
-			var me = this
-			this.on('change:openFile', function (project, file) {
-				if (file) {
-					me._manager.trigger('closeFile', project, file)
-				}
-				me._manager.trigger('openFile', project, file)
-			})
+			//this.on('change:openFile', function (project, file) {
+			//	if (file) {
+			//		me._manager.trigger('closeFile', project, file)
+			//	}
+			//	me._manager.trigger('openFile', project, file)
+			//})
 
 
 			this.listenTo(this, 'add:files', function (file) {
@@ -74,6 +73,21 @@ define(function (require) {
 		//		}
 		//	})
 		//},
+
+
+		changeOpenFile: function (file) {
+			if (file) {
+				this.trigger('closeFile', this, file)
+			}
+			fswrap.readFile(file.absolutePath(), (err, data)=> {
+				if (err) {
+					console.error(err)
+				}
+				file.set('value', data + '')
+				this.set('openFile', file)
+				this.trigger('openFile', this, file)
+			})
+		},
 
 
 		/** Return a file the match the relative path */
