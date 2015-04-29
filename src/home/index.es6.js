@@ -1,7 +1,6 @@
 define(function (require, exports) {
 	//var nodegit = requireNode('nodegit')
 
-	var g = require('./global')
 	var layout = require('../window/layout')
 	var ProjectManager = require('../project-manager/project-manager')
 	var ProjectModel = require('../project-manager/project-model')
@@ -23,7 +22,7 @@ define(function (require, exports) {
 
 
 	var loading = new Loading
-	var projectManager = g.projectManager = new ProjectManager
+	var projectManager = new ProjectManager
 
 	$.when(
 		loader.load('../status-bar/view').done(function (StatusBarView) {
@@ -34,11 +33,11 @@ define(function (require, exports) {
 				projectManager: projectManager
 			})
 		}),
-		loader.load('../file-tree/file-tree-view', '../project-manager/file-tree-model').done(function (FileTreeView, FileTreeModel) {
-			g.fileTree = (new FileTreeView({
-				model         : new FileTreeModel,
+		loader.load('../file-tree/file-tree-view').done(function (FileTreeView) {
+			new FileTreeView({
+				//model         : new FileTreeModel,
 				projectManager: projectManager
-			})).model
+			})
 		})
 	).done(function () {
 			layout.init()
@@ -76,8 +75,8 @@ define(function (require, exports) {
 			// for debug
 			setTimeout(function () {
 				// 打开文件
-				var file = g.fileTree.getFileByPath('readme.md')
-				g.fileTree.get('project').set('openFile', file)
+				var file = projectManager.active().getFileByPath('readme.md')
+				projectManager.active().set('openFile', file)
 
 				// 状态条弹出
 				//$('.status-bar::shadow .views').click()

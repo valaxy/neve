@@ -28,7 +28,7 @@ define(function (require) {
 
 		events: {
 			openFile: function (event, file) {
-				this.model.get('project').set('openFile', file)
+				this.model.set('openFile', file)
 			}
 		},
 
@@ -53,7 +53,7 @@ define(function (require) {
 
 		_openFile: function (file, updateModel, updateDom) {
 			if (updateModel) {
-				this.model.get('project').set('openFile', file)
+				this.model.set('openFile', file)
 			}
 			if (updateDom) {
 				var domId = this._pathToDomId[file.get('path')]
@@ -172,7 +172,9 @@ define(function (require) {
 			])
 		},
 
-		_initModel: function () {
+		_initModel: function (model) {
+			this.model = model
+
 			this.listenTo(this.model, 'add:files', function (file) {
 				var fileAbsPath = file.absolutePath(this.model.get('root'))
 				if (file.get('path') == '.') {
@@ -197,9 +199,6 @@ define(function (require) {
 				this._fileTree.deleteFile(this._pathToDomId[file.get('path')])
 			})
 
-			this.listenTo(this.model.get('project'), 'change:openFile', function (file) {
-			})
-
 
 			// change file name
 			this.listenTo(this.model, 'change:name', function (file, name, options, source) {
@@ -219,15 +218,13 @@ define(function (require) {
 			this._$jstree = this.$('.jstree')
 			this._init()
 
-			this._projectManager.on('open', (project) => {
-				this.model.set('root', project.get('location'))
-				this.model.set('project', project)
-				project.set('fileTree', this.model)
-				this._initModel()
+			this.listenTo(this._projectManager, 'open', (project) => {
+				project.set('root', project.get('location')) // todo, 这行代码不需要
+				this._initModel(project)
 				this._initWatch()
 			})
 
-			this._projectManager.on('close', () => {
+			this.listenTo(this._projectManager, 'close', () => {
 				this.stopListening()
 				watch.unwatchTree(this.model.get('root'))
 				this._clearFile(true, true)

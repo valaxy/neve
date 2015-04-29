@@ -75,7 +75,7 @@ define(function (require, exports) {
 
 			// execute program in child process
 			childProcess.exec(cmd, {
-				cwd: projectManager.active().get('fileTree').get('root')
+				cwd: projectManager.active().get('root')
 			}, function (err, stdout, stderr) {
 				if (err) {
 					console.error(err)
@@ -96,8 +96,8 @@ define(function (require, exports) {
 	}
 
 
-	var initForFileTree = function (fileTree) {
-		event.listenToPro(fileTree, 'file', 'modify', function (e) {
+	var initForProject = function (project) {
+		event.listenToPro(project, 'file', 'modify', function (e) {
 			execWatches2(e.file, function () {
 				console.log('all is done')
 			})
@@ -132,7 +132,7 @@ define(function (require, exports) {
 		})
 
 		event.listenTo(projectManager, 'open', (project) => {
-			initForFileTree(project.get('fileTree'))
+			initForProject(project)
 		})
 	}
 
