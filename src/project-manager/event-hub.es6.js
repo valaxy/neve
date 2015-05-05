@@ -6,7 +6,7 @@ define(function (require) {
 	/**
 	 ** Events:
 	 **     file:
-	 **         open:
-	 **         close:
+	 **         open(file, project):
+	 **         close(file, project):
 	 */
 })

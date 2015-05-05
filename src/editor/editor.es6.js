@@ -62,8 +62,8 @@ define(function (require) {
 			// check: https://github.com/Juicy/juicy-ace-editor/pull/3
 			var session = editor.getSession()
 			session.on('changeMode', function () {
-				var mode = session.getMode()
-				console.log(mode)
+				//var mode = session.getMode()
+				//console.log(mode)
 			})
 
 			editor.renderer.addEventListener("themeLoaded", (e) => { // todo, 可以在load之前劫持吗?

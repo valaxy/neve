@@ -8,7 +8,8 @@ define(function (require) {
 	var utility = require('../utility/utility')
 	var fswrap = require('../file-system/fs-wrap')
 	var hub = require('./event-hub')
-
+	var ProjectSetting = require('./project-setting')
+	var _ = require('underscore')
 
 	/** Events:
 	 **     openFile:  open a file
@@ -19,11 +20,14 @@ define(function (require) {
 		// 工程配置文件目录这条领域信息还是决定从ProjectManger转移到Project
 		CONFIG_DIR_NAME: '.neve',
 
-		defaults: {
-			name          : '',             // unique identity of project
-			location      : '',         // absolute path of local file system
-			lastOpenedDate: null, // opened time
-			root          : '' // absolute path of file system
+		defaults: function () {
+			return {
+				name          : '', // unique identity of project
+				location      : '', // absolute path of local file system
+				lastOpenedDate: null, // opened time
+				root          : '', // absolute path of file system
+				setting       : null
+			}
 		},
 
 		relations: [{
@@ -60,6 +64,7 @@ define(function (require) {
 
 		initialize: function () {
 			this._pathToModel = {} // path -> model
+			this.set('setting', ProjectSetting.create(this))
 
 			this.listenTo(this, 'add:files', function (file) {
 				this.trigger('addFile', file)
@@ -89,6 +94,11 @@ define(function (require) {
 				}
 				file.set('value', data + '')
 				this.set('openFile', file)
+
+				var opendFiles = _.clone(this.get('setting').get('opendFiles'))
+				opendFiles.push(file.get('path'))
+				this.get('setting').set('opendFiles', opendFiles)
+
 				hub.trigger('file:open', file)
 				this.trigger('openFile', this, file)
 			})
