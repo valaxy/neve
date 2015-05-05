@@ -1,5 +1,5 @@
 define(function (require) {
-	var path = require('path')
+	var path = requireNode('path') // todo, 换成require('path'), 因为不能智能识别\\的问题
 	var id = require('../utility/id')
 	var Backbone = require('backbone')
 	var propagation = require('backbone-event-propagation')

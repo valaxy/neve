@@ -61,7 +61,7 @@ define(function (require, exports) {
 				projectManager: projectManager
 			})
 			scssPlugin.init()
-			jadePlugin.init()
+			//jadePlugin.init()
 
 
 			projectManager.open(new ProjectModel({

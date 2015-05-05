@@ -9,6 +9,10 @@ define(function (require) {
 	var fswrap = require('../file-system/fs-wrap')
 
 	var ProjectModel = propagation.mixin(Backbone.RelationalModel.extend({
+		// @设计决策
+		// 工程配置文件目录这条领域信息还是决定从ProjectManger转移到Project
+		CONFIG_DIR_NAME: '.neve',
+
 		defaults: {
 			name          : '',             // unique identity of project
 			location      : '',         // absolute path of local file system
@@ -22,7 +26,7 @@ define(function (require) {
 			key            : 'openFile',
 			relatedModel   : FileModel,
 			reverseRelation: {
-				key: 'openedProject',
+				key : 'openedProject',
 				type: Backbone.HasOne
 			}
 		}, {
@@ -172,7 +176,7 @@ define(function (require) {
 
 		_add: function (file) {
 			if (file.get('path') in this._pathToModel) {
-				console.log('file that has path of "' + file.get('path') + '" exist')
+				console.warn('file that has path of "' + file.get('path') + '" exist')
 				return file.cid
 			}
 			this._pathToModel[file.get('path')] = file

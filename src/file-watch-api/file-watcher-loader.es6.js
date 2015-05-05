@@ -43,6 +43,7 @@ define(function (require, exports) {
 		workingDir       : ''
 	}) {
 		watchers.push(options)
+		console.log('load ' + options.name)
 	}
 
 

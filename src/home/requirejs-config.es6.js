@@ -2,6 +2,7 @@ requirejs.config({
 	baseUrl: '../../',
 
 	paths: {
+		// required lib
 		'async'                     : 'bower_components/async/lib/async',
 		'jquery'                    : 'bower_components/jquery/dist/jquery.min',
 		'jquery-ui'                 : 'bower_components/jquery-ui/jquery-ui.min',
@@ -28,6 +29,15 @@ requirejs.config({
 		'stack-analysis'            : 'bower_components/stack-analysis/index',
 		'art-template'              : 'bower_components/artTemplate/dist/template-debug',
 		'URIjs'                     : 'bower_components/URIjs/src'
+
+		// neve api
+
+	},
+
+	"map": {
+		'*': {
+			'file-watch': 'src/file-watch-api/file-watcher-loader'
+		}
 	},
 
 	"valaxy/requirejs-bundle": {

@@ -7,8 +7,10 @@ define(function (require) {
 	var Backbone = require('backbone')
 	var Project = require('./project-model')
 	var propagation = require('backbone-event-propagation')
+	var PluginManager = require('./plugin-manager')
 	require('backbone-relational')
 
+	const BASEDIR = '.neve'
 
 	/** Events:
 	 **     - open: open a project
@@ -28,6 +30,8 @@ define(function (require) {
 		}],
 
 		initialize: function () {
+			this._pluginManager = new PluginManager
+
 			this._set = new Set(function (p1, p2) {
 				// some may not has open time
 				if (p1.get('lastOpenedDate') && p2.get('lastOpenedDate')) {
@@ -69,6 +73,23 @@ define(function (require) {
 		})
 	}
 
+	ProjectManager.prototype._createBaseDir = function (project, callback) {
+		var baseDir = path.join(project.get('location'), BASEDIR)
+		fs.exists(baseDir, (exist) => {
+			if (!exist) {
+				fs.mkdir(baseDir, function (err) {
+					if (err) {
+						throw new Error(err)
+					}
+					callback()
+				})
+			} else {
+				console.warn(BASEDIR + ' exist')
+				callback()
+			}
+		})
+	}
+	
 
 	/** Open the project in neve, and trigger a `open` event,
 	 ** only one project can active at the same time
@@ -88,8 +109,11 @@ define(function (require) {
 		this._set.add(project)
 
 		// set active
-		this.set('active', project)
-		this.trigger('open', project)
+		this._createBaseDir(project, ()=> {
+			this._pluginManager.init(project)
+			this.set('active', project)
+			this.trigger('open', project)
+		})
 	}
 
 
