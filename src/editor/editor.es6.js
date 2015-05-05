@@ -1,6 +1,7 @@
 define(function (require) {
 	var fs = requireNode('fs')
 	var $ = require('jquery')
+	var Backbone = require('backbone')
 	//var ace = require('ace')
 	var loader = require('../loader/index')
 	var autoSave = require('./plugin/auto-save')
@@ -9,8 +10,16 @@ define(function (require) {
 	var html = require('html!./index')
 	var css = require('style!./index')
 
+	var propagation = require('backbone-event-propagation')
+	var hub = require('../project-manager/event-hub')
 
-	var Editor = Backbone.View.extend({
+
+	const EXTENSION_TO_MODE = {
+		js: 'javascript',
+		md: 'markdown'
+	}
+
+	var Editor = propagation.mixin(Backbone.View.extend({
 		_onOpenFile: function (project, file) {
 			this.$el.show()
 			var content = fs.readFileSync(file.absolutePath(project.get('location')), {
@@ -43,8 +52,7 @@ define(function (require) {
 			this._editor = editor
 
 
-			editor.setTheme("ace/theme/chrome") // this bug
-			//editor.getSession().setMode("ace/mode/markdown")
+			editor.setTheme("ace/theme/chrome")
 			//editor.renderer.setShowGutter(false)
 			//editor.setOptions({
 			//	maxLines: 50
@@ -72,7 +80,6 @@ define(function (require) {
 			editor.getSession().setUseWorker(useWebWorker);
 
 			//#region not relevant to tern, just some deafults I prefer
-			editor.session.setMode("ace/mode/javascript");
 			editor.getSession().setUseWrapMode(true);
 			editor.getSession().setWrapLimitRange(null, null);
 			editor.setShowPrintMargin(false);
@@ -167,30 +174,31 @@ define(function (require) {
 			//-----------------------------------------------------------
 
 
-			// fix about ace editor-------------------------------------
+			// set content
+			this.listenTo(hub, 'file:open', (file) => {
+				var content = fs.readFileSync(file.absolutePath(), {
+					encoding: 'utf-8'
+				})
+				this._editor.setValue(content)
+			})
 
-			// fix about css
-			setTimeout(() => {
 
-				//this.el.appendChild(style5)
-			}, 2000)
-			// fix about ace editor-------------------------------------
-
-
-			// bind event when open a file in project
-			projectManager.on('openFile', (project, file) => {
-				if (file) {
-					this._onOpenFile(project, file)
+			// set mode
+			this.listenTo(hub, 'file:open', function (file) {
+				var extension = file.get('extension')
+				if (extension) {
+					this._editor.getSession().setMode('ace/mode/' + EXTENSION_TO_MODE[extension])
 				} else {
-					this._onCloseFile(project, file)
+					console.warn('no extension')
 				}
 			})
+
 
 			autoSave.init({
 				projectManager: projectManager
 			})
 		}
-	})
+	}))
 
 	return Editor
 })

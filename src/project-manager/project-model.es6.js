@@ -7,7 +7,13 @@ define(function (require) {
 	require('backbone-relational')
 	var utility = require('../utility/utility')
 	var fswrap = require('../file-system/fs-wrap')
+	var hub = require('./event-hub')
 
+
+	/** Events:
+	 **     openFile:  open a file
+	 **     closeFile: close a file
+	 */
 	var ProjectModel = propagation.mixin(Backbone.RelationalModel.extend({
 		// @设计决策
 		// 工程配置文件目录这条领域信息还是决定从ProjectManger转移到Project
@@ -54,13 +60,6 @@ define(function (require) {
 
 		initialize: function () {
 			this._pathToModel = {} // path -> model
-			//this.on('change:openFile', function (project, file) {
-			//	if (file) {
-			//		me._manager.trigger('closeFile', project, file)
-			//	}
-			//	me._manager.trigger('openFile', project, file)
-			//})
-
 
 			this.listenTo(this, 'add:files', function (file) {
 				this.trigger('addFile', file)
@@ -82,6 +81,7 @@ define(function (require) {
 		changeOpenFile: function (file) {
 			if (file) {
 				this.trigger('closeFile', this, file)
+				hub.trigger('file:close', file)
 			}
 			fswrap.readFile(file.absolutePath(), (err, data)=> {
 				if (err) {
@@ -89,6 +89,7 @@ define(function (require) {
 				}
 				file.set('value', data + '')
 				this.set('openFile', file)
+				hub.trigger('file:open', file)
 				this.trigger('openFile', this, file)
 			})
 		},

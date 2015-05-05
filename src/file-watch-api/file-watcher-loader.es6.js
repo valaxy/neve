@@ -106,7 +106,6 @@ define(function (require, exports) {
 				if (err) {
 					console.log(err)
 				}
-				console.log('all is done')
 			})
 		})
 

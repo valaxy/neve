@@ -8,7 +8,12 @@ define(function (require) {
 	require('backbone-computedfields')
 
 
-	/** File or Directory */
+	/** File or Directory
+	 ** Events:
+	 **     open:
+	 **     close:
+	 **     modify:
+	 */
 	var FileModel = propagation.mixin(Backbone.RelationalModel.extend({}, {
 		createByStat: function (path, stat) {
 			return new FileModel({
