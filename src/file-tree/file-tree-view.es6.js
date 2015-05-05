@@ -28,7 +28,7 @@ define(function (require) {
 
 		events: {
 			openFile: function (event, file) { // todo, 这里的file真的是domain file吗
-				this.model.set('openFile', file)
+				this.model.changeOpenFile(file)
 			}
 		},
 
@@ -118,11 +118,14 @@ define(function (require) {
 			async.series([
 				(done)=> {
 					watch2.walkAllFiles(me.model.get('root'), {
-						filter: function (absolutePath, stat) {
-							return !/\.git/.test(absolutePath)
-								&& !/__pycache__/.test(absolutePath)
-								&& !/\.idea/.test(absolutePath)
-							//return stat.isDirectory() || /.*\.md/.test(absolutePath) // only add *.md
+						filter: (absolutePath, stat)=> {
+							for (var i = 0; i < this._filters.length; i++) {
+								var filter = this._filters[i]
+								if (filter.text(absolutePath)) {
+									return false
+								}
+							}
+							return true
 						}
 					}, function (files) {
 						me._createRoot(me.model.get('root'))
@@ -209,7 +212,9 @@ define(function (require) {
 			})
 		},
 
-		initialize: function (options) {
+		initialize: function (options = {}) {
+			this._filters = options.filters || [] // regexp
+
 			var root = loader.loadDom('file-tree', html)
 			this.setElement($(root).find('.file-tree'))
 			dom.appendStyle(root, css)

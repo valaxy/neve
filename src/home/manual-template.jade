@@ -7,7 +7,6 @@ html
             title 界面组件手工测试
         // shadow dom 的字体机制还有待研究, 为了使font生效, 只能暂时把字体放在这里
         link(rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css")
-        //link(rel="stylesheet" href="../../bower_components/jquery-ui/themes/blitzer/jquery-ui.min.css")
 
         // This is about link
         block link
@@ -22,7 +21,9 @@ html
 
         // This components can not package them to AMD for now
         //script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,file:///c:/project/neve/src/mathjax-config/config")
-        script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+        //script(src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+        script(src="../../bower_components/Ace.Tern/ace-builds/src-noconflict/ace.js")
+        script(src="../../bower_components/ace-shim-about-shadow-dom/ace-shim.js")
 
         // startup
         script(src="../../bower_components/requirejs/require.js")

@@ -56,7 +56,9 @@
     "backbone-computedfields": "~0.0.10",
     "underscore": "~1.8.3",
     "artTemplate": "aui/artTemplate#master",
-    "URIjs": "~1.15.0"
+    "URIjs": "~1.15.0",
+    "Ace.Tern": "sevin7676/Ace.Tern",
+    "ace-shim-about-shadow-dom": "valaxy/ace-shim-about-shadow-dom"
   },
   "devDependencies": {
     "qunit": "~1.18.0"

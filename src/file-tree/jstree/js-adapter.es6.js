@@ -13,11 +13,11 @@ define(function (require) {
 
 		initContextMenu: function (fn) {
 			this._$root.jstree({
-				core: {
+				core       : {
 					check_callback: true
 				},
-				types: {
-					file: {
+				types      : {
+					file     : {
 						icon: 'fa fa-file-o'
 					},
 					directory: {
@@ -27,9 +27,9 @@ define(function (require) {
 				contextmenu: {
 					items: function (node) {
 						var items = fn({
-							id: node.id,
+							id   : node.id,
 							isDir: node.type == 'directory',
-							data: node.data
+							data : node.data
 						})
 
 						var keys = _.map(items, function (item, index) {
@@ -38,7 +38,7 @@ define(function (require) {
 
 						var values = _.map(items, function (item) {
 							return {
-								label: item.label,
+								label : item.label,
 								action: item.action
 							}
 						})
@@ -46,7 +46,7 @@ define(function (require) {
 						return _.object(keys, values)
 					}
 				},
-				plugins: ['types', 'wholerow', 'contextmenu']
+				plugins    : ['types', 'wholerow', 'contextmenu']
 			})
 
 			// 不知道为什么不能把这里的事件绑定放到events选项里
@@ -70,8 +70,8 @@ define(function (require) {
 			$(document).on('context_show.vakata', (e, data) => {
 				this._$root.parent().append(data.element.css({
 					display: 'block',
-					left: data.reference[0].offsetLeft + 'px',
-					top: data.reference[0].offsetTop + 'px'
+					left   : data.reference[0].offsetLeft + 'px',
+					top    : data.reference[0].offsetTop + 'px'
 				})) // show fix
 
 				// fix about click don't work
@@ -90,11 +90,17 @@ define(function (require) {
 			this._jstree = this._$root.jstree()  // jstree control handler
 		},
 
+		$file: function (id) {
+			var node = this._jstree.get_node(id)
+			console.log(node)
+			return node
+		},
+
 		addFile: function (file, parentId, callback) {
 			var domId = this._jstree.create_node(parentId, {
-				data: file.data,
-				text: file.label,
-				type: file.isDir ? 'directory' : 'file',
+				data : file.data,
+				text : file.label,
+				type : file.isDir ? 'directory' : 'file',
 				state: {
 					opened: true
 				}
@@ -119,11 +125,11 @@ define(function (require) {
 		getFile: function (id) {
 			var node = this._jstree.get_node(id)
 			return {
-				id: node.id,
+				id   : node.id,
 				label: node.text,
-				icon: node.icon,
+				icon : node.icon,
 				isDir: node.type == 'directory',
-				data: node.data
+				data : node.data
 			}
 		},
 

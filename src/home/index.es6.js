@@ -75,7 +75,7 @@ define(function (require, exports) {
 			// for debug
 			setTimeout(function () {
 				// 打开文件
-				var file = projectManager.active().getFileByPath('readme.md')
+				var file = projectManager.active().getFileByPath('test.js')
 				projectManager.active().changeOpenFile(file)
 
 				// 状态条弹出
