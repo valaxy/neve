@@ -1,4 +1,0 @@
-Tab
-- add(name)
-- select()
-- 

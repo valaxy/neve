@@ -4,14 +4,9 @@ define(function (require) {
 	var itemTemplate = require('html!./tab-template')
 	var $ = require('jquery')
 
-
 	// Tab
 	var TabView = Backbone.View.extend({
 		initialize: function () {
-			//this.listenTo(this.model.get('file'), 'change:file', function () {
-			//
-			//})
-
 			this.render()
 		},
 

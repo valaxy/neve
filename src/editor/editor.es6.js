@@ -19,7 +19,12 @@ define(function (require) {
 		md: 'markdown'
 	}
 
-	var Editor = propagation.mixin(Backbone.View.extend({
+	var EditorView = propagation.mixin(Backbone.View.extend({
+		events     : {
+			'click tab': function (e) {
+				//this._tab.active($(e.currentTarget))
+			}
+		},
 		_onOpenFile: function (project, file) {
 			this.$el.show()
 			var content = fs.readFileSync(file.absolutePath(project.get('location')), {
@@ -39,6 +44,7 @@ define(function (require) {
 
 		initialize: function (options) {
 			var me = this
+			this.model = new (require('./model/editor'))
 			this.setElement($(html))
 			dom.appendStyle(this.el, css)
 
@@ -183,12 +189,14 @@ define(function (require) {
 
 
 			// This is about tabs
-			var editorTabView = new (require('./editor-tab/view'))
+			var editorTabView = new (require('./tabs/view'))
 			this.$('.ace').before(editorTabView.el)
+
+
 		}
 	}))
 
-	return Editor
+	return EditorView
 })
 
 

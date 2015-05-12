@@ -10,19 +10,21 @@ define(function (require, exports) {
 		var lis = hub.createListener()
 		aceShim.init()
 
-		lis.listenTo(hub, 'file:open', function (file) {
-			editorView = new EditorView({
-				projectManager: projectManager
-			})
+		editorView = new EditorView({
+			projectManager: projectManager
+		})
 
-			layout.load2(editorView.el, {
-				title  : 'Editor',
-				icon   : 'fa fa-paragraph',
-				flex   : '1',
-				dispose: function () {
-					console.log('should dispose me')
-				}
-			})
+		layout.load2(editorView.el, {
+			title  : 'Editor',
+			icon   : 'fa fa-paragraph',
+			flex   : '1',
+			dispose: function () {
+				console.log('should dispose me')
+			}
+		})
+
+		lis.listenTo(hub, 'file:open', function (file) {
+
 		})
 
 	}
