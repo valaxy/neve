@@ -16,7 +16,6 @@ define(function (require) {
 			this.render()
 
 			this.listenTo(this.model, 'destroy', function () {
-				this.$el.parent().remove()
 				this.remove()
 			})
 		},

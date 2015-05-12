@@ -3,16 +3,18 @@ define(function (require, exports) {
 	var layout = require('../window/layout')
 	var dom = require('../utility/dom')
 	var hub = require('../project-manager/event-hub')
-	var editorView
+
+	var editorViews = []
 
 	exports.init = function (options) {
 		var projectManager = options.projectManager
 		var lis = hub.createListener()
 		aceShim.init()
 
-		editorView = new EditorView({
+		var editorView = new EditorView({
 			projectManager: projectManager
 		})
+		editorViews.push(editorView)
 
 		layout.load2(editorView.el, {
 			title  : 'Editor',
@@ -32,6 +34,6 @@ define(function (require, exports) {
 
 	/** ACE editro */
 	exports.getEditor = function () {
-		return editorView._editor
+		return editorViews[0]._editor
 	}
 })

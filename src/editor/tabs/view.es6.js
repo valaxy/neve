@@ -25,13 +25,16 @@ define(function (require) {
 				this.model.set('active', tab)
 			})
 
+			this.listenTo(this.model, 'remove:tabs', function (tab) {
+				tabUI.active(tabUI.getAt(0))
+			})
+
 			this.listenTo(this.model, 'change:active', function (editor, activeTab) {
 				if (activeTab) {
 					var index = this.model.indexOf(activeTab)
 					tabUI.active(tabUI.getAt(index))
 				}
 			})
-
 
 			this.listenTo(hub, 'file:open', function (file) {
 				var tab = new TabModel({file: file})
