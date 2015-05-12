@@ -5,42 +5,41 @@ define(function (require) {
 	var TabView = require('./tab-view')
 	var TabModel = require('../model/tab')
 	var Editor = require('../model/editor')
+	var dom = require('../../utility/dom')
 
 	var EditorTabView = Backbone.View.extend({
-		events    : {
-			'click tab': function () {
-
-			},
-
-			'click .close': function () {
-				//var $li = $(this).parent()
-				//var $ul = $li.parent()
-				//var index = $ul[0].indexOf($li[0])
-				//this.model.get('tabs').at(index).closeFile()
+		events: {
+			'click tab': function (e) {
+				var index = dom.orderInParent(e.currentTarget)
+				this.model.set('active', this.model.get('tabs').at(index))
 			}
 		},
+
 		initialize: function () {
-			var tabUI = this._tabUI = new TabUI
+			var tabUI = new TabUI
 			this.setElement(tabUI.$dom)
 			this.model = new Editor
 
-			this.listenTo(hub, 'file:open', function (file) {
-				var tabModel = new TabModel({
-					file: file
-				})
-				var index = this.model.indexOf(tabModel)
-				if (index < 0) { // tab not open
-					tabUI.add(new TabView({
-						model: tabModel
-					}).$el)
-				} else { // tab has been open
+			this.listenTo(this.model, 'add:tabs', function (tab) {
+				tabUI.add(new TabView({model: tab}).$el)
+				this.model.set('active', tab)
+			})
 
+			this.listenTo(this.model, 'change:active', function (editor, activeTab) {
+				if (activeTab) {
+					var index = this.model.indexOf(activeTab)
+					tabUI.active(tabUI.getAt(index))
 				}
 			})
 
-			this.listenTo(this.model, 'change:active', function (activeTab) {
-				if (activeTab) {
-					tabUI.active(activeTab.$el)
+
+			this.listenTo(hub, 'file:open', function (file) {
+				var tab = new TabModel({file: file})
+				var index = this.model.indexOf(tab)
+				if (index < 0) { // tab not open
+					this.model.addTab(tab)
+				} else { // tab has been open
+					throw new Error('not implement')
 				}
 			})
 

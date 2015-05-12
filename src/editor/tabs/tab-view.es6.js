@@ -6,8 +6,19 @@ define(function (require) {
 
 	// Tab
 	var TabView = Backbone.View.extend({
+		events: {
+			'click .close': function () {
+				this.model.destroy()
+			}
+		},
+
 		initialize: function () {
 			this.render()
+
+			this.listenTo(this.model, 'destroy', function () {
+				this.$el.parent().remove()
+				this.remove()
+			})
 		},
 
 		render: function () {
