@@ -36,14 +36,17 @@ requirejs.config({
 
 	"map": {
 		'*': {
-			'file-watch': 'src/file-watch-api/file-watcher-loader'
+			'file-watch'        : 'src/file-watch-api/file-watcher-loader',
+			'array-ordered-node': 'bower_components/algorithm-data-structure/src/tree/ordered/array-ordered-node',
+			'tab'               : 'bower_components/tab/index'
 		}
 	},
 
 	"valaxy/requirejs-bundle": {
 		libBaseUrl: 'bower_components'
 	},
-	shim                     : {
+
+	shim: {
 		ace: {
 			exports: 'ace'
 		}

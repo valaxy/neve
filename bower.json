@@ -25,6 +25,7 @@
     "stack-analysis": "valaxy/stack-analysis",
     "backbone-event-propagation": "valaxy/backbone-event-propagation",
     "backbone-fsm": "valaxy/backbone-fsm#master",
+    "ace-shim-about-shadow-dom": "valaxy/ace-shim-about-shadow-dom",
     "backbone": "~1.1.2",
     "backbone-relational": "~0.9.0",
     "jquery": "~2.1.3",
@@ -58,7 +59,7 @@
     "artTemplate": "aui/artTemplate#master",
     "URIjs": "~1.15.0",
     "Ace.Tern": "sevin7676/Ace.Tern",
-    "ace-shim-about-shadow-dom": "valaxy/ace-shim-about-shadow-dom"
+    "tab": "valaxy/tab"
   },
   "devDependencies": {
     "qunit": "~1.18.0"

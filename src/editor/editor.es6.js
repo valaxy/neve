@@ -42,39 +42,22 @@ define(function (require) {
 			this.setElement($(html))
 			dom.appendStyle(this.el, css)
 
-			aceShimAboutShadowDom({
-				cssContainer: this.el
-			})
-
-
 			var projectManager = options.projectManager
 			var editor = window.editor = this._editor = ace.edit(this.$('.ace')[0])
+			aceShim.addEditor(editor, {
+				cssHead: this.el
+			})
 			this._editor = editor
 
 
 			editor.setTheme("ace/theme/chrome")
 			//editor.renderer.setShowGutter(false)
-			//editor.setOptions({
-			//	maxLines: 50
-			//});
-
-
-			// check: https://github.com/Juicy/juicy-ace-editor/pull/3
-			var session = editor.getSession()
-			session.on('changeMode', function () {
-				//var mode = session.getMode()
-				//console.log(mode)
-			})
-
-			editor.renderer.addEventListener("themeLoaded", (e) => { // todo, 可以在load之前劫持吗?
-				//var theme = document.getElementById(e.theme.cssClass) // cssClass is a id actually
-				//this.el.appendChild(theme)
+			editor.setOptions({
+				maxLines: 50
 			})
 
 
 			//--------------------init ace------------------------------
-
-
 			// set to false to prevent using worker, which is needed to run this from local html file due to browser security restritions
 			var useWebWorker = true;
 			editor.getSession().setUseWorker(useWebWorker);
@@ -197,8 +180,26 @@ define(function (require) {
 			autoSave.init({
 				projectManager: projectManager
 			})
+
+
+			// This is about tabs
+			var editorTabView = new (require('./editor-tab/view'))
+			this.$('.ace').before(editorTabView.el)
 		}
 	}))
 
 	return Editor
 })
+
+
+// check: https://github.com/Juicy/juicy-ace-editor/pull/3
+//var session = editor.getSession()
+//session.on('changeMode', function () {
+//var mode = session.getMode()
+//console.log(mode)
+//})
+//
+//editor.renderer.addEventListener("themeLoaded", (e) => { // todo, 可以在load之前劫持吗?
+//var theme = document.getElementById(e.theme.cssClass) // cssClass is a id actually
+//this.el.appendChild(theme)
+//})

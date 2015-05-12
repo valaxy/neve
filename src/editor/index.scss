@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import "../utility/style";
+@import "./editor-tab/index";
 
 $COLOR: #aaa;
 
@@ -21,10 +22,14 @@ $COLOR: #aaa;
 
 	.ace {
 		position: absolute;
-		top:      0;
+		top:      26px;
 		bottom:   0;
 		left:     0;
 		right:    0;
+	}
+
+	.editor-tab {
+		height: 25px;
 	}
 
 	.ace_content {

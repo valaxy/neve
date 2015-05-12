@@ -14,7 +14,7 @@ define(function (require) {
 		save: function () {
 			//var json = JSON.stringify(this.toJSON(), 2)
 			//var settingFile = path.join(project.get('location'), project.CONFIG_DIR_NAME, SETTING_FILE_NAME)
-			
+
 
 		},
 

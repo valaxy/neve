@@ -29,7 +29,7 @@ define(function (require, exports) {
 		// add explorer
 		this.load2($('.file-tree'), {
 			position: 'left',
-			flex    : '0 300px',
+			flex    : '0 200px',
 			title   : 'explorer'
 		})
 	}
@@ -47,7 +47,7 @@ define(function (require, exports) {
 	 ** options:
 	 **     dispose: function
 	 **     title: null or some no empty string
-	 **     position: 'left' | 'right'(default) | 'bottom'
+	 **     position: 'left' | 'right'(default) | 'bottom' | 'top'
 	 **     flex: css
 	 **     icon: icon class
 	 */
@@ -83,6 +83,7 @@ define(function (require, exports) {
 		// load by judge
 		if (this._linearLayout.getViewAt(0) == welcome) {
 			welcome.replaceWith(view)
+			view.flex(flex)
 		} else {
 			this._linearLayout.addViewAtEdge(view, position, {flex: flex})
 		}
